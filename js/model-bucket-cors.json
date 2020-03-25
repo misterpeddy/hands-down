@@ -1,0 +1,8 @@
+[
+    {
+      "origin": ["http://localhost:4000", "http://localhost:8080", "http://peddy.ai"],
+      "responseHeader": ["Content-Type"],
+      "method": ["GET", "HEAD", "DELETE"],
+      "maxAgeSeconds": 3600
+    }
+]

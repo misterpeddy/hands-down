@@ -1,0 +1,29 @@
+<!-- Load tf.js libraries !--> 
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+
+<!-- Load the pre-trained models !-->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/facemesh"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/handpose"></script>
+
+<!-- Load WASM backend for tf.js !-->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm/dist/tf-backend-wasm.js"></script>
+
+<!-- Load three.js -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.106.2/build/three.min.js"></script>
+
+<!-- Load scatter-gl.js -->
+<script src="https://cdn.jsdelivr.net/npm/scatter-gl@0.0.1/lib/scatter-gl.min.js"></script>
+
+<!-- Load main local JS libraries -->
+<script type="module" src="js/main.js"></script>
+
+<button id="export-btn">Export Data</button>
+Collection: <button id="collection-state-btn">Off</button>
+Inference: <button id="inference-state-btn">On</button>
+Label: <button id="label-btn">True</button>
+
+<div class="canvas-wrapper">
+  <video style="display:none" id="video"></video>
+  <canvas id="output">
+</div>
