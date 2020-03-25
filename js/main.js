@@ -1,48 +1,21 @@
 import * as draw from './draw.js';
 import * as models from './models.js';
 import * as data from './data.js';
+import * as ui from './ui.js';
 
 let state = {
   isCollectionOn  : false,
   isInferenceOn   : true,
   label           : true,
-  video           : undefined
+  video           : undefined,
 };
 
-function toggleCollection() {
-  state.isCollectionOn = !state.isCollectionOn;
-  document.getElementById('collection-state-btn').innerHTML =
-    state.isCollectionOn ? "On" : "Off";
-}
-
-function toggleInference() {
-  state.isInferenceOn = !state.isInferenceOn;
-  document.getElementById('inference-state-btn').innerHTML = 
-    (state.isInferenceOn? "On" : "Off");
-}
-
-function toggleLabel() {
-  state.label = !state.label;
-  document.getElementById('label-btn').innerHTML = 
-    (state.label? "True" : "False");
-}
-
-function initButtons() {
-  const collectionButton = document.getElementById('collection-state-btn');
-  const inferenceButton = document.getElementById('inference-state-btn');
-  const exportButton = document.getElementById('export-btn');
-  const labelButton = document.getElementById('label-btn');
-
-  collectionButton.innerHTML = state.isCollectionOn ? "On" : "Off";
-  inferenceButton.innerHTML = state.isInferenceOn? "On" : "Off";
-  labelButton.innerHTML = state.label ? "True" : "False";
- 
-  collectionButton.onclick = toggleCollection;
-  inferenceButton.onclick = toggleInference;
-  labelButton.onclick = toggleLabel;
-  exportButton.onclick = data.exportData;
-}
-
+/*
+ * Requests access to user-facing, video-only
+ * media stream; resolves the returned promise
+ * when onMetadataLoaded event is called on the
+ * media stream
+ */
 async function initCamera() {
   state.video = document.getElementById('video');
 
@@ -56,11 +29,15 @@ async function initCamera() {
 
   return new Promise((resolve) => {
     state.video.onloadedmetadata = () => {
-      resolve(state.video);
+      resolve();
     };
   });
 }
 
+/*
+ * Takes face and hand keypoints and carries out
+ * all processing steps enabled in current state.
+ */
 function processKeyPoints(combinedKeyPoints) {
   if (combinedKeyPoints == undefined || combinedKeyPoints.length != 2) 
     throw "Expected 2 key point arrays, but received " + combinedKeyPoints;
@@ -73,11 +50,19 @@ function processKeyPoints(combinedKeyPoints) {
   }
 
   if (state.isInferenceOn) {
-    models.computeInference(facePoints, handPoints);
+    if (facePoints != undefined && handPoints != undefined) {
+      models.computeInference(facePoints, handPoints)
+        .then((inference) => ui.updateInferenceText(inference[0]));
+    }
   }
 }
 
-async function computeAndRenderFrames(canvas, video) {
+/*
+ * Each call to update carries out all key point computations, 
+ * any enabled processing, and draws the next frame. If no errors 
+ * occur, asks the runtime to be called again on next frame update.
+ */
+async function startEngine(canvas, video) {
   (function update() {
     models.computeCombinedKeyPoints(video)
       .then((combinedFeatures) => draw.frame(canvas, video, combinedFeatures))
@@ -87,6 +72,10 @@ async function computeAndRenderFrames(canvas, video) {
   })()
 }
 
+/*
+ * Initializes video feed models and tf.js runtime.
+ * Failures should be fatal.
+ */
 async function initialize() {
   return Promise.all([
     initCamera(),
@@ -94,31 +83,19 @@ async function initialize() {
   ]);
 }
 
+/* Initializes necessary components and starts the
+ * inference engine.
+ */
 async function main() {
 
   await initialize();
-  initButtons();
 
-  const video = state.video;
-  video.play();
-  video.width = video.videoWidth;
-  video.height = video.videoHeight;
+  ui.setState(state);
+  ui.initButtons();
+  ui.initVideo();
+  const canvas = ui.initCanvas()
 
-  const canvas = document.getElementById('output');
-  canvas.width = video.width;
-  canvas.height = video.height;
-
-  const canvasContainer = document.querySelector('.canvas-wrapper');
-  canvasContainer.style = `width: ${video.width}px; height: ${video.height}px`;
-
-  const ctx = canvas.getContext('2d');
-  ctx.translate(canvas.width, 0);
-  ctx.scale(-1, 1);
-  ctx.fillStyle = '#32EEDB';
-  ctx.strokeStyle = '#32EEDB';
-  ctx.lineWidth = 0.5;
-
-  computeAndRenderFrames(canvas, video);
+  startEngine(canvas, video);
 }
 
 main();
