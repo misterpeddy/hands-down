@@ -1,0 +1,23 @@
+{
+  "name": "hands-down",
+  "version": "0.0.1",
+  "description": "Help slow the spread of COVID-19 by discouraging people from touching their face while sitting in front of a computer.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/misterpeddy/hands-down.git"
+  },
+  "author": "Pedram Pejman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/misterpeddy/hands-down/issues"
+  },
+  "homepage": "https://github.com/misterpeddy/hands-down#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "path": "^0.12.7"
+  }
+}
