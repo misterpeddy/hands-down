@@ -1,26 +1,27 @@
-let handPointList = [];
-let facePointList = [];
-let labelList = [];
+import * as ui from './ui.js';
+
 let collectedData = {
-  'facePointList': facePointList,
-  'handPointList': handPointList,
-  'labelList': labelList
+  'facePointList': [],
+  'handPointList': [],
+  'labelList': []
 };
 
 /*
  * Stages the given features and label in in-memory data 
  * structures; intended to be called many times, 
  * preeceding a call to save().
+ * Returns the number of items staged so far.
  */
 function collectFeatures(facePoints, handPoints, label) {
-  facePointList.push(facePoints);
-  handPointList.push(handPoints);
-  labelList.push(label);
-  return labelList;
+  collectedData['facePointList'].push(facePoints);
+  collectedData['handPointList'].push(handPoints);
+  collectedData['labelList'].push(label);
+  return collectedData['labelList'].length;
 }
 
 /*
- * Downloads the collected data as a JSON file.
+ * Downloads the collected data as a JSON file and resets
+ * the staging buffers (collectedData).
  */
 function exportData(){
   const filename = 'data.json';
@@ -36,6 +37,9 @@ function exportData(){
   a.dataset.downloadurl =  ['text/json', a.download, a.href].join(':')
   e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
   a.dispatchEvent(e)
+
+  Object.keys(collectedData).forEach(key => collectedData[key] = []);
+  ui.updateCollectionText(0);
 }
 
 // alias to console.save for easy saving from console
