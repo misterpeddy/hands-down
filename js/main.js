@@ -46,7 +46,8 @@ function processKeyPoints(combinedKeyPoints) {
   const handPoints = combinedKeyPoints[1];
 
   if (state.isCollectionOn) {
-    data.collectFeatures(facePoints, handPoints, state.label);
+    const labelList = data.collectFeatures(facePoints, handPoints, state.label)
+    ui.updateCollectionText(labelList.length);
   }
 
   if (state.isInferenceOn) {

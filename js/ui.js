@@ -1,7 +1,7 @@
 import * as data from './data.js';
 
-let state, collectionButton, inferenceButton, 
-  exportButton, labelButton, inferenceText;
+let state, collectionButton, inferenceButton, exportButton, 
+  labelButton, inferenceText, collectionText;
 
 function _toggleCollection() {
   state.isCollectionOn = !state.isCollectionOn;
@@ -38,6 +38,7 @@ function initButtons() {
   exportButton.onclick = data.exportData;
 
   inferenceText = document.getElementById('inference-txt');
+  collectionText = document.getElementById('collection-txt');
 }
 
 function initVideo() {
@@ -69,5 +70,10 @@ function updateInferenceText(inference) {
   inferenceText.innerHTML = inference.toFixed(4);
 }
 
-export {setState, initButtons, initVideo, initCanvas, updateInferenceText}
+function updateCollectionText(numCollected) {
+  collectionText.innerHTML = numCollected;
+}
+
+export {setState, initButtons, initVideo, initCanvas, 
+  updateInferenceText, updateCollectionText}
 

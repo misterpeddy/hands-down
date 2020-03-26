@@ -16,7 +16,7 @@ function collectFeatures(facePoints, handPoints, label) {
   facePointList.push(facePoints);
   handPointList.push(handPoints);
   labelList.push(label);
-  console.log("List at size: " + labelList.length);
+  return labelList;
 }
 
 /*
