@@ -3,7 +3,7 @@
 const MODEL_URL = "https://storage.googleapis.com/peddy-ai-models/covid.js/05-03-20-0/model.json"
 const MODEL_LOCAL_PATH = "models/05-03-20-0/model.json"
 
-const BACKEND = 'wasm';
+const BACKEND = 'webgl';
 const IS_INFERENCE_VERBOSE = false;
 
 let faceMesh, handPose, classifier, initialized;
