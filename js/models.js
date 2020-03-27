@@ -25,6 +25,8 @@ async function initialize() {
     handPose = models[1];
     classifier = models[2];
 
+    console.log(tf.getBackend() + " tf.js backend initialized");
+
     initialized = true;
   }
 
