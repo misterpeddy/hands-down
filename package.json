@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js"
-    "dev": "nodemon app",
+    "dev": "nodemon app -e js,css,html",
     "lint:js": "eslint --fix",
     "lint:html": "tidy -config tidy_config.txt",
     "lint:css": "stylelint --fix",
