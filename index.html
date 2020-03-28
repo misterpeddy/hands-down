@@ -1,3 +1,7 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
 <!-- Load tf.js libraries !--> 
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
@@ -15,18 +19,36 @@
 <!-- Load scatter-gl.js -->
 <script src="https://cdn.jsdelivr.net/npm/scatter-gl@0.0.1/lib/scatter-gl.min.js"></script>
 
+<!-- FONT
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+<!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<link href="css/normalize.css" rel="stylesheet"/>
+<link href="css/skeleton.css" rel="stylesheet">
+</head>
+
+<body>
 <!-- Load main local JS libraries -->
 <script type="module" src="js/main.js"></script>
-
-Collection: <button id="collection-state-btn">Off</button>
-Label: <button id="label-btn">True</button>
-Collected <span id="collection-txt">0</span> Data Points
-<button id="export-btn">Export Data</button>
-<br>
-Inference: <button id="inference-state-btn">On</button>
-Inference: <span id="inference-txt"></span>
-
-<div class="canvas-wrapper">
-  <video style="display:none" id="video"></video>
-  <canvas id="output">
+  <div class="container">
+    <h2>Hands-Down!</h2>
+    <div class="row">
+      Collection: <button id="collection-state-btn" class="button-primary">Off</button>
+      Label: <button id="label-btn">True</button>
+      Collected <span id="collection-txt">0</span> Data Points
+      <button id="export-btn">Export Data</button>
+    </div>
+    <div class="row">
+      Inference: <button id="inference-state-btn" class="button-primary">On</button>
+      Inference: <span id="inference-txt"></span>
+    </div>
+    <div class="canvas-wrapper">
+      <video style="display:none" id="video"></video>
+      <canvas id="output">
+    </div>
+  </div>
 </div>
+</body>
+
