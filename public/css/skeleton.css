@@ -45,6 +45,15 @@
   box-sizing: border-box;
 }
 
+/* Center-align the rows using flex-box */
+.row {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
 /* For devices larger than 400px */
 @media (min-width: 400px) {
   .container {

@@ -32,10 +32,12 @@
 <body>
 <!-- Load main local JS libraries -->
 <script type="module" src="js/main.js"></script>
-  <div class="container" style="margin-left: 24%">
-    <h2>Hands-Down!</h2>
+  <div class="container">
     <div class="row">
-      <div class="column">
+      <h2>Hands-Down!</h2>
+    </div>
+    <div class="row">
+      <div class="eight columns">
         Collection: <button id="collection-state-btn" class="button-primary">Off</button>
         Label: <button id="label-btn">True</button>
         Collected <span id="collection-txt">0</span> Data Points
@@ -43,16 +45,18 @@
       </div>
     </div>
     <div class="row">
-      <div class="column">
+      <div class="eight columns">
         Inference: <button id="inference-state-btn" class="button-primary">On</button>
         Inference: <span id="inference-txt"></span>
       </div>
     </div>
-    <div class="canvas-wrapper row"> 
-      <div class="column">
-        <video style="display:none" id="video"></video>
-        <canvas id="output" width="640" height="500" style="border: 1px solid blue;">
-    </div>
+    <div class="row">
+    <div class="canvas-wrapper"> 
+        <video id="video" style="display:none;"></video>
+        <div class="row">
+          <canvas id="output" width="640" height="480" style="border: 1px solid black;">
+        </div>
   </div>
+</div>
 </div>
 </body>
