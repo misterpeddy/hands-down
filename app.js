@@ -3,7 +3,7 @@ const path = require('path');
 
 const app = express();
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 const JS_DIR = 'js';
 const JS_MOUNT_PATH = '/js';
 const MODELS_DIR = 'models';
