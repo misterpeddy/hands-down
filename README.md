@@ -29,9 +29,9 @@ One of the ways you can help the project is by collecting data to train our mode
 
 Clone the repo and run:
 
-`npm install`
+1. `npm install`
 
-`npm start`
+2. `npm start` or `npm run dev` (like `npm start` but the server automatically restarts after files are changed)
 
 Then app should be serving at localhost:8080.
 
