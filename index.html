@@ -32,23 +32,28 @@
 <body>
 <!-- Load main local JS libraries -->
 <script type="module" src="js/main.js"></script>
-  <div class="container">
+  <div class="container" style="margin-left: 1%">
     <h2>Hands-Down!</h2>
     <div class="row">
-      Collection: <button id="collection-state-btn" class="button-primary">Off</button>
-      Label: <button id="label-btn">True</button>
-      Collected <span id="collection-txt">0</span> Data Points
-      <button id="export-btn">Export Data</button>
+      <div class="column">
+        Collection: <button id="collection-state-btn" class="button-primary">Off</button>
+        Label: <button id="label-btn">True</button>
+        Collected <span id="collection-txt">0</span> Data Points
+        <button id="export-btn">Export Data</button>
+      </div>
     </div>
     <div class="row">
-      Inference: <button id="inference-state-btn" class="button-primary">On</button>
-      Inference: <span id="inference-txt"></span>
+      <div class="column">
+        Inference: <button id="inference-state-btn" class="button-primary">On</button>
+        Inference: <span id="inference-txt"></span>
+      </div>
     </div>
-    <div class="canvas-wrapper">
-      <video style="display:none" id="video"></video>
-      <canvas id="output">
+    <div class="canvas-wrapper row">
+      <div class="column">
+        <video style="display:none" id="video"></video>
+        <canvas id="output">
+      <div class="column"></div>
     </div>
   </div>
 </div>
 </body>
-
