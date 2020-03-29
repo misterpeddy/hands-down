@@ -1,4 +1,7 @@
 const express = require('express');
+const path = require('path');
+const http = require('http');
+const reload = require('reload');
 
 const app = express();
 
@@ -13,5 +16,9 @@ app.use(MODELS_MOUNT_PATH, express.static(MODELS_DIR));
 
 app.get('/', (req, res) => res.sendFile(INDEX_PATH));
 
-// eslint-disable-next-line no-console
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+const server = http.createServer(app);
+
+reload(app).then(() => {
+  // eslint-disable-next-line no-console
+  server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+}).catch(err => console.error('Reload error:', err));
