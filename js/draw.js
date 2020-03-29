@@ -68,7 +68,7 @@ function frame(canvas, video, combinedFeatures) {
     handPoints = handPoses[0].landmarks;
     const handAnnotations = handPoses[0].annotations;
     drawPoints(ctx, handPoints, 3);
-    Object.entries(handAnnotations).forEach(([_, points]) =>
+    Object.entries(handAnnotations).forEach(([, points]) =>
       drawPath(ctx, points)
     );
   }

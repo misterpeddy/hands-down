@@ -54,7 +54,7 @@ function initVideoUI() {
 
 function initCanvas() {
   const canvas = document.getElementById('output');
-  // Where is this video coming from?
+  const { video } = state;
   canvas.width = video.width;
   canvas.height = video.height;
 
