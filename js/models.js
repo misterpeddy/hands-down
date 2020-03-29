@@ -73,7 +73,7 @@ async function computeCombinedKeyPoints(video) {
  */
 function computeInference(faceKeyPoints, handKeyPoints) {
   validateInit();
-  if (faceKeyPoints === undefined || handKeyPoints === undefined) {
+  if (!faceKeyPoints || !handKeyPoints) {
     return Promise.reject(Error('Both key points must be set'));
   }
 

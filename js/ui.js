@@ -1,4 +1,4 @@
-import * as data from './data';
+import { exportData } from './data.js';
 
 let state; let collectionButton; let inferenceButton; let exportButton;
 let labelButton; let inferenceText; let collectionText;
@@ -35,7 +35,7 @@ function initButtons() {
   collectionButton.onclick = _toggleCollection;
   inferenceButton.onclick = _toggleInference;
   labelButton.onclick = _toggleLabel;
-  exportButton.onclick = data.exportData;
+  exportButton.onclick = exportData;
 
   inferenceText = document.getElementById('inference-txt');
   collectionText = document.getElementById('collection-txt');
