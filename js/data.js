@@ -62,7 +62,7 @@ function exportData() {
 }
 
 // alias to console.save for easy saving from console
-(function (console) {
+(function log(console) {
   // eslint-disable-next-line no-param-reassign
   console.save = exportData;
 })(console);
