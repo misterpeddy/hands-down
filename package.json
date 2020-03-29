@@ -4,6 +4,7 @@
   "description": "Help slow the spread of COVID-19 by discouraging people from touching their face while sitting in front of a computer.",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint . --fix --ext .js,.html",
     "start": "node app.js"
   },
   "repository": {
@@ -19,5 +20,10 @@
   "dependencies": {
     "express": "^4.17.1",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-html": "^6.0.0"
   }
 }
