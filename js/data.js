@@ -1,4 +1,5 @@
-import { updateCollectionText } from './ui';
+// eslint-disable-next-line import/extensions
+import { updateCollectionText } from './ui.js';
 
 const collectedData = {
   facePointList: [],
