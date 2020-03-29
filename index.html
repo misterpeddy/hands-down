@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Hands-down!</title><!-- Load tf.js libraries !-->
-  <script src=
-  "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-  <script src=
-  "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script><!-- Load the pre-trained models !-->
+  <head>
+    <title>Hands-down!</title>
+    <!-- Load tf.js libraries !-->
 
-  <script src=
-  "https://cdn.jsdelivr.net/npm/@tensorflow-models/facemesh"></script>
-  <script src=
-  "https://cdn.jsdelivr.net/npm/@tensorflow-models/handpose"></script><!-- Load WASM backend for tf.js !-->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+    <!-- Load the pre-trained models !-->
 
-  <script src=
-  "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm/dist/tf-backend-wasm.js"></script><!-- Load three.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/facemesh"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/handpose"></script>
+    <!-- Load WASM backend for tf.js !-->
 
-  <script src=
-  "https://cdn.jsdelivr.net/npm/three@0.106.2/build/three.min.js"></script><!-- Load scatter-gl.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm/dist/tf-backend-wasm.js"></script>
+    <!-- Load three.js -->
 
-  <script src=
-  "https://cdn.jsdelivr.net/npm/scatter-gl@0.0.1/lib/scatter-gl.min.js"></script><!-- Load main local JS libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.106.2/build/three.min.js"></script>
+    <!-- Load scatter-gl.js -->
 
-  <script type="module" src="js/main.js"></script>
-</head>
-<body>
-  Collection: <button id="collection-state-btn">Off</button> Label:
-  <button id="label-btn">True</button> Collected <span id=
-  "collection-txt">0</span> Data Points <button id="export-btn">Export
-  Data</button><br>
-  Inference: <button id="inference-state-btn">On</button> Inference:
-  <span id="inference-txt"></span>
-  <div class="canvas-wrapper">
-    <video style="display:none" id="video"></video>
-    <canvas id="output"></canvas>
-  </div>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/scatter-gl@0.0.1/lib/scatter-gl.min.js"></script>
+    <!-- Load main local JS libraries -->
+
+    <script type="module" src="js/main.js"></script>
+  </head>
+  <body>
+    Collection: <button id="collection-state-btn">Off</button> Label:
+    <button id="label-btn">True</button> Collected
+    <span id="collection-txt">0</span> Data Points
+    <button id="export-btn">Export Data</button><br />
+    Inference: <button id="inference-state-btn">On</button> Inference:
+    <span id="inference-txt"></span>
+    <div class="canvas-wrapper">
+      <video style="display: none;" id="video"></video>
+      <canvas id="output"></canvas>
+    </div>
+  </body>
 </html>
