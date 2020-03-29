@@ -36,10 +36,28 @@ function exportData() {
   a.download = filename;
   a.href = window.URL.createObjectURL(blob);
   a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
-  e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+  e.initMouseEvent(
+    'click',
+    true,
+    false,
+    window,
+    0,
+    0,
+    0,
+    0,
+    0,
+    false,
+    false,
+    false,
+    false,
+    0,
+    null
+  );
   a.dispatchEvent(e);
 
-  Object.keys(collectedData).forEach((key) => { collectedData[key] = []; });
+  Object.keys(collectedData).forEach((key) => {
+    collectedData[key] = [];
+  });
   updateCollectionText(0);
 }
 
@@ -47,6 +65,6 @@ function exportData() {
 (function (console) {
   // eslint-disable-next-line no-param-reassign
   console.save = exportData;
-}(console));
+})(console);
 
 export { collectFeatures, exportData };

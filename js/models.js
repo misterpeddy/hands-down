@@ -1,13 +1,18 @@
 /* eslint-disable no-undef */
 // TODO(peddy): Fix the CORS issue on 302 redirect and use canonical model URL
 // const MODEL_URL = "http://models.peddy.ai/covid.js/05-03-20-0/model.json"
-const MODEL_URL = 'https://storage.googleapis.com/peddy-ai-models/covid.js/05-03-20-0/model.json';
+
+const MODEL_URL =
+  'https://storage.googleapis.com/peddy-ai-models/covid.js/05-03-20-0/model.json';
 const MODEL_LOCAL_PATH = 'models/05-03-20-0/model.json';
 
 const BACKEND = 'webgl';
 const IS_INFERENCE_VERBOSE = false;
 
-let faceMesh; let handPose; let classifier; let initialized;
+let faceMesh;
+let handPose;
+let classifier;
+let initialized;
 
 /*
  * Must be called before any other functions in module.
@@ -20,7 +25,9 @@ async function initializeModel() {
 
   function completeInit(models) {
     if (models.length !== 3) {
-      throw Error(`Expected to initialize 3 models but received ${models.length}`);
+      throw Error(
+        `Expected to initialize 3 models but received ${models.length}`
+      );
     }
 
     [faceMesh, handPose, classifier] = models;
@@ -34,12 +41,12 @@ async function initializeModel() {
   const modelPromises = [
     facemesh.load({ maxFaces: 1 }),
     handpose.load(),
-    tf.loadGraphModel(MODEL_URL, { mode: 'cors' })
+    tf
+      .loadGraphModel(MODEL_URL, { mode: 'cors' })
       .catch(() => tf.loadGraphModel(MODEL_LOCAL_PATH)),
   ];
 
-  return Promise.all(modelPromises)
-    .then((models) => completeInit(models));
+  return Promise.all(modelPromises).then((models) => completeInit(models));
 }
 
 /*
@@ -47,7 +54,9 @@ async function initializeModel() {
  */
 function validateInit() {
   if (!initialized) {
-    throw Error('Attempted to use a function from models Module before initialization');
+    throw Error(
+      'Attempted to use a function from models Module before initialization'
+    );
   }
 }
 
@@ -86,7 +95,9 @@ function computeInference(faceKeyPoints, handKeyPoints) {
     hand_tower_input: hp,
   };
 
-  const inference = classifier.predict(inputs, { verbose: IS_INFERENCE_VERBOSE });
+  const inference = classifier.predict(inputs, {
+    verbose: IS_INFERENCE_VERBOSE,
+  });
 
   if (IS_INFERENCE_VERBOSE) {
     // eslint-disable-next-line no-console
