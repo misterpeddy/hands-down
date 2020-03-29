@@ -1,28 +1,27 @@
-import { exportData } from './data.js';
-
 let state; let collectionButton; let inferenceButton; let exportButton;
 let labelButton; let inferenceText; let collectionText;
 
-function _toggleCollection() {
+// All handlers are private
+function toggleCollection() {
   state.isCollectionOn = !state.isCollectionOn;
   collectionButton.innerHTML = state.isCollectionOn ? 'On' : 'Off';
 }
 
-function _toggleInference() {
+function toggleInference() {
   state.isInferenceOn = !state.isInferenceOn;
   inferenceButton.innerHTML = (state.isInferenceOn ? 'On' : 'Off');
 }
 
-function _toggleLabel() {
+function toggleLabel() {
   state.label = !state.label;
   labelButton.innerHTML = (state.label ? 'True' : 'False');
 }
 
-function setState(appState) {
+function setStateUI(appState) {
   state = appState;
 }
 
-function initButtons() {
+function initButtonsUI(exportDataHandler) {
   collectionButton = document.getElementById('collection-state-btn');
   inferenceButton = document.getElementById('inference-state-btn');
   exportButton = document.getElementById('export-btn');
@@ -32,16 +31,16 @@ function initButtons() {
   inferenceButton.innerHTML = state.isInferenceOn ? 'On' : 'Off';
   labelButton.innerHTML = state.label ? 'True' : 'False';
 
-  collectionButton.onclick = _toggleCollection;
-  inferenceButton.onclick = _toggleInference;
-  labelButton.onclick = _toggleLabel;
-  exportButton.onclick = exportData;
+  collectionButton.onclick = toggleCollection;
+  inferenceButton.onclick = toggleInference;
+  labelButton.onclick = toggleLabel;
+  exportButton.onclick = exportDataHandler;
 
   inferenceText = document.getElementById('inference-txt');
   collectionText = document.getElementById('collection-txt');
 }
 
-function initVideo() {
+function initVideoUI() {
   const { video } = state;
   video.play();
   video.width = video.videoWidth;
@@ -50,6 +49,7 @@ function initVideo() {
 
 function initCanvas() {
   const canvas = document.getElementById('output');
+  // Where is this video coming from?
   canvas.width = video.width;
   canvas.height = video.height;
 
@@ -75,6 +75,6 @@ function updateCollectionText(numCollected) {
 }
 
 export {
-  setState, initButtons, initVideo, initCanvas,
+  setStateUI, initButtonsUI, initVideoUI, initCanvas,
   updateInferenceText, updateCollectionText,
 };

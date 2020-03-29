@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // TODO(peddy): Fix the CORS issue on 302 redirect and use canonical model URL
 // const MODEL_URL = "http://models.peddy.ai/covid.js/05-03-20-0/model.json"
 const MODEL_URL = 'https://storage.googleapis.com/peddy-ai-models/covid.js/05-03-20-0/model.json';
@@ -14,7 +15,7 @@ let faceMesh; let handPose; let classifier; let initialized;
  * Initializes the Facemesh and Handpose models, fetches
  * and loads the frozen classifer into memory, all in parallel.
  */
-async function initialize() {
+async function initializeModel() {
   await tf.setBackend(BACKEND);
 
   function completeInit(models) {
@@ -24,6 +25,7 @@ async function initialize() {
 
     [faceMesh, handPose, classifier] = models;
 
+    // eslint-disable-next-line no-console
     console.log(`${tf.getBackend()} tf.js backend initialized`);
 
     initialized = true;
@@ -94,4 +96,4 @@ function computeInference(faceKeyPoints, handKeyPoints) {
   return inference.data();
 }
 
-export { initialize, computeCombinedKeyPoints, computeInference };
+export { initializeModel, computeCombinedKeyPoints, computeInference };

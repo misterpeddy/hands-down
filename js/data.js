@@ -1,4 +1,4 @@
-import * as ui from './ui.js';
+import { updateCollectionText } from './ui';
 
 const collectedData = {
   facePointList: [],
@@ -39,11 +39,12 @@ function exportData() {
   a.dispatchEvent(e);
 
   Object.keys(collectedData).forEach((key) => { collectedData[key] = []; });
-  ui.updateCollectionText(0);
+  updateCollectionText(0);
 }
 
 // alias to console.save for easy saving from console
 (function (console) {
+  // eslint-disable-next-line no-param-reassign
   console.save = exportData;
 }(console));
 
