@@ -111,7 +111,7 @@ async function main() {
   initVideoUI();
   const canvas = initCanvas();
 
-  startEngine(canvas, video);
+  startEngine(canvas, state.video);
 }
 
 main();
