@@ -3,8 +3,8 @@
  * each point in the given array of (x,y) tuples
  * in the provided context.
  */
-function _drawPoints(ctx, points, r) {
-  for (let i = 0; i < points.length; i++) {
+function drawPoints(ctx, points, r) {
+  for (let i = 0; i < points.length; i += 1) {
     const x = points[i][0];
     const y = points[i][1];
     ctx.beginPath();
@@ -18,10 +18,10 @@ function _drawPoints(ctx, points, r) {
  * draws lines in the provided context to the
  * next point until the final point is reached.
  */
-function _drawPath(ctx, points) {
+function drawPath(ctx, points) {
   const region = new Path2D();
   region.moveTo(points[0][0], points[0][1]);
-  for (let i = 1; i < points.length; i++) {
+  for (let i = 1; i < points.length; i += 1) {
     const point = points[i];
     region.lineTo(point[0], point[1]);
   }
@@ -35,8 +35,8 @@ function _drawPath(ctx, points) {
  * Returns the extracted combined keypoints.
  */
 function frame(canvas, video, combinedFeatures) {
-  if (combinedFeatures == undefined) {
-    throw 'Cannot draw frame with undefined features';
+  if (combinedFeatures === undefined) {
+    throw Error('Cannot draw frame with undefined features');
   }
 
   const faceMeshes = combinedFeatures[0];
@@ -49,23 +49,23 @@ function frame(canvas, video, combinedFeatures) {
 
   // Render FaceMesh
   let facePoints;
-  if (faceMeshes != undefined && faceMeshes.length > 0) {
+  if (faceMeshes !== undefined && faceMeshes.length > 0) {
     facePoints = faceMeshes[0].scaledMesh;
-    _drawPoints(ctx, facePoints, 1);
+    drawPoints(ctx, facePoints, 1);
   }
 
   // Render HandPose
   let handPoints;
-  if (handPoses != undefined && handPoses.length > 0) {
+  if (handPoses !== undefined && handPoses.length > 0) {
     handPoints = handPoses[0].landmarks;
     const handAnnotations = handPoses[0].annotations;
-    _drawPoints(ctx, handPoints, 3);
+    drawPoints(ctx, handPoints, 3);
     for (const [annotation, points] of Object.entries(handAnnotations)) {
-      _drawPath(ctx, points);
+      drawPath(ctx, points);
     }
   }
 
   return [facePoints, handPoints];
 }
 
-export { frame };
+export default frame;

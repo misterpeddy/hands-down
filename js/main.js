@@ -1,7 +1,15 @@
-import * as draw from './draw.js';
-import * as models from './models.js';
-import * as data from './data.js';
-import * as ui from './ui.js';
+/* eslint-disable import/extensions */
+import frame from './draw.js';
+import { computeInference, computeCombinedKeyPoints, initializeModel } from './models.js';
+import { collectFeatures, exportData } from './data.js';
+import {
+  updateCollectionText,
+  setStateUI,
+  initButtonsUI,
+  initVideoUI,
+  initCanvas,
+  updateInferenceText,
+} from './ui.js';
 
 const state = {
   isCollectionOn: false,
@@ -39,22 +47,22 @@ async function initCamera() {
  * all processing steps enabled in current state.
  */
 function processKeyPoints(combinedKeyPoints) {
-  if (combinedKeyPoints == undefined || combinedKeyPoints.length != 2) {
-    throw `Expected 2 key point arrays, but received ${combinedKeyPoints}`;
+  if (combinedKeyPoints === undefined || combinedKeyPoints.length !== 2) {
+    throw Error(`Expected 2 key point arrays, but received ${combinedKeyPoints}`);
   }
 
   const facePoints = combinedKeyPoints[0];
   const handPoints = combinedKeyPoints[1];
 
   if (state.isCollectionOn) {
-    const collectionSize = data.collectFeatures(facePoints, handPoints, state.label);
-    ui.updateCollectionText(collectionSize);
+    const collectionSize = collectFeatures(facePoints, handPoints, state.label);
+    updateCollectionText(collectionSize);
   }
 
   if (state.isInferenceOn) {
-    if (facePoints != undefined && handPoints != undefined) {
-      models.computeInference(facePoints, handPoints)
-        .then((inference) => ui.updateInferenceText(inference[0]));
+    if (facePoints !== undefined && handPoints !== undefined) {
+      computeInference(facePoints, handPoints)
+        .then((inference) => updateInferenceText(inference[0]));
     }
   }
 }
@@ -66,10 +74,11 @@ function processKeyPoints(combinedKeyPoints) {
  */
 async function startEngine(canvas, video) {
   (function update() {
-    models.computeCombinedKeyPoints(video)
-      .then((combinedFeatures) => draw.frame(canvas, video, combinedFeatures))
+    computeCombinedKeyPoints(video)
+      .then((combinedFeatures) => frame(canvas, video, combinedFeatures))
       .then((combinedKeyPoints) => processKeyPoints(combinedKeyPoints))
       .then(() => requestAnimationFrame(update))
+      // eslint-disable-next-line no-console
       .catch((err) => console.error('Could not compute and render frame: ', err));
   }());
 }
@@ -81,7 +90,7 @@ async function startEngine(canvas, video) {
 async function initialize() {
   return Promise.all([
     initCamera(),
-    models.initialize(),
+    initializeModel(),
   ]);
 }
 
@@ -91,10 +100,10 @@ async function initialize() {
 async function main() {
   await initialize();
 
-  ui.setState(state);
-  ui.initButtons();
-  ui.initVideo();
-  const canvas = ui.initCanvas();
+  setStateUI(state);
+  initButtonsUI(exportData);
+  initVideoUI();
+  const canvas = initCanvas();
 
   startEngine(canvas, video);
 }
