@@ -44,7 +44,15 @@ function frame(canvas, video, combinedFeatures) {
   const ctx = canvas.getContext('2d');
 
   ctx.drawImage(
-    video, 0, 0, video.width, video.height, 0, 0, canvas.width, canvas.height,
+    video,
+    0,
+    0,
+    video.width,
+    video.height,
+    0,
+    0,
+    canvas.width,
+    canvas.height
   );
 
   // Render FaceMesh
@@ -60,7 +68,9 @@ function frame(canvas, video, combinedFeatures) {
     handPoints = handPoses[0].landmarks;
     const handAnnotations = handPoses[0].annotations;
     drawPoints(ctx, handPoints, 3);
-    Object.entries(handAnnotations).forEach(([_, points]) => drawPath(ctx, points));
+    Object.entries(handAnnotations).forEach(([_, points]) =>
+      drawPath(ctx, points)
+    );
   }
 
   return [facePoints, handPoints];

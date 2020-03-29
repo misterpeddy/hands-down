@@ -1,5 +1,10 @@
-let state; let collectionButton; let inferenceButton; let exportButton;
-let labelButton; let inferenceText; let collectionText;
+let state;
+let collectionButton;
+let inferenceButton;
+let exportButton;
+let labelButton;
+let inferenceText;
+let collectionText;
 
 // All handlers are private
 function toggleCollection() {
@@ -9,12 +14,12 @@ function toggleCollection() {
 
 function toggleInference() {
   state.isInferenceOn = !state.isInferenceOn;
-  inferenceButton.innerHTML = (state.isInferenceOn ? 'On' : 'Off');
+  inferenceButton.innerHTML = state.isInferenceOn ? 'On' : 'Off';
 }
 
 function toggleLabel() {
   state.label = !state.label;
-  labelButton.innerHTML = (state.label ? 'True' : 'False');
+  labelButton.innerHTML = state.label ? 'True' : 'False';
 }
 
 function setStateUI(appState) {
@@ -75,6 +80,10 @@ function updateCollectionText(numCollected) {
 }
 
 export {
-  setStateUI, initButtonsUI, initVideoUI, initCanvas,
-  updateInferenceText, updateCollectionText,
+  setStateUI,
+  initButtonsUI,
+  initVideoUI,
+  initCanvas,
+  updateInferenceText,
+  updateCollectionText,
 };

@@ -1,6 +1,10 @@
 /* eslint-disable import/extensions */
 import frame from './draw.js';
-import { computeInference, computeCombinedKeyPoints, initializeModel } from './models.js';
+import {
+  computeInference,
+  computeCombinedKeyPoints,
+  initializeModel,
+} from './models.js';
 import { collectFeatures, exportData } from './data.js';
 import {
   updateCollectionText,
@@ -48,7 +52,9 @@ async function initCamera() {
  */
 function processKeyPoints(combinedKeyPoints) {
   if (combinedKeyPoints === undefined || combinedKeyPoints.length !== 2) {
-    throw Error(`Expected 2 key point arrays, but received ${combinedKeyPoints}`);
+    throw Error(
+      `Expected 2 key point arrays, but received ${combinedKeyPoints}`
+    );
   }
 
   const facePoints = combinedKeyPoints[0];
@@ -61,8 +67,9 @@ function processKeyPoints(combinedKeyPoints) {
 
   if (state.isInferenceOn) {
     if (facePoints !== undefined && handPoints !== undefined) {
-      computeInference(facePoints, handPoints)
-        .then((inference) => updateInferenceText(inference[0]));
+      computeInference(facePoints, handPoints).then((inference) =>
+        updateInferenceText(inference[0])
+      );
     }
   }
 }
@@ -78,9 +85,11 @@ async function startEngine(canvas, video) {
       .then((combinedFeatures) => frame(canvas, video, combinedFeatures))
       .then((combinedKeyPoints) => processKeyPoints(combinedKeyPoints))
       .then(() => requestAnimationFrame(update))
-      // eslint-disable-next-line no-console
-      .catch((err) => console.error('Could not compute and render frame: ', err));
-  }());
+      .catch((err) =>
+        // eslint-disable-next-line no-console
+        console.error('Could not compute and render frame: ', err)
+      );
+  })();
 }
 
 /*
@@ -88,10 +97,7 @@ async function startEngine(canvas, video) {
  * Failures should be fatal.
  */
 async function initialize() {
-  return Promise.all([
-    initCamera(),
-    initializeModel(),
-  ]);
+  return Promise.all([initCamera(), initializeModel()]);
 }
 
 /* Initializes necessary components and starts the
