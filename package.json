@@ -4,7 +4,9 @@
   "description": "Help slow the spread of COVID-19 by discouraging people from touching their face while sitting in front of a computer.",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint . --fix --ext .js,.html && tidy -m -config tidy_config.txt *.html",
+    "lint:js": "eslint . --fix --ext .js",
+    "lint:html": "tidy -m -config tidy_config.txt *.html",
+    "lint": "npm run lint:js && npm run lint:html",
     "start": "node app.js"
   },
   "repository": {
