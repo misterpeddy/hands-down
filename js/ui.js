@@ -1,21 +1,21 @@
-import * as data from './data.js';
+import * as data from './data';
 
-let state, collectionButton, inferenceButton, exportButton, 
-  labelButton, inferenceText, collectionText;
+let state; let collectionButton; let inferenceButton; let exportButton;
+let labelButton; let inferenceText; let collectionText;
 
 function _toggleCollection() {
   state.isCollectionOn = !state.isCollectionOn;
-  collectionButton.innerHTML = state.isCollectionOn ? "On" : "Off";
+  collectionButton.innerHTML = state.isCollectionOn ? 'On' : 'Off';
 }
 
 function _toggleInference() {
   state.isInferenceOn = !state.isInferenceOn;
-  inferenceButton.innerHTML = (state.isInferenceOn ? "On" : "Off");
+  inferenceButton.innerHTML = (state.isInferenceOn ? 'On' : 'Off');
 }
 
 function _toggleLabel() {
   state.label = !state.label;
-  labelButton.innerHTML = (state.label ? "True" : "False");
+  labelButton.innerHTML = (state.label ? 'True' : 'False');
 }
 
 function setState(appState) {
@@ -28,10 +28,10 @@ function initButtons() {
   exportButton = document.getElementById('export-btn');
   labelButton = document.getElementById('label-btn');
 
-  collectionButton.innerHTML = state.isCollectionOn ? "On" : "Off";
-  inferenceButton.innerHTML = state.isInferenceOn? "On" : "Off";
-  labelButton.innerHTML = state.label ? "True" : "False";
- 
+  collectionButton.innerHTML = state.isCollectionOn ? 'On' : 'Off';
+  inferenceButton.innerHTML = state.isInferenceOn ? 'On' : 'Off';
+  labelButton.innerHTML = state.label ? 'True' : 'False';
+
   collectionButton.onclick = _toggleCollection;
   inferenceButton.onclick = _toggleInference;
   labelButton.onclick = _toggleLabel;
@@ -42,7 +42,7 @@ function initButtons() {
 }
 
 function initVideo() {
-  const video = state.video;
+  const { video } = state;
   video.play();
   video.width = video.videoWidth;
   video.height = video.videoHeight;
@@ -74,6 +74,7 @@ function updateCollectionText(numCollected) {
   collectionText.innerHTML = numCollected;
 }
 
-export {setState, initButtons, initVideo, initCanvas, 
-  updateInferenceText, updateCollectionText}
-
+export {
+  setState, initButtons, initVideo, initCanvas,
+  updateInferenceText, updateCollectionText,
+};
