@@ -4,7 +4,7 @@
   "description": "Help slow the spread of COVID-19 by discouraging people from touching their face while sitting in front of a computer.",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
     "dev": "nodemon app -e js,css,html",
     "lint:js": "eslint --fix",
     "lint:html": "tidy -config tidy_config.txt",
