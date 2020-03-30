@@ -15,7 +15,10 @@ app.use(MODELS_MOUNT_PATH, express.static(MODELS_DIR));
 
 app.get('/', (req, res) => res.sendFile(INDEX_PATH));
 
-reload(app).then(() => {
+reload(app)
+  .then(() => {
+    // eslint-disable-next-line no-console
+    app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+  })
   // eslint-disable-next-line no-console
-  app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
-}).catch(err => console.error('Reload error:', err));
+  .catch((err) => console.error('Reload error:', err));
