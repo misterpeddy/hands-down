@@ -9,8 +9,9 @@ const JS_MOUNT_PATH = '/js';
 const MODELS_DIR = 'models';
 const MODELS_MOUNT_PATH = '/models';
 const INDEX_PATH = path.join(__dirname + '/index.html');
+const PUBLIC_DIR = 'public';
 
-app.use(express.static('public'));
+app.use(express.static(PUBLIC_DIR));
 app.use(JS_MOUNT_PATH, express.static(JS_DIR));
 app.use(MODELS_MOUNT_PATH, express.static(MODELS_DIR));
 
