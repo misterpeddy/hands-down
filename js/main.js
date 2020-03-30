@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import frame from './draw.js';
+import drawFrame from './draw.js';
 import {
   computeInference,
   computeCombinedKeyPoints,
@@ -82,7 +82,7 @@ function processKeyPoints(combinedKeyPoints) {
 async function startEngine(canvas, video) {
   (function update() {
     computeCombinedKeyPoints(video)
-      .then((combinedFeatures) => frame(canvas, video, combinedFeatures))
+      .then((combinedFeatures) => drawFrame(canvas, video, combinedFeatures))
       .then((combinedKeyPoints) => processKeyPoints(combinedKeyPoints))
       .then(() => requestAnimationFrame(update))
       .catch((err) =>

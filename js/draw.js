@@ -34,7 +34,7 @@ function drawPath(ctx, points) {
  * the hand and face key points contained in combinedFeatures.
  * Returns the extracted combined keypoints.
  */
-function frame(canvas, video, combinedFeatures) {
+function drawFrame(canvas, video, combinedFeatures) {
   if (combinedFeatures === undefined) {
     throw Error('Cannot draw frame with undefined features');
   }
@@ -76,4 +76,4 @@ function frame(canvas, video, combinedFeatures) {
   return [facePoints, handPoints];
 }
 
-export default frame;
+export default drawFrame;
