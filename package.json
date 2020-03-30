@@ -43,13 +43,13 @@
   },
   "lint-staged": {
     "*.js": [
-      "nr lint:js"
+      "npm run lint:js"
     ],
     "*.html": [
       "prettier --write"
     ],
     "*.css": [
-      "nr lint:css"
+      "npm run lint:css"
     ]
   }
 }
