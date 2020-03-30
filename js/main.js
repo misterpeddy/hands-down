@@ -1,13 +1,25 @@
-import * as draw from './draw.js';
-import * as models from './models.js';
-import * as data from './data.js';
-import * as ui from './ui.js';
+/* eslint-disable import/extensions */
+import drawFrame from './draw.js';
+import {
+  computeInference,
+  computeCombinedKeyPoints,
+  initializeModel,
+} from './models.js';
+import { collectFeatures, exportData } from './data.js';
+import {
+  updateCollectionText,
+  setStateUI,
+  initButtonsUI,
+  initVideoUI,
+  initCanvas,
+  updateInferenceText,
+} from './ui.js';
 
-let state = {
-  isCollectionOn  : false,
-  isInferenceOn   : true,
-  label           : true,
-  video           : undefined,
+const state = {
+  isCollectionOn: false,
+  isInferenceOn: true,
+  label: true,
+  video: undefined,
 };
 
 /*
@@ -20,10 +32,10 @@ async function initCamera() {
   state.video = document.getElementById('video');
 
   const stream = await navigator.mediaDevices.getUserMedia({
-    'video': {
+    video: {
       facingMode: 'user',
     },
-    'audio': false,
+    audio: false,
   });
   state.video.srcObject = stream;
 
@@ -39,38 +51,45 @@ async function initCamera() {
  * all processing steps enabled in current state.
  */
 function processKeyPoints(combinedKeyPoints) {
-  if (combinedKeyPoints == undefined || combinedKeyPoints.length != 2) 
-    throw "Expected 2 key point arrays, but received " + combinedKeyPoints;
+  if (combinedKeyPoints === undefined || combinedKeyPoints.length !== 2) {
+    throw Error(
+      `Expected 2 key point arrays, but received ${combinedKeyPoints}`
+    );
+  }
 
   const facePoints = combinedKeyPoints[0];
   const handPoints = combinedKeyPoints[1];
 
   if (state.isCollectionOn) {
-    const collectionSize = data.collectFeatures(facePoints, handPoints, state.label)
-    ui.updateCollectionText(collectionSize);
+    const collectionSize = collectFeatures(facePoints, handPoints, state.label);
+    updateCollectionText(collectionSize);
   }
 
   if (state.isInferenceOn) {
-    if (facePoints != undefined && handPoints != undefined) {
-      models.computeInference(facePoints, handPoints)
-        .then((inference) => ui.updateInferenceText(inference[0]));
+    if (facePoints !== undefined && handPoints !== undefined) {
+      computeInference(facePoints, handPoints).then((inference) =>
+        updateInferenceText(inference[0])
+      );
     }
   }
 }
 
 /*
- * Each call to update carries out all key point computations, 
- * any enabled processing, and draws the next frame. If no errors 
+ * Each call to update carries out all key point computations,
+ * any enabled processing, and draws the next frame. If no errors
  * occur, asks the runtime to be called again on next frame update.
  */
 async function startEngine(canvas, video) {
   (function update() {
-    models.computeCombinedKeyPoints(video)
-      .then((combinedFeatures) => draw.frame(canvas, video, combinedFeatures))
+    computeCombinedKeyPoints(video)
+      .then((combinedFeatures) => drawFrame(canvas, video, combinedFeatures))
       .then((combinedKeyPoints) => processKeyPoints(combinedKeyPoints))
       .then(() => requestAnimationFrame(update))
-      .catch((err) => console.error("Could not compute and render frame: ", err));
-  })()
+      .catch((err) =>
+        // eslint-disable-next-line no-console
+        console.error('Could not compute and render frame: ', err)
+      );
+  })();
 }
 
 /*
@@ -78,25 +97,21 @@ async function startEngine(canvas, video) {
  * Failures should be fatal.
  */
 async function initialize() {
-  return Promise.all([
-    initCamera(),
-    models.initialize()  
-  ]);
+  return Promise.all([initCamera(), initializeModel()]);
 }
 
 /* Initializes necessary components and starts the
  * inference engine.
  */
 async function main() {
-
   await initialize();
 
-  ui.setState(state);
-  ui.initButtons();
-  ui.initVideo();
-  const canvas = ui.initCanvas()
+  setStateUI(state);
+  initButtonsUI(exportData);
+  initVideoUI();
+  const canvas = initCanvas();
 
-  startEngine(canvas, video);
+  startEngine(canvas, state.video);
 }
 
 main();

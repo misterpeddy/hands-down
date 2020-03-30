@@ -1,10 +1,10 @@
 /*
- * Draws circles of radius r centered around 
+ * Draws circles of radius r centered around
  * each point in the given array of (x,y) tuples
  * in the provided context.
  */
-function _drawPoints(ctx, points, r) {
-  for (let i = 0; i < points.length; i++) {
+function drawPoints(ctx, points, r) {
+  for (let i = 0; i < points.length; i += 1) {
     const x = points[i][0];
     const y = points[i][1];
     ctx.beginPath();
@@ -15,13 +15,13 @@ function _drawPoints(ctx, points, r) {
 
 /*
  * Starts at the first point, and continually
- * draws lines in the provided context to the 
+ * draws lines in the provided context to the
  * next point until the final point is reached.
  */
-function _drawPath(ctx, points) {
+function drawPath(ctx, points) {
   const region = new Path2D();
   region.moveTo(points[0][0], points[0][1]);
-  for (let i = 1; i < points.length; i++) {
+  for (let i = 1; i < points.length; i += 1) {
     const point = points[i];
     region.lineTo(point[0], point[1]);
   }
@@ -34,36 +34,46 @@ function _drawPath(ctx, points) {
  * the hand and face key points contained in combinedFeatures.
  * Returns the extracted combined keypoints.
  */
-function frame(canvas, video, combinedFeatures) {
-  if (combinedFeatures == undefined)
-    throw "Cannot draw frame with undefined features";
+function drawFrame(canvas, video, combinedFeatures) {
+  if (combinedFeatures === undefined) {
+    throw Error('Cannot draw frame with undefined features');
+  }
 
   const faceMeshes = combinedFeatures[0];
   const handPoses = combinedFeatures[1];
   const ctx = canvas.getContext('2d');
 
   ctx.drawImage(
-      video, 0, 0, video.width, video.height, 0, 0, canvas.width, canvas.height);
+    video,
+    0,
+    0,
+    video.width,
+    video.height,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
 
-  // Render FaceMesh 
+  // Render FaceMesh
   let facePoints;
-  if (faceMeshes != undefined && faceMeshes.length > 0) {
+  if (faceMeshes !== undefined && faceMeshes.length > 0) {
     facePoints = faceMeshes[0].scaledMesh;
-    _drawPoints(ctx, facePoints, 1);
+    drawPoints(ctx, facePoints, 1);
   }
 
-  // Render HandPose 
+  // Render HandPose
   let handPoints;
-  if (handPoses != undefined && handPoses.length > 0) {
+  if (handPoses !== undefined && handPoses.length > 0) {
     handPoints = handPoses[0].landmarks;
     const handAnnotations = handPoses[0].annotations;
-    _drawPoints(ctx, handPoints, 3);
-    for (let [annotation, points] of Object.entries(handAnnotations)) {
-      _drawPath(ctx, points);
-    }
+    drawPoints(ctx, handPoints, 3);
+    Object.entries(handAnnotations).forEach(([, points]) =>
+      drawPath(ctx, points)
+    );
   }
 
   return [facePoints, handPoints];
 }
 
-export {frame}
+export default drawFrame;
