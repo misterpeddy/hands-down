@@ -6,8 +6,8 @@
   "scripts": {
     "lint:js": "eslint --fix",
     "lint:html": "tidy -config tidy_config.txt",
-    "lint:css": "stylelint",
-    "lint": "npm run lint:js -- --ext .js && npm run lint:html *.html && npm run lint:css **/*.css",
+    "lint:css": "stylelint --fix",
+    "lint": "npm run lint:js *.js public/js/*.js && npm run lint:html *.html && npm run lint:css public/css/*.css",
     "start": "node app.js"
   },
   "repository": {
