@@ -1,12 +1,13 @@
 {
   "name": "hands-down",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Help slow the spread of COVID-19 by discouraging people from touching their face while sitting in front of a computer.",
   "main": "index.js",
   "scripts": {
     "lint:js": "eslint . --fix",
     "lint:html": "tidy -config tidy_config.txt",
-    "lint": "npm run lint:js -- --ext .js && npm run lint:html *.html",
+    "lint:css": "npx stylelint **/*.css",
+    "lint": "npm run lint:js -- --ext .js && npm run lint:html *.html && npm run lint:css",
     "start": "node app.js"
   },
   "repository": {
