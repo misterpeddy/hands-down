@@ -23,6 +23,7 @@
   "homepage": "https://github.com/misterpeddy/hands-down#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "nclr": "^2.2.4",
     "reload": "^3.0.4"
   },
   "devDependencies": {
