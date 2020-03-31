@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const reload = require('reload');
+const { info, error } = require('nclr/symbols');
 
 const app = express();
 
@@ -17,8 +18,6 @@ app.get('/', (req, res) => res.sendFile(INDEX_PATH));
 
 reload(app)
   .then(() => {
-    // eslint-disable-next-line no-console
-    app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+    app.listen(PORT, () => info(`Listening on port ${PORT}`));
   })
-  // eslint-disable-next-line no-console
-  .catch((err) => console.error('Reload error:', err));
+  .catch((err) => error('Reload error:', err));

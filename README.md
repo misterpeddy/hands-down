@@ -31,7 +31,7 @@ Clone the repo and run:
 
 1. `npm install`
 
-2. `npm start` or `npm run dev` (like `npm start` but the server automatically restarts after files are changed)
+2. `npm start` or `npm run dev` (like `npm start` but the server automatically restarts after any HTML/CSS/JS files are changed)
 
 Then app should be serving at localhost:8080.
 
