@@ -35,15 +35,20 @@
   </head>
 
   <body>
+    <header class="row">
+      <h2><strong>Hands Down!</strong></h2>
+    </header>
     <div class="container">
       <div class="row">
-        <h2>Hands-Down!</h2>
-      </div>
-      <div class="row">
-        <div class="eight columns">
+        <div class="two columns">
           Collection:
-          <button id="collection-state-btn" class="button-primary">Off</button>
-          Label: <button id="label-btn">True</button>
+          <button id="collection-state-btn" class="button-primary button-off">Off</button>
+        </div>
+        <div class="three columns">
+          <strong><span id="collection-txt">0</span> Data Points</strong>
+        </div>
+        <div class="two columns">
+          Label: <button id="label-btn" class="button-secondary">True</button>
         </div>
       </div>
       <div class="row"></div>
@@ -51,12 +56,11 @@
         <div class="eight columns">
           Inference:
           <button id="inference-state-btn" class="button-primary">On</button>
-          Inference: <span id="inference-txt"></span>
+          <strong><span id="inference-txt"></span></strong>
         </div>
       </div>
       <div class="row">
         <div class="eight columns">
-          Collected <span id="collection-txt">0</span> Data Points
           <button id="export-btn">Export Data</button>
         </div>
       </div>
@@ -64,6 +68,7 @@
         <div class="canvas-wrapper">
           <video id="video" style="display: none;"></video>
           <div class="row">
+            <!-- Changing the size here doesn't change much as the drawing changes the size again -->
             <canvas
               id="output"
               width="640"
