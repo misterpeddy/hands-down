@@ -25,6 +25,11 @@
       rel="stylesheet"
       type="text/css"
     />
+    <link
+      href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
 
     <!-- Load Skeleton CSS -->
     <link href="css/normalize.css" rel="stylesheet" />
@@ -35,47 +40,56 @@
   </head>
 
   <body>
-    <header class="row">
-      <h2><strong>Hands Down!</strong></h2>
+    <header>
+      <h3><strong>Hands Down!</strong></h3>
     </header>
     <div class="container">
       <div class="row">
-        <div class="two columns">
+        <div class="one-third columns">
           Collection:
-          <button id="collection-state-btn" class="button-primary button-off">Off</button>
+          <button id="collection-state-btn" class="button-primary button-off">
+            Off
+          </button>
         </div>
-        <div class="three columns">
-          <strong><span id="collection-txt">0</span> Data Points</strong>
+        <div class="one-third columns">
+          <h6>
+            <strong><span id="collection-txt">0</span> Data Points</strong>
+          </h6>
         </div>
-        <div class="two columns">
+        <div class="one-third columns">
           Label: <button id="label-btn" class="button-secondary">True</button>
         </div>
       </div>
       <div class="row"></div>
       <div class="row">
-        <div class="eight columns">
+        <div class="one-third columns">
           Inference:
           <button id="inference-state-btn" class="button-primary">On</button>
-          <strong><span id="inference-txt"></span></strong>
         </div>
-      </div>
-      <div class="row">
-        <div class="eight columns">
+        <div class="one-third columns">
+          <h6>
+            <strong
+              ><span class="mdi mdi-hand-right"></span> &nbsp;<span
+                id="inference-txt"
+              ></span
+            ></strong>
+          </h6>
+        </div>
+        <div class="one-third columns">
           <button id="export-btn">Export Data</button>
         </div>
       </div>
       <div class="row">
+        <div class="one column"></div>
         <div class="canvas-wrapper">
           <video id="video" style="display: none;"></video>
-          <div class="row">
-            <!-- Changing the size here doesn't change much as the drawing changes the size again -->
-            <canvas
-              id="output"
-              width="640"
-              height="480"
-              style="border: 1px solid black;"
-            ></canvas>
-          </div>
+          <!-- Changing the size here doesn't change much as the drawing changes the size again -->
+          <canvas
+            id="output"
+            width="640"
+            height="480"
+            style="border: 1px solid black;"
+          ></canvas>
         </div>
       </div>
     </div>
