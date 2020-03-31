@@ -559,6 +559,14 @@ hr {
   border-top: 1px solid #e1e1e1;
 }
 
+.bad {
+  color: #f00;
+}
+
+.mdi {
+  vertical-align: middle;
+}
+
 /* Clearing
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
