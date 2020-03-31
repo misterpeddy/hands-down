@@ -3,8 +3,8 @@
 // const MODEL_URL = "http://models.peddy.ai/covid.js/05-03-20-0/model.json"
 
 const MODEL_URL =
-  'https://storage.googleapis.com/peddy-ai-models/covid.js/05-03-20-0/model.json';
-const MODEL_LOCAL_PATH = 'models/05-03-20-0/model.json';
+  'https://storage.googleapis.com/peddy-ai-models/covid.js/31-03-20-0/model.json';
+const MODEL_LOCAL_PATH = 'models/31-03-20-0/model.json';
 
 const BACKEND = 'webgl';
 const IS_INFERENCE_VERBOSE = false;
@@ -88,11 +88,20 @@ function computeInference(faceKeyPoints, handKeyPoints) {
     return Promise.reject(Error('Both key points must be set'));
   }
 
-  const fp = tf.tensor(faceKeyPoints).expandDims(0);
-  const hp = tf.tensor(handKeyPoints).expandDims(0);
+  let fp = tf.tensor(faceKeyPoints).expandDims(0);
+  let hp = tf.tensor(handKeyPoints).expandDims(0);
+
+  // Compute difference between every (hp, fp) pair
+  hp = hp.expandDims(2);
+  fp = fp.expandDims(1);
+  const diff = hp.sub(fp);
+
+  // Reduce to distance to closest fp for each hp
+  const norm = diff.norm(undefined, 3);
+  const minDiff = norm.min(2);
+
   const inputs = {
-    face_tower_input: fp,
-    hand_tower_input: hp,
+    input_1: minDiff,
   };
 
   const inference = classifier.predict(inputs, {
