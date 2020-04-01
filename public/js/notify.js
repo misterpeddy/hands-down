@@ -41,7 +41,7 @@ function notify(notificationTitle, options = {}) {
     const notification = new Notification(notificationTitle, options);
     notification.onclick = () => {
       // eslint-disable-next-line no-alert
-      alert('Thanks for your consideration of COVID-19');
+      // alert('Thanks for your consideration of COVID-19');
       // TODO Make it go to the tab that contains this app
     };
   });

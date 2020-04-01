@@ -1,6 +1,3 @@
-// eslint-disable-next-line import/extensions
-import notify from './notify.js';
-
 let state;
 let collectionButton;
 let inferenceButton;
@@ -100,11 +97,9 @@ function updateInferenceText(inference) {
   inferenceText.parentElement.className = '';
   if (touching) {
     inferenceText.parentElement.className = 'danger';
-    notify('Hands Down!!', {
-      icon: '/assets/doNotTouch.png', // `${window.location.origin}/assets/doNotTouch.png`,
-      body: 'YOU are touching your face!',
-    });
+    return touching;
   }
+  return false;
 }
 
 function updateCollectionText(numCollected) {
