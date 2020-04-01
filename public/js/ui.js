@@ -87,7 +87,7 @@ function updateInferenceText(inference) {
   inferenceText.innerHTML = `${(inference * 100).toFixed(2)} %`;
   const TOUCH_THRESHOLD = 0.8;
   inferenceText.parentElement.className =
-    inference >= TOUCH_THRESHOLD ? 'bad' : '';
+    inference >= TOUCH_THRESHOLD ? 'danger' : '';
 }
 
 function updateCollectionText(numCollected) {
