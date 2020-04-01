@@ -14,8 +14,6 @@ import {
   initCanvas,
   updateInferenceText,
 } from './ui.js';
-import { throttle } from './event.js';
-import notify from './notify.js';
 
 const state = {
   isCollectionOn: false,
@@ -99,20 +97,9 @@ function processKeyPoints(combinedKeyPoints) {
 
   if (state.isInferenceOn) {
     if (facePoints !== undefined && handPoints !== undefined) {
-      computeInference(facePoints, handPoints)
-        .then((inference) => updateInferenceText(inference[0]))
-        .then((touching) => {
-          if (touching) {
-            // TODO Make this work (while using either throttle/debounce)
-            throttle(() => {
-              // eslint-disable-next-line no-console
-              notify('Hands Down!!', {
-                icon: '/assets/doNotTouch.png', // `${window.location.origin}/assets/doNotTouch.png`,
-                body: 'YOU are touching your face!',
-              });
-            }, 1);
-          }
-        });
+      computeInference(facePoints, handPoints).then((inference) =>
+        updateInferenceText(inference[0])
+      );
     }
   }
 }

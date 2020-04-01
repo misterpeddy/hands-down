@@ -1,3 +1,7 @@
+/* eslint-disable import/extensions */
+import { throttle } from './event.js';
+import notify from './notify.js';
+
 let state;
 let collectionButton;
 let inferenceButton;
@@ -34,6 +38,16 @@ function setStateUI(appState) {
   state = appState;
 }
 
+function remindUser() {
+  if (state.handFaceContact) {
+    notify('Hands Down!!', {
+      // TODO See why the icon isn't being shown and fix it!
+      icon: '/assets/doNotTouch.png', // `${window.location.origin}/assets/doNotTouch.png`,
+      body: 'YOU are touching your face!',
+    });
+  }
+}
+
 function initButtonsUI(exportDataHandler) {
   if (state.devMode) {
     collectionButton = document.getElementById('collection-state-btn');
@@ -62,6 +76,13 @@ function initButtonsUI(exportDataHandler) {
   };
 
   inferenceText = document.getElementById('inference-txt');
+
+  const DELAY = 500;
+  const textObserver = new MutationObserver(throttle(remindUser, DELAY));
+
+  const observerConfig = { childList: true };
+  textObserver.observe(inferenceText, observerConfig);
+  window.onunload = () => textObserver.disconnect();
 }
 
 function initVideoUI() {
@@ -94,12 +115,8 @@ function updateInferenceText(inference) {
   inferenceText.innerHTML = `${(inference * 100).toFixed(2)} %`;
   const TOUCH_THRESHOLD = 0.8;
   const touching = inference >= TOUCH_THRESHOLD;
-  inferenceText.parentElement.className = '';
-  if (touching) {
-    inferenceText.parentElement.className = 'danger';
-    return touching;
-  }
-  return false;
+  state.handFaceContact = touching;
+  inferenceText.parentElement.className = touching ? 'danger' : '';
 }
 
 function updateCollectionText(numCollected) {
