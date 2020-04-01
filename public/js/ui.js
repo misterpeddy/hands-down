@@ -42,8 +42,11 @@ function remindUser() {
   if (state.handFaceContact) {
     notify('Hands Down!!', {
       // TODO See why the icon isn't being shown and fix it!
-      icon: '/assets/doNotTouch.png', // `${window.location.origin}/assets/doNotTouch.png`,
+      badge: `${window.location.origin}/assets/doNotTouch.png`,
+      icon: '/assets/doNotTouch.png',
+      // image: 'https://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
       body: 'YOU are touching your face!',
+      vibrate: [200, 100, 200], // Vibrates the device for 200ms, pause 100ms, vibrate for 200ms
     });
   }
 }
