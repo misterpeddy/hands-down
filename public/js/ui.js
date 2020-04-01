@@ -39,7 +39,7 @@ function setStateUI(appState) {
 }
 
 function remindUser() {
-  if (state.handFaceContact) {
+  if (state.handFaceContact && !state.devMode) {
     notify('Hands Down!!', {
       // TODO See why the icon isn't being shown and fix it!
       badge: `${window.location.origin}/assets/doNotTouch.png`,
