@@ -35,26 +35,35 @@ function setStateUI(appState) {
 }
 
 function initButtonsUI(exportDataHandler) {
-  collectionButton = document.getElementById('collection-state-btn');
+  if (state.devMode) {
+    collectionButton = document.getElementById('collection-state-btn');
+    exportButton = document.getElementById('export-btn');
+    labelButton = document.getElementById('label-btn');
+
+    collectionButton.innerHTML = state.isCollectionOn ? 'On' : 'Off';
+    labelButton.innerHTML = state.label ? 'True' : 'False';
+
+    collectionButton.onclick = () => {
+      toggleButton(collectionButton, 'isCollectionOn');
+    };
+
+    labelButton.onclick = toggleLabel;
+    exportButton.onclick = exportDataHandler;
+
+    collectionText = document.getElementById('collection-txt');
+  }
+
   inferenceButton = document.getElementById('inference-state-btn');
-  exportButton = document.getElementById('export-btn');
-  labelButton = document.getElementById('label-btn');
 
-  collectionButton.innerHTML = state.isCollectionOn ? 'On' : 'Off';
   inferenceButton.innerHTML = state.isInferenceOn ? 'On' : 'Off';
-  labelButton.innerHTML = state.label ? 'True' : 'False';
+  console.log('infBtn=', inferenceButton);
 
-  collectionButton.onclick = () => {
-    toggleButton(collectionButton, 'isCollectionOn');
-  };
   inferenceButton.onclick = () => {
     toggleButton(inferenceButton, 'isInferenceOn');
   };
-  labelButton.onclick = toggleLabel;
-  exportButton.onclick = exportDataHandler;
 
   inferenceText = document.getElementById('inference-txt');
-  collectionText = document.getElementById('collection-txt');
+  console.log('infTx=', inferenceText);
 }
 
 function initVideoUI() {
@@ -84,6 +93,7 @@ function initCanvas() {
 }
 
 function updateInferenceText(inference) {
+  console.log(inferenceButton, inferenceText);
   inferenceText.innerHTML = `${(inference * 100).toFixed(2)} %`;
   const TOUCH_THRESHOLD = 0.8;
   inferenceText.parentElement.className =

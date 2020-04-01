@@ -20,6 +20,8 @@ const state = {
   isInferenceOn: true,
   label: true,
   video: undefined,
+  // TODO Consider putting the pathname to a JS[ON]/YAML file which would also be read by app.js
+  devMode: window.location.pathname === '/',
 };
 
 function computeCameraDimensions() {
