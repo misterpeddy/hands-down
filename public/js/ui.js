@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/extensions
+import notify from './notify.js';
+
 let state;
 let collectionButton;
 let inferenceButton;
@@ -56,14 +59,12 @@ function initButtonsUI(exportDataHandler) {
   inferenceButton = document.getElementById('inference-state-btn');
 
   inferenceButton.innerHTML = state.isInferenceOn ? 'On' : 'Off';
-  console.log('infBtn=', inferenceButton);
 
   inferenceButton.onclick = () => {
     toggleButton(inferenceButton, 'isInferenceOn');
   };
 
   inferenceText = document.getElementById('inference-txt');
-  console.log('infTx=', inferenceText);
 }
 
 function initVideoUI() {
@@ -93,11 +94,17 @@ function initCanvas() {
 }
 
 function updateInferenceText(inference) {
-  console.log(inferenceButton, inferenceText);
   inferenceText.innerHTML = `${(inference * 100).toFixed(2)} %`;
   const TOUCH_THRESHOLD = 0.8;
-  inferenceText.parentElement.className =
-    inference >= TOUCH_THRESHOLD ? 'danger' : '';
+  const touching = inference >= TOUCH_THRESHOLD;
+  inferenceText.parentElement.className = '';
+  if (touching) {
+    inferenceText.parentElement.className = 'danger';
+    notify('Hands Down!!', {
+      icon: '/assets/doNotTouch.png', // `${window.location.origin}/assets/doNotTouch.png`,
+      body: 'YOU are touching your face!',
+    });
+  }
 }
 
 function updateCollectionText(numCollected) {
