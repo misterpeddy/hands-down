@@ -101,6 +101,8 @@ function processKeyPoints(combinedKeyPoints) {
         updateInferenceText(inference[0])
       );
     }
+  } else if (!state.devMode) {
+    document.getElementById('inference-txt').innerHTML = '- %';
   }
 }
 
