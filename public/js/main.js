@@ -30,14 +30,58 @@ const state = {
  */
 async function initCamera() {
   state.video = document.getElementById('video');
+  console.info(navigator.mediaDevices);
+  console.info(
+    'sup constraints:',
+    navigator.mediaDevices.getSupportedConstraints()
+  );
+  navigator.mediaDevices
+    .enumerateDevices()
+    // eslint-disable-next-line no-console
+    .then((devs) => console.log('Media devices:', devs), console.error);
 
-  const stream = await navigator.mediaDevices.getUserMedia({
-    video: {
-      facingMode: 'user',
-    },
-    audio: false,
-  });
-  state.video.srcObject = stream;
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    // eslint-disable-next-line no-alert
+    return alert('Your browser does not support the webcam functionality');
+  }
+  navigator.mediaDevices.getUserMedia.onactive = (evt) => {
+    console.log('Media active', evt);
+  };
+
+  navigator.mediaDevices.getUserMedia.oninactive = (evt) => {
+    console.log('Media inactive', evt);
+  };
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: 'user',
+        width: { exact: 768 },
+        height: { exact: 576 },
+        // width: { min: 768 },
+        // height: { min: 576 },
+        // frameRate: 30 (or whatever will improve the app's performance)
+      },
+      audio: false,
+    });
+    state.video.srcObject = stream;
+    console.log('stream=', stream);
+    stream.onactive = () => {
+      // eslint-disable-next-line no-console
+      console.log('Stream back up');
+    }; // or stream.onaddtrack or navigator.mediaDevices.ondevicechange or navigator.mediaDevices.getUserMedia.onactive
+    stream.oninactive = () => {
+      // eslint-disable-next-line no-alert
+      alert('Oh! I lost you!');
+    }; // or stream.onremovetrack
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.warn('Media error:', err);
+    /* 
+      Errors to look for according to https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices
+      error.name = 'ConstraintNotSatisfiedError' | 'PermissionDeniedError'
+    */
+  }
 
   return new Promise((resolve) => {
     state.video.onloadedmetadata = () => {
