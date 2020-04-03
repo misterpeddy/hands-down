@@ -31,19 +31,22 @@ const state = {
 async function initCamera() {
   state.video = document.getElementById('video');
   console.info(navigator.mediaDevices);
+
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    console.log('mediaDevices not supported');
+    // eslint-disable-next-line no-alert
+    return alert('Your browser does not support the webcam functionality');
+  }
+
   console.info(
     'sup constraints:',
     navigator.mediaDevices.getSupportedConstraints()
   );
-  navigator.mediaDevices
-    .enumerateDevices()
-    // eslint-disable-next-line no-console
-    .then((devs) => console.log('Media devices:', devs), console.error);
+  // navigator.mediaDevices
+  //   .enumerateDevices()
+  //   // eslint-disable-next-line no-console
+  //   .then((devs) => console.log('Media devices:', devs), console.error);
 
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    // eslint-disable-next-line no-alert
-    return alert('Your browser does not support the webcam functionality');
-  }
   navigator.mediaDevices.getUserMedia.onactive = (evt) => {
     console.log('Media active', evt);
   };
@@ -53,6 +56,10 @@ async function initCamera() {
   };
 
   try {
+    navigator.mediaDevices.getUserMedia().then(
+      (m) => console.log('m=', m),
+      (err) => console.log('m err=', err) // Gets called
+    );
     const stream = await navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: 'user',
@@ -70,13 +77,16 @@ async function initCamera() {
       // eslint-disable-next-line no-console
       console.log('Stream back up');
     }; // or stream.onaddtrack or navigator.mediaDevices.ondevicechange or navigator.mediaDevices.getUserMedia.onactive
+    stream.onaddtrack = (t) => {
+      console.log('Track added:', t);
+    };
     stream.oninactive = () => {
       // eslint-disable-next-line no-alert
       alert('Oh! I lost you!');
     }; // or stream.onremovetrack
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.warn('Media error:', err);
+    console.warn('Media error:', err); // Not called
     /* 
       Errors to look for according to https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices
       error.name = 'ConstraintNotSatisfiedError' | 'PermissionDeniedError'
