@@ -30,24 +30,11 @@ const state = {
  */
 async function initCamera() {
   state.video = document.getElementById('video');
-  // console.info(navigator.mediaDevices);
 
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    console.log('mediaDevices not supported');
     // eslint-disable-next-line no-alert
     return alert('Your browser does not support the webcam functionality');
   }
-
-  console.info(
-    'sup constraints:',
-    navigator.mediaDevices.getSupportedConstraints()
-  );
-
-  window.onunhandledrejection = (evt) => {
-    // https://catchjs.com/Docs/AsyncAwait
-    // eslint-disable-next-line no-console
-    console.warn('UnHandled Rejection:', evt);
-  };
 
   /* navigator.mediaDevices.getUserMedia().then(
     (m) => console.log('Media stream=', m),
@@ -55,6 +42,7 @@ async function initCamera() {
   ); */
 
   navigator.mediaDevices.ondevicechange = (evt) => {
+    // eslint-disable-next-line no-console
     console.log('Device change detected:', evt);
     // Do some updates here
   };
@@ -71,22 +59,6 @@ async function initCamera() {
       audio: false,
     });
     state.video.srcObject = stream;
-    console.log('stream=', stream);
-    stream.onactive = () => {
-      // eslint-disable-next-line no-console
-      console.log('Stream back up');
-    };
-    stream.onaddtrack = (t) => {
-      console.log('Track added:', t);
-    };
-    stream.oninactive = () => {
-      // eslint-disable-next-line no-alert
-      alert('Oh! I lost you!');
-    };
-
-    stream.onremovetrack = (t) => {
-      console.log('Track removed:', t);
-    };
   } catch (err) {
     // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia)
     /* eslint-disable no-alert, no-console */
