@@ -99,3 +99,11 @@ input[type="button"]:hover {
 .mdi {
   vertical-align: middle;
 }
+
+#video {
+  display: none;
+}
+
+#output {
+  border: 1px solid black;
+}
