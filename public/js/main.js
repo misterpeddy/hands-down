@@ -88,16 +88,17 @@ async function initCamera() {
       console.log('Track removed:', t);
     };
   } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error('Media error:', err);
-    console.dir(err);
-
-    /* 
-      Errors to look for according to https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices
-      error.name = 'ConstraintNotSatisfiedError' | 'PermissionDeniedError'
-      Or (according to https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia)
-      error.name = 'AbortError' | 'NotAllowedError' | 'NotFoundError' | 'NotReadableError' | 'OvercontrainedError' | 'SecurityError' |
-    */
+    // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia)
+    /* eslint-disable no-alert, no-console */
+    if (err.name === 'NotReadableError')
+      alert(
+        'Another software is using the webcam, please close it and reload this page!'
+      );
+    else if (err.name === 'NotAllowedError' || err.name === 'SecurityError')
+      alert(
+        'The webcam access was blocked by either the insecure connection or Content Security Policy'
+      );
+    else console.error('Media error:', err);
   }
 
   return new Promise((resolve) => {
