@@ -60,14 +60,43 @@ function computeCameraDimensions() {
 async function initCamera() {
   state.video = document.getElementById('video');
 
-  const stream = await navigator.mediaDevices.getUserMedia({
-    video: {
-      facingMode: 'user',
-      ...computeCameraDimensions(),
-    },
-    audio: false,
-  });
-  state.video.srcObject = stream;
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    // eslint-disable-next-line no-alert
+    return alert('Your browser does not support the webcam functionality');
+  }
+
+  /* navigator.mediaDevices.getUserMedia().then(
+    (m) => console.log('Media stream=', m),
+    (err) => console.log('Media stream err=', err) // Gets called
+  ); */
+
+  navigator.mediaDevices.ondevicechange = (evt) => {
+    // eslint-disable-next-line no-console
+    console.log('Device change detected:', evt);
+    // Do some updates here
+  };
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: 'user',
+        ...computeCameraDimensions(),
+      },
+      audio: false,
+    });
+    state.video.srcObject = stream;
+  } catch (err) {
+    // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia)
+    /* eslint-disable no-alert, no-console */
+    if (err.name === 'NotReadableError')
+      alert(
+        'Another software is using the webcam, please close it and reload this page!'
+      );
+    else if (err.name === 'NotAllowedError' || err.name === 'SecurityError')
+      alert(
+        'The webcam access was blocked by either the insecure connection or Content Security Policy'
+      );
+    else console.error('Media error:', err);
+  }
 
   return new Promise((resolve) => {
     state.video.onloadedmetadata = () => {
