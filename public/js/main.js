@@ -30,7 +30,7 @@ const state = {
  */
 async function initCamera() {
   state.video = document.getElementById('video');
-  console.info(navigator.mediaDevices);
+  // console.info(navigator.mediaDevices);
 
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
     console.log('mediaDevices not supported');
@@ -42,32 +42,31 @@ async function initCamera() {
     'sup constraints:',
     navigator.mediaDevices.getSupportedConstraints()
   );
-  // navigator.mediaDevices
-  //   .enumerateDevices()
-  //   // eslint-disable-next-line no-console
-  //   .then((devs) => console.log('Media devices:', devs), console.error);
 
-  navigator.mediaDevices.getUserMedia.onactive = (evt) => {
-    console.log('Media active', evt);
+  window.onunhandledrejection = (evt) => {
+    // https://catchjs.com/Docs/AsyncAwait
+    // eslint-disable-next-line no-console
+    console.warn('UnHandled Rejection:', evt);
   };
 
-  navigator.mediaDevices.getUserMedia.oninactive = (evt) => {
-    console.log('Media inactive', evt);
-  };
+  /* navigator.mediaDevices.getUserMedia().then(
+    (m) => console.log('Media stream=', m),
+    (err) => console.log('Media stream err=', err) // Gets called
+  ); */
 
+  navigator.mediaDevices.ondevicechange = (evt) => {
+    console.log('Device change detected:', evt);
+    // Do some updates here
+  };
   try {
-    navigator.mediaDevices.getUserMedia().then(
-      (m) => console.log('m=', m),
-      (err) => console.log('m err=', err) // Gets called
-    );
     const stream = await navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: 'user',
-        width: { exact: 768 },
-        height: { exact: 576 },
-        // width: { min: 768 },
-        // height: { min: 576 },
-        // frameRate: 30 (or whatever will improve the app's performance)
+        // width: { exact: 768 },
+        // height: { exact: 576 },
+        // width: { min: 640, ideal: 768, max: 1430 },
+        // height: { min: 480, ideal: 576, max: 1010 },
+        // frameRate: { ideal: 30, max: 60 } (or whatever will improve the app's performance)
       },
       audio: false,
     });
@@ -76,20 +75,28 @@ async function initCamera() {
     stream.onactive = () => {
       // eslint-disable-next-line no-console
       console.log('Stream back up');
-    }; // or stream.onaddtrack or navigator.mediaDevices.ondevicechange or navigator.mediaDevices.getUserMedia.onactive
+    };
     stream.onaddtrack = (t) => {
       console.log('Track added:', t);
     };
     stream.oninactive = () => {
       // eslint-disable-next-line no-alert
       alert('Oh! I lost you!');
-    }; // or stream.onremovetrack
+    };
+
+    stream.onremovetrack = (t) => {
+      console.log('Track removed:', t);
+    };
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.warn('Media error:', err); // Not called
+    console.error('Media error:', err);
+    console.dir(err);
+
     /* 
       Errors to look for according to https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices
       error.name = 'ConstraintNotSatisfiedError' | 'PermissionDeniedError'
+      Or (according to https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia)
+      error.name = 'AbortError' | 'NotAllowedError' | 'NotFoundError' | 'NotReadableError' | 'OvercontrainedError' | 'SecurityError' |
     */
   }
 
