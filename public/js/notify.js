@@ -1,11 +1,11 @@
 /*
   Notes:
-  - This is for desktop notifications, to not be confused with Chrome extension notifications or Service work notifications.
+  - This is for desktop notifications, to not be confused with Chrome extension notifications or Service workers notifications.
   - Best practices (https://docs.google.com/document/d/1WNPIS_2F0eyDm5SS2E6LZ_75tk6XtBSnR1xNjWJ_DPE) indicate it should Not be called
   on page load where there's no context, doing it at a logical point within the flow is preferable (that way, the user knows the context of the
-    permission request)
+    permission request).
   - It should also give room to the user to opt-out for the notifications (like in a cookie manager for instance), say in a notification settings page
-  - This has no throttle/debounce ability built-in so if implemented like so it can spam you
+  - This has no throttle/debounce ability built-in so if implemented like so it can spam you.
 */
 
 // TODO: Refactor into a thenable/awaitable function
@@ -40,7 +40,8 @@ function notify(notificationTitle, options = {}) {
   setupNotification(() => {
     const notification = new Notification(notificationTitle, options);
     notification.onclick = () => {
-      // eslint-disable-next-line no-alert
+      // eslint-disable-next-line no-console
+      console.log('Notification clicked!');
       // alert('Thanks for your consideration of COVID-19');
       // TODO Make it go to the tab that contains this app
     };
