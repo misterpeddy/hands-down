@@ -7,10 +7,10 @@ let inferenceText;
 let collectionText;
 
 // All handlers are private
-function toggleButton(button, flag) {
-  state[flag] = !state[flag];
+function toggleButton(button, value) {
+  state[value] = !state[value];
   /* eslint-disable no-param-reassign */
-  if (state[flag]) {
+  if (state[value]) {
     button.innerHTML = 'On';
     button.classList.remove('button-off');
   } else {
