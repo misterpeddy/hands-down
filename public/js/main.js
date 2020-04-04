@@ -22,6 +22,33 @@ const state = {
   video: undefined,
 };
 
+function computeCameraDimensions() {
+  const IDEAL_VIEW_WIDTH = 768;
+  const IDEAL_VIEW_HEIGHT = 576;
+  const REF_WIDTH = 1440;
+  const REF_HEIGHT = 1024;
+
+  const VIEW_RATIO = {
+    width: IDEAL_VIEW_WIDTH / REF_WIDTH,
+    height: IDEAL_VIEW_HEIGHT / REF_HEIGHT,
+  };
+  const MAX_CAMERA_WIDTH = window.innerWidth * VIEW_RATIO.width;
+  const MAX_CAMERA_HEIGHT = window.innerHeight * VIEW_RATIO.height;
+
+  return {
+    width: {
+      // min: 640,
+      ideal: IDEAL_VIEW_WIDTH,
+      max: MAX_CAMERA_WIDTH,
+    },
+    height: {
+      // min: 480,
+      ideal: IDEAL_VIEW_HEIGHT,
+      max: MAX_CAMERA_HEIGHT,
+    },
+  };
+}
+
 /*
  * Requests access to user-facing, video-only
  * media stream; resolves the returned promise
@@ -34,6 +61,7 @@ async function initCamera() {
   const stream = await navigator.mediaDevices.getUserMedia({
     video: {
       facingMode: 'user',
+      ...computeCameraDimensions(),
     },
     audio: false,
   });
