@@ -61,20 +61,12 @@ async function initCamera() {
   state.video = document.getElementById('video');
 
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    const message = 'Your browser does not support the webcam functionality';
     // eslint-disable-next-line no-alert
-    return alert('Your browser does not support the webcam functionality');
+    alert(message);
+    throw new Error(message);
   }
 
-  /* navigator.mediaDevices.getUserMedia().then(
-    (m) => console.log('Media stream=', m),
-    (err) => console.log('Media stream err=', err) // Gets called
-  ); */
-
-  navigator.mediaDevices.ondevicechange = (evt) => {
-    // eslint-disable-next-line no-console
-    console.log('Device change detected:', evt);
-    // Do some updates here
-  };
   try {
     const stream = await navigator.mediaDevices.getUserMedia({
       video: {
@@ -86,16 +78,19 @@ async function initCamera() {
     state.video.srcObject = stream;
   } catch (err) {
     // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia)
-    /* eslint-disable no-alert, no-console */
-    if (err.name === 'NotReadableError')
+    /* eslint-disable no-alert */
+    if (err.name === 'NotReadableError') {
       alert(
         'Another software is using the webcam, please close it and reload this page!'
       );
-    else if (err.name === 'NotAllowedError' || err.name === 'SecurityError')
+    } else if (err.name === 'NotAllowedError' || err.name === 'SecurityError') {
       alert(
         'The webcam access was blocked by either the insecure connection or Content Security Policy'
       );
-    else console.error('Media error:', err);
+    } else {
+      alert(`Media error: ${err.message}`);
+    }
+    throw err;
   }
 
   return new Promise((resolve) => {
@@ -165,14 +160,23 @@ async function initialize() {
  * inference engine.
  */
 async function main() {
-  await initialize();
+  try {
+    await initialize();
 
-  setStateUI(state);
-  initButtonsUI(exportData);
-  initVideoUI();
-  const canvas = initCanvas();
+    setStateUI(state);
+    initButtonsUI(exportData);
+    initVideoUI();
+    const canvas = initCanvas();
 
-  startEngine(canvas, state.video);
+    startEngine(canvas, state.video);
+  } catch (err) {
+    // TODO Use the danger class once this hits the new UI
+    document.querySelector('h2').innerHTML +=
+      '<br><em style="color: red;">Please reload the app!</em>';
+    // Maybe also disable the buttons to increase the emphasis?
+    // eslint-disable-next-line no-console
+    console.warn('App failure:', err);
+  }
 }
 
 main();
