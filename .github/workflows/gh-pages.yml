@@ -12,14 +12,12 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
-        # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
         with:
           persist-credentials: false
 
       - name: Install and Build 🔧
         run: |
           npm ci
-        # npm run build (Needed when we use a transpiler/bundler)
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
