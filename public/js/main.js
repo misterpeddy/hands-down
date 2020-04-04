@@ -13,6 +13,8 @@ import {
   initVideoUI,
   initCanvas,
   updateInferenceText,
+  error,
+  setButtonsState,
 } from './ui.js';
 
 const state = {
@@ -164,8 +166,8 @@ async function main() {
     await initialize();
   } catch (err) {
     // TODO Use the danger class once this hits the new UI
-    document.querySelector('h2').innerHTML +=
-      '<br><em style="color: red;">Please reload this page!</em>';
+    error(err.message);
+    setButtonsState({ disable: true });
     // Maybe also disable the buttons to increase the emphasis?
     // eslint-disable-next-line no-console
     console.warn('App failure:', err);

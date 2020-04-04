@@ -382,6 +382,13 @@ input[type="button"].button-secondary:hover {
   border-color: #000;
 }
 
+input:disabled,
+button:disabled {
+  border: 1px solid #999;
+  background-color: #ccc;
+  color: #666;
+}
+
 /* Forms
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 input[type="email"],
@@ -558,6 +565,12 @@ hr {
   border-width: 0;
   border-top: 1px solid #e1e1e1;
 }
+
+.danger {
+  color: red;
+}
+
+
 
 /* Clearing
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
