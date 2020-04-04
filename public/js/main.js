@@ -162,13 +162,6 @@ async function initialize() {
 async function main() {
   try {
     await initialize();
-
-    setStateUI(state);
-    initButtonsUI(exportData);
-    initVideoUI();
-    const canvas = initCanvas();
-
-    startEngine(canvas, state.video);
   } catch (err) {
     // TODO Use the danger class once this hits the new UI
     document.querySelector('h2').innerHTML +=
@@ -176,7 +169,17 @@ async function main() {
     // Maybe also disable the buttons to increase the emphasis?
     // eslint-disable-next-line no-console
     console.warn('App failure:', err);
+    return -1;
   }
+
+  setStateUI(state);
+  initButtonsUI(exportData);
+  initVideoUI();
+  const canvas = initCanvas();
+
+  startEngine(canvas, state.video);
+
+  return 0;
 }
 
 main();
