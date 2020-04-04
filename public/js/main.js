@@ -172,7 +172,7 @@ async function main() {
   } catch (err) {
     // TODO Use the danger class once this hits the new UI
     document.querySelector('h2').innerHTML +=
-      '<br><em style="color: red;">Please reload the app!</em>';
+      '<br><em style="color: red;">Please reload this page!</em>';
     // Maybe also disable the buttons to increase the emphasis?
     // eslint-disable-next-line no-console
     console.warn('App failure:', err);
