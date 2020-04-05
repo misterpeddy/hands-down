@@ -1,12 +1,14 @@
 /* eslint-disable no-undef */
-// TODO(peddy): Fix the CORS issue on 302 redirect and use canonical model URL
-// const MODEL_URL = "http://models.peddy.ai/covid.js/05-03-20-0/model.json"
 
-const MODEL_URL =
-  'https://storage.googleapis.com/peddy-ai-models/covid.js/31-03-20-0/model.json';
-const MODEL_LOCAL_PATH = 'models/31-03-20-0/model.json';
+const MODEL_VERSION = "31-03-20-0";
+const REMOTE_MODEL_ROOT = "http://peddy-ai-models.storage.googleapis.com/hands-down";
+const LOCAL_MODEL_ROOT = "public/models";
 
-const BACKEND = 'webgl';
+const REMOTE_MODEL_URL = `${REMOTE_MODEL_ROOT}/${MODEL_VERSION}/model.json`;
+const LOCAL_MODEL_URL = `${LOCAL_MODEL_ROOT}/${MODEL_VERSION}/model.json`;
+
+const BACKENDS = ['webgl', 'wasm', 'cpu'];
+
 const IS_INFERENCE_VERBOSE = false;
 
 let faceMesh;
@@ -21,7 +23,15 @@ let initialized;
  * and loads the frozen classifer into memory, all in parallel.
  */
 async function initializeModel() {
-  await tf.setBackend(BACKEND);
+
+  var i=0;
+  for (; i<BACKENDS.length; i++) {
+    if (await tf.setBackend(BACKENDS[i]))
+      break;
+  }
+
+  if (i > BACKENDS.length || tf.getBackend() == undefined)
+    throw Error("No TensorFlow backend was successfully initialized.");
 
   function completeInit(models) {
     if (models.length !== 3) {
@@ -42,11 +52,13 @@ async function initializeModel() {
     facemesh.load({ maxFaces: 1 }),
     handpose.load(),
     tf
-      .loadGraphModel(MODEL_URL, { mode: 'cors' })
-      .catch(() => tf.loadGraphModel(MODEL_LOCAL_PATH)),
+      .loadGraphModel(REMOTE_MODEL_URL, { mode: 'cors' })
+      .catch(() => tf.loadGraphModel(LOCAL_MODEL_URL)),
   ];
 
-  return Promise.all(modelPromises).then((models) => completeInit(models));
+  return Promise.all(modelPromises)
+    .then((models) => completeInit(models))
+    .catch((err) => {throw Error("Model initialization unsuccessful: " + err)});
 }
 
 /*
