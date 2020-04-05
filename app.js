@@ -7,7 +7,7 @@ const app = express();
 
 const PORT = process.env.PORT || 8080;
 const MODELS_DIR = 'models';
-const MODELS_MOUNT_PATH = '/models';
+const MODELS_MOUNT_PATH = path.join(`${__dirname}/public/models`);
 const DEV_PATH = path.join(`${__dirname}/public/dev.html`);
 const INDEX_PATH = 'index.html';
 const PUBLIC_DIR = 'public';
