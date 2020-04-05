@@ -31,7 +31,7 @@ async function initializeModel() {
       break;
   }
 
-  if (i > BACKENDS.length || tf.getBackend() == undefined)
+  if (i == BACKENDS.length || tf.getBackend() == undefined)
     throw Error("No TensorFlow backend was successfully initialized.");
 
   function completeInit(models) {
