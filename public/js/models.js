@@ -1,9 +1,10 @@
 /* eslint-disable no-undef */
 
-const MODEL_FILENAME = "model.json";
-const MODEL_VERSION = "31-03-20-0";
-const REMOTE_MODEL_ROOT = "http://peddy-ai-models.storage.googleapis.com/hands-down";
-const LOCAL_MODEL_ROOT = "public/models";
+const MODEL_FILENAME = 'model.json';
+const MODEL_VERSION = '31-03-20-0';
+const REMOTE_MODEL_ROOT =
+  'http://peddy-ai-models.storage.googleapis.com/hands-down';
+const LOCAL_MODEL_ROOT = 'public/models';
 
 const REMOTE_MODEL_URL = `${REMOTE_MODEL_ROOT}/${MODEL_VERSION}/${MODEL_FILENAME}`;
 const LOCAL_MODEL_URL = `${LOCAL_MODEL_ROOT}/${MODEL_VERSION}/${MODEL_FILENAME}`;
@@ -24,15 +25,14 @@ let initialized;
  * and loads the frozen classifer into memory, all in parallel.
  */
 async function initializeModel() {
-
-  var i=0;
-  for (; i<BACKENDS.length; i++) {
-    if (await tf.setBackend(BACKENDS[i]))
-      break;
+  let i = 0;
+  for (; i < BACKENDS.length; i += 1) {
+    // eslint-disable-next-line no-await-in-loop
+    if (await tf.setBackend(BACKENDS[i])) break;
   }
 
-  if (i == BACKENDS.length || tf.getBackend() == undefined)
-    throw Error("No TensorFlow backend was successfully initialized.");
+  if (i === BACKENDS.length || tf.getBackend() === undefined)
+    throw Error('No TensorFlow backend was successfully initialized.');
 
   function completeInit(models) {
     if (models.length !== 3) {
@@ -59,7 +59,9 @@ async function initializeModel() {
 
   return Promise.all(modelPromises)
     .then((models) => completeInit(models))
-    .catch((err) => {throw Error("Model initialization unsuccessful: " + err)});
+    .catch((err) => {
+      throw Error(`Model initialization unsuccessful: ${err}`);
+    });
 }
 
 /*
