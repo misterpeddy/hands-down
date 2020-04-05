@@ -3,7 +3,7 @@
 const MODEL_FILENAME = 'model.json';
 const MODEL_VERSION = '31-03-20-0';
 const REMOTE_MODEL_ROOT =
-  'http://peddy-ai-models.storage.googleapis.com/hands-down';
+  'https://peddy-ai-models.storage.googleapis.com/hands-down';
 const LOCAL_MODEL_ROOT = 'public/models';
 
 const REMOTE_MODEL_URL = `${REMOTE_MODEL_ROOT}/${MODEL_VERSION}/${MODEL_FILENAME}`;
