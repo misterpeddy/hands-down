@@ -7,19 +7,27 @@ let inferenceText;
 let collectionText;
 
 // All handlers are private
-function toggleCollection() {
-  state.isCollectionOn = !state.isCollectionOn;
-  collectionButton.innerHTML = state.isCollectionOn ? 'On' : 'Off';
-}
-
-function toggleInference() {
-  state.isInferenceOn = !state.isInferenceOn;
-  inferenceButton.innerHTML = state.isInferenceOn ? 'On' : 'Off';
+function toggleButton(button, value) {
+  state[value] = !state[value];
+  /* eslint-disable no-param-reassign */
+  if (state[value]) {
+    button.innerHTML = 'On';
+    button.classList.remove('button-off');
+  } else {
+    button.innerHTML = 'Off';
+    button.classList.add('button-off');
+  }
 }
 
 function toggleLabel() {
   state.label = !state.label;
-  labelButton.innerHTML = state.label ? 'True' : 'False';
+  if (state.label) {
+    labelButton.innerHTML = 'True';
+    labelButton.classList.remove('button-off');
+  } else {
+    labelButton.innerHTML = 'False';
+    labelButton.classList.add('button-off');
+  }
 }
 
 function setStateUI(appState) {
@@ -36,8 +44,12 @@ function initButtonsUI(exportDataHandler) {
   inferenceButton.innerHTML = state.isInferenceOn ? 'On' : 'Off';
   labelButton.innerHTML = state.label ? 'True' : 'False';
 
-  collectionButton.onclick = toggleCollection;
-  inferenceButton.onclick = toggleInference;
+  collectionButton.onclick = () => {
+    toggleButton(collectionButton, 'isCollectionOn');
+  };
+  inferenceButton.onclick = () => {
+    toggleButton(inferenceButton, 'isInferenceOn');
+  };
   labelButton.onclick = toggleLabel;
   exportButton.onclick = exportDataHandler;
 
@@ -72,7 +84,10 @@ function initCanvas() {
 }
 
 function updateInferenceText(inference) {
-  inferenceText.innerHTML = inference.toFixed(4);
+  inferenceText.innerHTML = `${(inference * 100).toFixed(2)} %`;
+  const TOUCH_THRESHOLD = 0.8;
+  inferenceText.parentElement.className =
+    inference >= TOUCH_THRESHOLD ? 'danger' : '';
 }
 
 function updateCollectionText(numCollected) {

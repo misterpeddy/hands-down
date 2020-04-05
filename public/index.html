@@ -25,52 +25,138 @@
       rel="stylesheet"
       type="text/css"
     />
+    <link
+      href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
 
-    <!-- Load Skeleton CSS -->
+    <!-- Load CSS files -->
     <link href="css/normalize.css" rel="stylesheet" />
     <link href="css/skeleton.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+
+    <!-- FavIcons (using http://faviconit.com/) -->
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="icon" sizes="16x16 32x32 64x64" href="/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="196x196"
+      href="/assets/favicon-192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="160x160"
+      href="/assets/favicon-160.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="/assets/favicon-96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="64x64"
+      href="/assets/favicon-64.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/favicon-32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/favicon-16.png"
+    />
+    <link rel="apple-touch-icon" href="/assets/favicon-57.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="/assets/favicon-114.png"
+    />
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon-72.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="/assets/favicon-144.png"
+    />
+    <link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon-60.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="/assets/favicon-120.png"
+    />
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/favicon-76.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="/assets/favicon-152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/favicon-180.png"
+    />
+    <meta name="msapplication-TileColor" content="#C4C4C4" />
+    <meta name="msapplication-TileImage" content="/assets/favicon-144.png" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
 
     <!-- Load main local JS libraries -->
     <script type="module" src="js/main.js"></script>
   </head>
 
   <body>
+    <header>
+      <h3><strong>Hands Down!</strong></h3>
+    </header>
     <div class="container">
       <div class="row">
-        <h2>Hands-Down!</h2>
-      </div>
-      <div class="row">
-        <div class="eight columns">
+        <div class="one-third columns">
           Collection:
-          <button id="collection-state-btn" class="button-primary">Off</button>
-          Label: <button id="label-btn">True</button>
+          <button id="collection-state-btn" class="button-primary button-off">
+            Off
+          </button>
+        </div>
+        <div class="one-third columns">
+          <h6>
+            <strong><span id="collection-txt">0</span> Data Points</strong>
+          </h6>
+        </div>
+        <div class="one-third columns">
+          Label: <button id="label-btn" class="button-secondary">True</button>
         </div>
       </div>
       <div class="row"></div>
       <div class="row">
-        <div class="eight columns">
+        <div class="one-third columns">
           Inference:
           <button id="inference-state-btn" class="button-primary">On</button>
-          Inference: <span id="inference-txt"></span>
         </div>
-      </div>
-      <div class="row">
-        <div class="eight columns">
-          Collected <span id="collection-txt">0</span> Data Points
+        <div class="one-third columns">
+          <h6>
+            <strong
+              ><span class="mdi mdi-hand-right"></span> &nbsp;<span
+                id="inference-txt"
+              ></span
+            ></strong>
+          </h6>
+        </div>
+        <div class="one-third columns">
           <button id="export-btn">Export Data</button>
         </div>
       </div>
       <div class="row">
+        <div class="one column"></div>
         <div class="canvas-wrapper">
-          <video id="video" style="display: none;"></video>
-          <div class="row">
-            <canvas
-              id="output"
-              width="640"
-              height="480"
-              style="border: 1px solid black;"
-            ></canvas>
-          </div>
+          <video id="video"></video>
+          <canvas id="output"></canvas>
         </div>
       </div>
     </div>
