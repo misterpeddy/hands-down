@@ -1,7 +1,3 @@
-/* eslint-disable import/extensions */
-import { throttle } from './event.js';
-import notify from './notify.js';
-
 let state;
 let collectionButton;
 let inferenceButton;
@@ -11,81 +7,42 @@ let inferenceText;
 let collectionText;
 
 // All handlers are private
-function toggleButton(button, value) {
-  state[value] = !state[value];
-  /* eslint-disable no-param-reassign */
-  if (state[value]) {
-    button.innerHTML = 'On';
-    button.classList.remove('button-off');
-  } else {
-    button.innerHTML = 'Off';
-    button.classList.add('button-off');
-  }
+function toggleCollection() {
+  state.isCollectionOn = !state.isCollectionOn;
+  collectionButton.innerHTML = state.isCollectionOn ? 'On' : 'Off';
+}
+
+function toggleInference() {
+  state.isInferenceOn = !state.isInferenceOn;
+  inferenceButton.innerHTML = state.isInferenceOn ? 'On' : 'Off';
 }
 
 function toggleLabel() {
   state.label = !state.label;
-  if (state.label) {
-    labelButton.innerHTML = 'True';
-    labelButton.classList.remove('button-off');
-  } else {
-    labelButton.innerHTML = 'False';
-    labelButton.classList.add('button-off');
-  }
+  labelButton.innerHTML = state.label ? 'True' : 'False';
 }
 
 function setStateUI(appState) {
   state = appState;
 }
 
-function remindUser() {
-  if (state.handFaceContact && !state.devMode) {
-    notify('Hands Down!!', {
-      // TODO See why the icon isn't being shown and fix it!
-      badge: `${window.location.origin}/assets/doNotTouch.png`,
-      icon: '/assets/doNotTouch.png',
-      // image: 'https://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
-      body: 'YOU are touching your face!',
-      vibrate: [200, 100, 200], // Vibrates the device for 200ms, pause 100ms, vibrate for 200ms
-    });
-  }
-}
-
 function initButtonsUI(exportDataHandler) {
-  if (state.devMode) {
-    collectionButton = document.getElementById('collection-state-btn');
-    exportButton = document.getElementById('export-btn');
-    labelButton = document.getElementById('label-btn');
-
-    collectionButton.innerHTML = state.isCollectionOn ? 'On' : 'Off';
-    labelButton.innerHTML = state.label ? 'True' : 'False';
-
-    collectionButton.onclick = () => {
-      toggleButton(collectionButton, 'isCollectionOn');
-    };
-
-    labelButton.onclick = toggleLabel;
-    exportButton.onclick = exportDataHandler;
-
-    collectionText = document.getElementById('collection-txt');
-  }
-
+  collectionButton = document.getElementById('collection-state-btn');
   inferenceButton = document.getElementById('inference-state-btn');
+  exportButton = document.getElementById('export-btn');
+  labelButton = document.getElementById('label-btn');
 
+  collectionButton.innerHTML = state.isCollectionOn ? 'On' : 'Off';
   inferenceButton.innerHTML = state.isInferenceOn ? 'On' : 'Off';
+  labelButton.innerHTML = state.label ? 'True' : 'False';
 
-  inferenceButton.onclick = () => {
-    toggleButton(inferenceButton, 'isInferenceOn');
-  };
+  collectionButton.onclick = toggleCollection;
+  inferenceButton.onclick = toggleInference;
+  labelButton.onclick = toggleLabel;
+  exportButton.onclick = exportDataHandler;
 
   inferenceText = document.getElementById('inference-txt');
-
-  const DELAY = 500;
-  const textObserver = new MutationObserver(throttle(remindUser, DELAY));
-
-  const observerConfig = { childList: true };
-  textObserver.observe(inferenceText, observerConfig);
-  window.onunload = () => textObserver.disconnect();
+  collectionText = document.getElementById('collection-txt');
 }
 
 function initVideoUI() {
@@ -115,15 +72,23 @@ function initCanvas() {
 }
 
 function updateInferenceText(inference) {
-  inferenceText.innerHTML = `${(inference * 100).toFixed(2)} %`;
-  const TOUCH_THRESHOLD = 0.8;
-  const touching = inference >= TOUCH_THRESHOLD;
-  state.handFaceContact = touching;
-  inferenceText.parentElement.className = touching ? 'danger' : '';
+  inferenceText.innerHTML = inference.toFixed(4);
 }
 
 function updateCollectionText(numCollected) {
   collectionText.innerHTML = numCollected;
+}
+
+function error(message) {
+  const errorText = document.getElementById('error-message');
+  errorText.innerHTML = message;
+}
+
+function setButtonsState({ disable = false }) {
+  const buttons = [...document.querySelectorAll('button')];
+  buttons.forEach((button) => {
+    button.setAttribute('disabled', disable);
+  });
 }
 
 export {
@@ -133,4 +98,6 @@ export {
   initCanvas,
   updateInferenceText,
   updateCollectionText,
+  error,
+  setButtonsState,
 };

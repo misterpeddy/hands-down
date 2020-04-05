@@ -13,6 +13,8 @@ import {
   initVideoUI,
   initCanvas,
   updateInferenceText,
+  error,
+  setButtonsState,
 } from './ui.js';
 
 const state = {
@@ -20,36 +22,7 @@ const state = {
   isInferenceOn: true,
   label: true,
   video: undefined,
-  // TODO Consider putting the pathname to a JS[ON]/YAML file which would also be read by app.js
-  isInDevMode: window.location.pathname === '/',
 };
-
-function computeCameraDimensions() {
-  const IDEAL_VIEW_WIDTH = 768;
-  const IDEAL_VIEW_HEIGHT = 576;
-  const REF_WIDTH = 1440;
-  const REF_HEIGHT = 1024;
-
-  const VIEW_RATIO = {
-    width: IDEAL_VIEW_WIDTH / REF_WIDTH,
-    height: IDEAL_VIEW_HEIGHT / REF_HEIGHT,
-  };
-  const MAX_CAMERA_WIDTH = window.innerWidth * VIEW_RATIO.width;
-  const MAX_CAMERA_HEIGHT = window.innerHeight * VIEW_RATIO.height;
-
-  return {
-    width: {
-      // min: 640,
-      ideal: IDEAL_VIEW_WIDTH,
-      max: MAX_CAMERA_WIDTH,
-    },
-    height: {
-      // min: 480,
-      ideal: IDEAL_VIEW_HEIGHT,
-      max: MAX_CAMERA_HEIGHT,
-    },
-  };
-}
 
 /*
  * Requests access to user-facing, video-only
@@ -60,14 +33,37 @@ function computeCameraDimensions() {
 async function initCamera() {
   state.video = document.getElementById('video');
 
-  const stream = await navigator.mediaDevices.getUserMedia({
-    video: {
-      facingMode: 'user',
-      ...computeCameraDimensions(),
-    },
-    audio: false,
-  });
-  state.video.srcObject = stream;
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    const message = 'Your browser does not support the webcam functionality';
+    // eslint-disable-next-line no-alert
+    alert(message);
+    throw new Error(message);
+  }
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: 'user',
+      },
+      audio: false,
+    });
+    state.video.srcObject = stream;
+  } catch (err) {
+    // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia)
+    /* eslint-disable no-alert */
+    if (err.name === 'NotReadableError') {
+      alert(
+        'Another software is using the webcam, please close it and reload this page!'
+      );
+    } else if (err.name === 'NotAllowedError' || err.name === 'SecurityError') {
+      alert(
+        'The webcam access was blocked by either the insecure connection or Content Security Policy'
+      );
+    } else {
+      alert(`Media error: ${err.message}`);
+    }
+    throw err;
+  }
 
   return new Promise((resolve) => {
     state.video.onloadedmetadata = () => {
@@ -101,8 +97,6 @@ function processKeyPoints(combinedKeyPoints) {
         updateInferenceText(inference[0])
       );
     }
-  } else if (!state.devMode) {
-    document.getElementById('inference-txt').innerHTML = '- %';
   }
 }
 
@@ -136,7 +130,17 @@ async function initialize() {
  * inference engine.
  */
 async function main() {
-  await initialize();
+  try {
+    await initialize();
+  } catch (err) {
+    // TODO Use the danger class once this hits the new UI
+    error(err.message);
+    setButtonsState({ disable: true });
+    // Maybe also disable the buttons to increase the emphasis?
+    // eslint-disable-next-line no-console
+    console.warn('App failure:', err);
+    return -1;
+  }
 
   setStateUI(state);
   initButtonsUI(exportData);
@@ -144,6 +148,8 @@ async function main() {
   const canvas = initCanvas();
 
   startEngine(canvas, state.video);
+
+  return 0;
 }
 
 main();
