@@ -4,7 +4,7 @@
  * in the provided context.
  */
 function drawPoints(ctx, points, r) {
-  if (points == undefined) return;
+  if (points === undefined) return;
 
   for (let i = 0; i < points.length; i += 1) {
     const x = points[i][0];
@@ -21,7 +21,7 @@ function drawPoints(ctx, points, r) {
  * next point until the final point is reached.
  */
 function drawPath(ctx, points) {
-  if (points == undefined) return;
+  if (points === undefined) return;
 
   const region = new Path2D();
   region.moveTo(points[0][0], points[0][1]);
