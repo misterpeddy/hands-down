@@ -13,6 +13,8 @@ import {
   initVideoUI,
   initCanvas,
   updateInferenceText,
+  error,
+  setButtonsState,
 } from './ui.js';
 
 const state = {
@@ -60,14 +62,38 @@ function computeCameraDimensions() {
 async function initCamera() {
   state.video = document.getElementById('video');
 
-  const stream = await navigator.mediaDevices.getUserMedia({
-    video: {
-      facingMode: 'user',
-      ...computeCameraDimensions(),
-    },
-    audio: false,
-  });
-  state.video.srcObject = stream;
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    const message = 'Your browser does not support the webcam functionality';
+    // eslint-disable-next-line no-alert
+    alert(message);
+    throw new Error(message);
+  }
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: 'user',
+        ...computeCameraDimensions(),
+      },
+      audio: false,
+    });
+    state.video.srcObject = stream;
+  } catch (err) {
+    // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia)
+    /* eslint-disable no-alert */
+    if (err.name === 'NotReadableError') {
+      alert(
+        'Another software is using the webcam, please close it and reload this page!'
+      );
+    } else if (err.name === 'NotAllowedError' || err.name === 'SecurityError') {
+      alert(
+        'The webcam access was blocked by either the insecure connection or Content Security Policy'
+      );
+    } else {
+      alert(`Media error: ${err.message}`);
+    }
+    throw err;
+  }
 
   return new Promise((resolve) => {
     state.video.onloadedmetadata = () => {
@@ -136,7 +162,17 @@ async function initialize() {
  * inference engine.
  */
 async function main() {
-  await initialize();
+  try {
+    await initialize();
+  } catch (err) {
+    // TODO Use the danger class once this hits the new UI
+    error(err.message);
+    setButtonsState({ disable: true });
+    // Maybe also disable the buttons to increase the emphasis?
+    // eslint-disable-next-line no-console
+    console.warn('App failure:', err);
+    return -1;
+  }
 
   setStateUI(state);
   initButtonsUI(exportData);
@@ -144,6 +180,8 @@ async function main() {
   const canvas = initCanvas();
 
   startEngine(canvas, state.video);
+
+  return 0;
 }
 
 main();

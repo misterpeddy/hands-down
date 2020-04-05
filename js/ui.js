@@ -126,6 +126,18 @@ function updateCollectionText(numCollected) {
   collectionText.innerHTML = numCollected;
 }
 
+function error(message) {
+  const errorText = document.getElementById('error-message');
+  errorText.innerHTML = message;
+}
+
+function setButtonsState({ disable = false }) {
+  const buttons = [...document.querySelectorAll('button')];
+  buttons.forEach((button) => {
+    button.setAttribute('disabled', disable);
+  });
+}
+
 export {
   setStateUI,
   initButtonsUI,
@@ -133,4 +145,6 @@ export {
   initCanvas,
   updateInferenceText,
   updateCollectionText,
+  error,
+  setButtonsState,
 };
