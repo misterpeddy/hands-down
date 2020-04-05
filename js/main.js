@@ -12,6 +12,7 @@ import {
   initButtonsUI,
   initVideoUI,
   initCanvas,
+  initDom,
   updateInferenceText,
   error,
   setButtonsState,
@@ -155,7 +156,7 @@ async function startEngine(canvas, video) {
  * Failures should be fatal.
  */
 async function initialize() {
-  return Promise.all([initCamera(), initializeModel()]);
+  return Promise.all([initCamera(), initializeModel(), initDom()]);
 }
 
 /* Initializes necessary components and starts the
