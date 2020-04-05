@@ -9,7 +9,9 @@
     "lint:js": "eslint --fix",
     "lint:html": "tidy -config tidy_config.txt",
     "lint:css": "stylelint --fix",
-    "lint": "npm run lint:js *.js public/js/*.js && npm run lint:html public/*.html && npm run lint:css public/css/*.css"
+    "lint": "npm run lint:js *.js public/js/*.js && npm run lint:html public/*.html && npm run lint:css public/css/*.css",
+    "test": "cypress run",
+    "cy": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,7 @@
     "reload": "^3.0.4"
   },
   "devDependencies": {
+    "cypress": "^4.3.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-config-esnext": "^4.0.0",
