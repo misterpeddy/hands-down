@@ -21,7 +21,7 @@ function drawPoints(ctx, points, r) {
  * next point until the final point is reached.
  */
 function drawPath(ctx, points) {
-  if (points == undefined) return 0;
+  if (points == undefined) return;
 
   const region = new Path2D();
   region.moveTo(points[0][0], points[0][1]);
