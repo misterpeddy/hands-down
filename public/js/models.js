@@ -2,6 +2,7 @@
 // TODO(peddy): Fix the CORS issue on 302 redirect and use canonical model URL
 // const MODEL_URL = "http://models.peddy.ai/covid.js/05-03-20-0/model.json"
 
+// The URL appears to be incorrect, it leads to a 404
 const MODEL_URL =
   'https://storage.googleapis.com/peddy-ai-models/covid.js/31-03-20-0/model.json';
 const MODEL_LOCAL_PATH = 'models/31-03-20-0/model.json';
