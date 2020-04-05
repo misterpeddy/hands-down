@@ -33,6 +33,7 @@
   margin: 0 auto;
   padding: 0 20px;
   box-sizing: border-box;
+  text-align: center;
 }
 
 .column,
@@ -40,6 +41,7 @@
   width: 100%;
   float: left;
   box-sizing: border-box;
+  vertical-align: middle;
 }
 
 /* For devices larger than 400px */
@@ -181,7 +183,7 @@
 html is set to 62.5% so that all the REM measurements throughout Skeleton
 are based on 10px sizing. So basically 1.5rem = 15px :) */
 html {
-  font-size: 62.5%;
+  font-size: 100%;
 }
 body {
   font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
@@ -190,6 +192,17 @@ body {
   font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial,
     sans-serif;
   color: #222;
+}
+
+header {
+  background-color: #c4c4c4;
+  margin-bottom: 2rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+header h2 {
+  margin-bottom: 0;
 }
 
 /* Typography
@@ -306,7 +319,7 @@ input[type="button"] {
   display: inline-block;
   height: 38px;
   padding: 0 30px;
-  color: #555;
+  color: #3b3b3b;
   text-align: center;
   font-size: 11px;
   font-weight: 600;
@@ -317,7 +330,7 @@ input[type="button"] {
   white-space: nowrap;
   background-color: transparent;
   border-radius: 4px;
-  border: 1px solid #bbb;
+  border: 1px solid #3b3b3b;
   cursor: pointer;
   box-sizing: border-box;
 }
@@ -325,14 +338,9 @@ input[type="button"] {
 button:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover,
-input[type="button"]:hover,
-.button:focus,
-button:focus,
-input[type="submit"]:focus,
-input[type="reset"]:focus,
-input[type="button"]:focus {
-  color: #333;
-  border-color: #888;
+input[type="button"]:hover {
+  color: #33c3f0;
+  border-color: #33c3f0;
   outline: 0;
 }
 .button.button-primary,
@@ -340,7 +348,7 @@ button.button-primary,
 input[type="submit"].button-primary,
 input[type="reset"].button-primary,
 input[type="button"].button-primary {
-  color: #fff;
+  color: #000;
   background-color: #33c3f0;
   border-color: #33c3f0;
 }
@@ -348,15 +356,30 @@ input[type="button"].button-primary {
 button.button-primary:hover,
 input[type="submit"].button-primary:hover,
 input[type="reset"].button-primary:hover,
-input[type="button"].button-primary:hover,
-.button.button-primary:focus,
-button.button-primary:focus,
-input[type="submit"].button-primary:focus,
-input[type="reset"].button-primary:focus,
-input[type="button"].button-primary:focus {
+input[type="button"].button-primary:hover {
   color: #fff;
   background-color: #1eaedb;
   border-color: #1eaedb;
+}
+
+.button.button-secondary:hover,
+button.button-secondary:hover,
+input[type="submit"].button-secondary:hover,
+input[type="reset"].button-secondary:hover,
+input[type="button"].button-secondary:hover {
+  color: #555;
+  border-color: #bbb;
+}
+
+.button-primary.button-off {
+  color: #fff;
+  background-color: #000;
+  border-color: #000;
+}
+
+.button-secondary.button-off {
+  color: #000;
+  border-color: #000;
 }
 
 /* Forms
