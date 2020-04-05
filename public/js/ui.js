@@ -1,3 +1,7 @@
+/* eslint-disable import/extensions */
+import { throttle } from './event.js';
+import notify from './notify.js';
+
 let state;
 let collectionButton;
 let inferenceButton;
@@ -34,27 +38,54 @@ function setStateUI(appState) {
   state = appState;
 }
 
+function remindUser() {
+  if (state.handFaceContact && !state.isInDevMode) {
+    notify('Hands Down!!', {
+      // TODO See why the icon isn't being shown and fix it!
+      badge: `${window.location.origin}/assets/doNotTouch.png`,
+      icon: '/assets/doNotTouch.png',
+      // image: 'https://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
+      body: 'YOU are touching your face!',
+      vibrate: [200, 100, 200], // Vibrates the device for 200ms, pause 100ms, vibrate for 200ms
+    });
+  }
+}
+
 function initButtonsUI(exportDataHandler) {
-  collectionButton = document.getElementById('collection-state-btn');
+  if (state.isInDevMode) {
+    collectionButton = document.getElementById('collection-state-btn');
+    exportButton = document.getElementById('export-btn');
+    labelButton = document.getElementById('label-btn');
+
+    collectionButton.innerHTML = state.isCollectionOn ? 'On' : 'Off';
+    labelButton.innerHTML = state.label ? 'True' : 'False';
+
+    collectionButton.onclick = () => {
+      toggleButton(collectionButton, 'isCollectionOn');
+    };
+
+    labelButton.onclick = toggleLabel;
+    exportButton.onclick = exportDataHandler;
+
+    collectionText = document.getElementById('collection-txt');
+  }
+
   inferenceButton = document.getElementById('inference-state-btn');
-  exportButton = document.getElementById('export-btn');
-  labelButton = document.getElementById('label-btn');
 
-  collectionButton.innerHTML = state.isCollectionOn ? 'On' : 'Off';
   inferenceButton.innerHTML = state.isInferenceOn ? 'On' : 'Off';
-  labelButton.innerHTML = state.label ? 'True' : 'False';
 
-  collectionButton.onclick = () => {
-    toggleButton(collectionButton, 'isCollectionOn');
-  };
   inferenceButton.onclick = () => {
     toggleButton(inferenceButton, 'isInferenceOn');
   };
-  labelButton.onclick = toggleLabel;
-  exportButton.onclick = exportDataHandler;
 
   inferenceText = document.getElementById('inference-txt');
-  collectionText = document.getElementById('collection-txt');
+
+  const DELAY = 500;
+  const textObserver = new MutationObserver(throttle(remindUser, DELAY));
+
+  const observerConfig = { childList: true };
+  textObserver.observe(inferenceText, observerConfig);
+  window.onunload = () => textObserver.disconnect();
 }
 
 function initVideoUI() {
@@ -86,8 +117,9 @@ function initCanvas() {
 function updateInferenceText(inference) {
   inferenceText.innerHTML = `${(inference * 100).toFixed(2)} %`;
   const TOUCH_THRESHOLD = 0.8;
-  inferenceText.parentElement.className =
-    inference >= TOUCH_THRESHOLD ? 'danger' : '';
+  const touching = inference >= TOUCH_THRESHOLD;
+  state.handFaceContact = touching;
+  inferenceText.parentElement.className = touching ? 'danger' : '';
 }
 
 function updateCollectionText(numCollected) {

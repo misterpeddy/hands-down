@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hands-Down!</title>
+    <!-- Load tf.js libraries !-->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+
+    <!-- Load the pre-trained models !-->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/facemesh"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/handpose"></script>
+
+    <!-- Load WASM backend for tf.js !-->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm/dist/tf-backend-wasm.js"></script>
+
+    <!-- Load three.js -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.106.2/build/three.min.js"></script>
+
+    <!-- Load scatter-gl.js -->
+    <script src="https://cdn.jsdelivr.net/npm/scatter-gl@0.0.1/lib/scatter-gl.min.js"></script>
+
+    <!-- Load Skeleton/Google FONT -->
+    <link
+      href="//fonts.googleapis.com/css?family=Raleway:400,300,600"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <!-- Load CSS files -->
+    <link href="css/normalize.css" rel="stylesheet" />
+    <link href="css/skeleton.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+
+    <!-- FavIcons (using http://faviconit.com/) -->
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="icon" sizes="16x16 32x32 64x64" href="/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="196x196"
+      href="/assets/favicon-192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="160x160"
+      href="/assets/favicon-160.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="/assets/favicon-96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="64x64"
+      href="/assets/favicon-64.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/favicon-32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/favicon-16.png"
+    />
+    <link rel="apple-touch-icon" href="/assets/favicon-57.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="/assets/favicon-114.png"
+    />
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon-72.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="/assets/favicon-144.png"
+    />
+    <link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon-60.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="/assets/favicon-120.png"
+    />
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/favicon-76.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="/assets/favicon-152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/favicon-180.png"
+    />
+    <meta name="msapplication-TileColor" content="#C4C4C4" />
+    <meta name="msapplication-TileImage" content="/assets/favicon-144.png" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+
+    <!-- Load main local JS libraries -->
+    <script type="module" src="js/main.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <h3><strong>Hands Down!</strong></h3>
+    </header>
+    <div class="container">
+      <div class="row">
+        <div class="one-third columns">
+          Collection:
+          <button id="collection-state-btn" class="button-primary button-off">
+            Off
+          </button>
+        </div>
+        <div class="one-third columns">
+          <h6>
+            <strong><span id="collection-txt">0</span> Data Points</strong>
+          </h6>
+        </div>
+        <div class="one-third columns">
+          Label: <button id="label-btn" class="button-secondary">True</button>
+        </div>
+      </div>
+      <div class="row"></div>
+      <div class="row">
+        <div class="one-third columns">
+          Inference:
+          <button id="inference-state-btn" class="button-primary">On</button>
+        </div>
+        <div class="one-third columns">
+          <h6>
+            <strong
+              ><span class="mdi mdi-hand-right"></span> &nbsp;<span
+                id="inference-txt"
+              ></span
+            ></strong>
+          </h6>
+        </div>
+        <div class="one-third columns">
+          <button id="export-btn">Export Data</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="one column"></div>
+        <div class="canvas-wrapper">
+          <video id="video"></video>
+          <canvas id="output"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <script src="/reload/reload.js"></script>
+  </body>
+</html>
