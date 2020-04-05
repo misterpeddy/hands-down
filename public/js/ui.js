@@ -39,7 +39,7 @@ function setStateUI(appState) {
 }
 
 function remindUser() {
-  if (state.handFaceContact && !state.devMode) {
+  if (state.handFaceContact && !state.isInDevMode) {
     notify('Hands Down!!', {
       // TODO See why the icon isn't being shown and fix it!
       badge: `${window.location.origin}/assets/doNotTouch.png`,
@@ -52,7 +52,7 @@ function remindUser() {
 }
 
 function initButtonsUI(exportDataHandler) {
-  if (state.devMode) {
+  if (state.isInDevMode) {
     collectionButton = document.getElementById('collection-state-btn');
     exportButton = document.getElementById('export-btn');
     labelButton = document.getElementById('label-btn');
