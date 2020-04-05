@@ -382,13 +382,6 @@ input[type="button"].button-secondary:hover {
   border-color: #000;
 }
 
-input:disabled,
-button:disabled {
-  border: 1px solid #999;
-  background-color: #ccc;
-  color: #666;
-}
-
 /* Forms
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 input[type="email"],
