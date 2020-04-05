@@ -12,6 +12,7 @@ import {
   initButtonsUI,
   initVideoUI,
   initCanvas,
+  initDom,
   updateInferenceText,
   error,
   setButtonsState,
@@ -155,25 +156,13 @@ async function startEngine(canvas, video) {
  * Failures should be fatal.
  */
 async function initialize() {
-  return Promise.all([initCamera(), initializeModel()]);
-}
-
-function cleanupHtml() {
-  // eslint-disable-next-line no-restricted-globals
-  if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
-    const reloadScript = document.querySelector(
-      'script[src="/reload/reload.js"]'
-    );
-    reloadScript.parentElement.removeChild(reloadScript);
-  }
+  return Promise.all([initCamera(), initializeModel(), initDom()]);
 }
 
 /* Initializes necessary components and starts the
  * inference engine.
  */
 async function main() {
-  cleanupHtml();
-
   try {
     await initialize();
   } catch (err) {
