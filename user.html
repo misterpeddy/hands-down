@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hands-Down!</title>
+    <!-- Load tf.js libraries !-->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+
+    <!-- Load the pre-trained models !-->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/facemesh"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/handpose"></script>
+
+    <!-- Load WASM backend for tf.js !-->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm/dist/tf-backend-wasm.js"></script>
+
+    <!-- Load three.js -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.106.2/build/three.min.js"></script>
+
+    <!-- Load scatter-gl.js -->
+    <script src="https://cdn.jsdelivr.net/npm/scatter-gl@0.0.1/lib/scatter-gl.min.js"></script>
+
+    <!-- Load Skeleton/Google FONT -->
+    <link
+      href="//fonts.googleapis.com/css?family=Raleway:400,300,600"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <!-- Load Skeleton CSS -->
+    <link href="css/normalize.css" rel="stylesheet" />
+    <link href="css/skeleton.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+
+    <!-- Load main local JS libraries -->
+    <script type="module" src="js/main.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <h3><strong>Hands Down!</strong></h3>
+    </header>
+    <div class="container">
+      <div class="row">
+        <div class="one offset-by-one column"></div>
+        <div class="five columns">
+          Inference:
+          <button id="inference-state-btn" class="button-primary">On</button>
+        </div>
+        <div class="five columns">
+          <h6>
+            <strong
+              ><span class="mdi mdi-hand-right"></span> &nbsp;<span
+                id="inference-txt"
+                >- %</span
+              ></strong
+            >
+          </h6>
+        </div>
+        <div class="one column"></div>
+      </div>
+      <div class="row">
+        <div class="one column"></div>
+        <div class="canvas-wrapper">
+          <video id="video" style="display: none;"></video>
+          <!-- Changing the size here doesn't change much as the drawing changes the size again -->
+          <canvas
+            id="output"
+            width="640"
+            height="480"
+            style="border: 1px solid black;"
+          ></canvas>
+        </div>
+      </div>
+      <footer class="row">
+        <div class="two columns offset-by-three">
+          <a href="/privacy">Privacy Policy</a>
+        </div>
+        <div class="three columns">
+          <a href="/terms">Terms & Conditions</a>
+        </div>
+        <div class="three columns">
+          <a href="/notifications">Notifications Settings</a>
+        </div>
+        <div class="two columns"></div>
+      </footer>
+    </div>
+  </body>
+</html>
