@@ -80,6 +80,12 @@ function initButtonsUI(exportDataHandler) {
 
   inferenceText = document.getElementById('inference-txt');
 
+  /*
+   * Ideal delays:
+   * - Throttling: 2000
+   * - Debounce: 200 (or anywhere between 150-200)
+   */
+
   const DELAY = 2000;
   const textObserver = new MutationObserver(throttle(remindUser, DELAY));
 
