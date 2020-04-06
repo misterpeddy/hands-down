@@ -22,7 +22,12 @@ module.exports = (on /* , config */) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
       // Mac/Linux
       launchOptions.args.push('--enable-webgl2-compute-context');
-      // launchOptions.args.push('--use-file-for-fake-video-capture=cypress/fixtures/my-video.y4m')
+      // TODO Remove the 2 --use-fake-... if they are actually defaults like on issue cypress/2704
+      launchOptions.args.push('--use-fake-device-for-media-stream');
+      launchOptions.args.push('--use-fake-ui-for-media-stream');
+      launchOptions.args.push(
+        '--use-file-for-fake-video-capture=cypress/fixtures/deadline_cif.y4m'
+      );
 
       // Windows
       // launchOptions.args.push('--use-file-for-fake-video-capture=c:\\path\\to\\video\\my-video.y4m')
