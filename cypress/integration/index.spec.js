@@ -1,4 +1,21 @@
 /* global describe, it, cy */
+// Source: https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/By_example/Detect_WebGL
+const detectWebGLContext = () => {
+  /* eslint-disable no-console */
+  const canvas = document.createElement('canvas');
+  const gl =
+    canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (gl && gl instanceof WebGLRenderingContext) {
+    console.info('Congratulations! Your browser supports WebGL.');
+  } else {
+    console.info(
+      'Failed to get WebGL context. Your browser or device may not support WebGL.'
+    );
+  }
+};
+
+detectWebGLContext();
+
 describe('User Page', () => {
   it('loads', () => {
     cy.visit('/');

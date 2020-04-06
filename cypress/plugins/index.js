@@ -1,4 +1,4 @@
-/// <reference types="cypress" />
+// / <reference types="cypress" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
 //
@@ -15,7 +15,19 @@
 /**
  * @type {Cypress.PluginConfig}
  */
-module.exports = (on, config) => {
+module.exports = (on /* , config */) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
-}
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
+      // Mac/Linux
+      launchOptions.args.push('--enable-webgl2-compute-context');
+      // launchOptions.args.push('--use-file-for-fake-video-capture=cypress/fixtures/my-video.y4m')
+
+      // Windows
+      // launchOptions.args.push('--use-file-for-fake-video-capture=c:\\path\\to\\video\\my-video.y4m')
+    }
+
+    return launchOptions;
+  });
+};
