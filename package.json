@@ -11,7 +11,9 @@
     "lint:css": "stylelint --fix",
     "lint": "npm run lint:js *.js public/js/*.js && npm run lint:html public/*.html && npm run lint:css public/css/*.css",
     "test": "cypress run",
-    "cy": "cypress open"
+    "cy": "cypress open",
+    "test:dev": "CYPRESS_BASE_URL=http://localhost:8080 cypress run",
+    "cy:dev": "CYPRESS_BASE_URL=http://localhost:8080 cypress open"
   },
   "repository": {
     "type": "git",
