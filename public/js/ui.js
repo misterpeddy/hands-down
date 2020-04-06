@@ -80,7 +80,7 @@ function initButtonsUI(exportDataHandler) {
 
   inferenceText = document.getElementById('inference-txt');
 
-  const DELAY = 500;
+  const DELAY = 2000;
   const textObserver = new MutationObserver(throttle(remindUser, DELAY));
 
   const observerConfig = { childList: true };
