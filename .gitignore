@@ -117,3 +117,7 @@ dist
 # Editor/IDEs
 .vscode
 .idea
+
+# Cypress
+cypress/screenshots
+cypress/videos
