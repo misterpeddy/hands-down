@@ -13,18 +13,18 @@ const collectedData = {
  * preeceding a call to save().
  * Returns the number of items staged so far.
  */
-function collectFeatures(facePoints, handPoints, label) {
+const collectFeatures = (facePoints, handPoints, label) => {
   collectedData.facePointList.push(facePoints);
   collectedData.handPointList.push(handPoints);
   collectedData.labelList.push(label);
   return collectedData.labelList.length;
-}
+};
 
 /*
  * Downloads the collected data as a JSON file and resets
  * the staging buffers (collectedData).
  */
-function exportData() {
+const exportData = () => {
   const filename = 'data.json';
 
   const data = JSON.stringify(collectedData, undefined, 4);
@@ -59,10 +59,10 @@ function exportData() {
     collectedData[key] = [];
   });
   updateCollectionText(0);
-}
+};
 
 // alias to console.save for easy saving from console
-(function log(console) {
+((console) => {
   // eslint-disable-next-line no-param-reassign
   console.save = exportData;
 })(console);

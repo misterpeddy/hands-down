@@ -24,7 +24,7 @@ let initialized;
  * Initializes the Facemesh and Handpose models, fetches
  * and loads the frozen classifer into memory, all in parallel.
  */
-async function initializeModel() {
+const initializeModel = async () => {
   let i = 0;
   for (; i < BACKENDS.length; i += 1) {
     // eslint-disable-next-line no-await-in-loop
@@ -34,7 +34,7 @@ async function initializeModel() {
   if (i === BACKENDS.length || tf.getBackend() === undefined)
     throw Error('No TensorFlow backend was successfully initialized.');
 
-  function completeInit(models) {
+  const completeInit = (models) => {
     if (models.length !== 3) {
       throw Error(
         `Expected to initialize 3 models but received ${models.length}`
@@ -47,7 +47,7 @@ async function initializeModel() {
     console.log(`${tf.getBackend()} tf.js backend initialized`);
 
     initialized = true;
-  }
+  };
 
   const modelPromises = [
     facemesh.load({ maxFaces: 1 }),
@@ -62,25 +62,25 @@ async function initializeModel() {
     .catch((err) => {
       throw Error(`Model initialization unsuccessful: ${err}`);
     });
-}
+};
 
 /*
  * Throws error if  init() has not previously been called.
  */
-function validateInit() {
+const validateInit = () => {
   if (!initialized) {
     throw Error(
       'Attempted to use a function from models Module before initialization'
     );
   }
-}
+};
 
 /*
  * Given a video stream, returns a promise wrapping
  * the estimated keypoints of a single face and a
  * single hand present in the current frame.
  */
-async function computeCombinedKeyPoints(video) {
+const computeCombinedKeyPoints = async (video) => {
   validateInit();
   if (video === undefined) {
     throw Error('Cannot compute key points for undefined video stream');
@@ -100,7 +100,7 @@ async function computeCombinedKeyPoints(video) {
  * returns a promise for there inference result (probability
  * that the hand is touching the face).
  */
-function computeInference(faceKeyPoints, handKeyPoints) {
+const computeInference = (faceKeyPoints, handKeyPoints) => {
   validateInit();
   if (!faceKeyPoints || !handKeyPoints) {
     return Promise.reject(Error('Both key points must be set'));
@@ -132,6 +132,6 @@ function computeInference(faceKeyPoints, handKeyPoints) {
   }
 
   return inference.data();
-}
+};
 
 export { initializeModel, computeCombinedKeyPoints, computeInference };
