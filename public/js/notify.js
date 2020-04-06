@@ -32,6 +32,13 @@ function setupNotification(callback) {
   }
 }
 
+const AUDIO = new Audio();
+// Maybe add the possibility for the notification to increase the sound's volume every n notifications?
+function playSound(fileName) {
+  AUDIO.src = fileName;
+  AUDIO.play();
+}
+
 /**
  * @param {string} notificationTitle Title
  * @param {{icon: string, body: string}} options Notification options
@@ -39,9 +46,12 @@ function setupNotification(callback) {
 function notify(notificationTitle, options = {}) {
   setupNotification(() => {
     const notification = new Notification(notificationTitle, options);
+    const sound = `assets/${options.sound || 'blob'}.mp3`;
+    playSound(sound);
     notification.onclick = () => {
       // eslint-disable-next-line no-console
       console.log('Notification clicked!');
+      AUDIO.pause();
       // alert('Thanks for your consideration of COVID-19');
       // TODO Make it go to the tab that contains this app
     };

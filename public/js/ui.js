@@ -47,6 +47,7 @@ function remindUser() {
       // image: 'https://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
       body: 'YOU are touching your face!',
       vibrate: [200, 100, 200], // Vibrates the device for 200ms, pause 100ms, vibrate for 200ms
+      sound: 'stop-it-get-some-help',
     });
   }
 }
