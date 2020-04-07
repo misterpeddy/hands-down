@@ -1,11 +1,6 @@
 {
   "ci": {
     "preset": "lighthouse:recommended",
-    "assert": {
-      "assertions": {
-        "categories:performance": ["error", {"minScore": 0.56}]
-      }
-    },
     "collect": {
       "staticDistDir": "./public",
       "settings": {
