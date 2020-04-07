@@ -1,0 +1,16 @@
+{
+  "ci": {
+    "preset": "lighthouse:recommended",
+    "assert": {
+      "assertions": {
+        "categories:performance": ["error", {"minScore": 0.6}]
+      }
+    },
+    "collect": {
+      "staticDistDir": "./public",
+      "settings": {
+        "chromeFlags": ["--enable-webgl2-compute-context", "--use-fake-device-for-media-stream", "--use-fake-ui-for-media-stream"]
+      }
+    }
+  }
+}
