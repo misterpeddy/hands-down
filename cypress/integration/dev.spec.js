@@ -39,6 +39,4 @@ describe('Dev Page', () => {
       labelButton.contains('False');
     });
   });
-
-  // TODO Find a way to test when the camera is enabled so the button aren't disabled
 });
