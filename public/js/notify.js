@@ -53,13 +53,7 @@ function notify(notificationTitle, options = {}) {
     const notification = new Notification(notificationTitle, options);
     const sound = `assets/${options.sound || 'blob'}.mp3`;
     playSound(sound);
-    notification.onclick = () => {
-      // eslint-disable-next-line no-console
-      console.log('Notification clicked!');
-      AUDIO.pause();
-      // alert('Thanks for your consideration of COVID-19');
-      // TODO Make it go to the tab that contains this app
-    };
+    notification.onclick = () => AUDIO.pause();
   });
 }
 
