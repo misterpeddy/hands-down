@@ -26,7 +26,7 @@ let initialized;
  */
 const initializeModel = async () => {
   let i = 0;
-  for (; i < BACKENDS.length; i += 1) {
+  for (; i < BACKENDS.length; i++) {
     // eslint-disable-next-line no-await-in-loop
     if (await tf.setBackend(BACKENDS[i])) break;
   }
