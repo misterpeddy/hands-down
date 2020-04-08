@@ -6,7 +6,7 @@
 const drawPoints = (ctx, points, r) => {
   if (points === undefined) return;
 
-  for (let i = 0; i < points.length; i += 1) {
+  for (let i = 0; i < points.length; i++) {
     const x = points[i][0];
     const y = points[i][1];
     ctx.beginPath();

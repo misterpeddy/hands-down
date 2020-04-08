@@ -23,6 +23,7 @@ module.exports = {
     'import/no-commonjs': 'off',
     'import/no-named-as-default-member': 'off',
     'import/no-nodejs-modules': 'off',
+    'no-plusplus': 'off',
     'prettier/prettier': ['error', { singleQuote: true }],
   },
 };
