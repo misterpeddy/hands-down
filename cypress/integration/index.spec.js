@@ -35,5 +35,4 @@ describe('User Page', () => {
       inferenceButton.contains('On');
     });
   });
-  // TODO Find a way to test when the camera is enabled so the button aren't disabled
 });
