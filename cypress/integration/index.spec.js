@@ -30,9 +30,10 @@ describe('User Page', () => {
   it('can turn on inference', () => {
     const inferenceButton = cy.get('#inference-state-btn');
     inferenceButton.should('contain', 'On');
-    /*  inferenceButton.click().then((btn) => {
-      expect(btn.text()).to.eq('Off');
-    }); */
+    inferenceButton.click().then(() => {
+      cy.wait(300);
+      inferenceButton.contains('On');
+    });
   });
   // TODO Find a way to test when the camera is enabled so the button aren't disabled
 });
