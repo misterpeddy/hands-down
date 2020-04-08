@@ -155,9 +155,8 @@ const startEngine = async (canvas, video) => {
  * Initializes video feed models and tf.js runtime.
  * Failures should be fatal.
  */
-const initialize = async () => {
-  return Promise.all([initCamera(), initializeModel(), initDom()]);
-};
+const initialize = async () =>
+  Promise.all([initCamera(), initializeModel(), initDom()]);
 
 /* Initializes necessary components and starts the
  * inference engine.
