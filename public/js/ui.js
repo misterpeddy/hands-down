@@ -43,7 +43,6 @@ function remindUser() {
     notify('Hands Down!!', {
       // TODO See why the icon isn't being shown (in Chromium-based browsers) and fix it!
       icon: '/assets/favicon-64.png',
-      // image: 'https://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
       body: 'YOU are touching your face!',
       vibrate: [200, 100, 200], // Vibrates the device for 200ms, pause 100ms, vibrate for 200ms
       sound: 'stop-it-get-some-help',

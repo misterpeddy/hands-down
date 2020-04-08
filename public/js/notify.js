@@ -33,10 +33,15 @@ function setupNotification(callback) {
 }
 
 const AUDIO = new Audio();
-// Maybe add the possibility for the notification to increase the sound's volume every n notifications?
+AUDIO.onerror = ({ path }) => {
+  // eslint-disable-next-line no-console
+  console.warn(`The audio file used "${path[0].src}" doesn't exist!`);
+};
+AUDIO.onloadeddata = () => AUDIO.play();
+
+// TODO Maybe add the possibility for the notification to increase the sound's volume every n notifications?
 function playSound(fileName) {
   AUDIO.src = fileName;
-  AUDIO.play();
 }
 
 /**
