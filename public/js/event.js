@@ -1,6 +1,7 @@
 // Source: https://redd.one/blog/debounce-vs-throttle
 const debounce = (func, duration) => {
   let timeout;
+  /** @this function Function that called throttle */
   return function launch(...args) {
     const effect = () => {
       timeout = null;
@@ -13,6 +14,7 @@ const debounce = (func, duration) => {
 
 const throttle = (func, duration) => {
   let shouldWait = false;
+  /** @this function Function that called throttle */
   return function launch(...args) {
     if (!shouldWait) {
       func.apply(this, args);
