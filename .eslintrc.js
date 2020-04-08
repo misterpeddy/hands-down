@@ -3,14 +3,8 @@ module.exports = {
     browser: true,
     es6: true,
   },
-  plugins: [
-    "prettier",
-    "eslint-plugin-html",
-  ],
-  extends: [
-    'airbnb-base',
-    'prettier'
-  ],
+  plugins: ['prettier', 'eslint-plugin-html'],
+  extends: ['airbnb-base', 'prettier', 'esnext'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -20,7 +14,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    "import/no-named-as-default-member": "off",
-    "prettier/prettier": ["error", { "singleQuote": true }]
+    'import/no-named-as-default-member': 'off',
+    'prettier/prettier': ['error', { singleQuote: true }],
   },
 };
