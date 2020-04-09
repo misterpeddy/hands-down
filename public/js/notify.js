@@ -27,8 +27,8 @@ const setupNotification = (callback) => {
       }
     });
   } else {
-    // eslint-disable-next-line no-alert
-    alert(`The permission is ${Notification.permission}`);
+    // eslint-disable-next-line no-console
+    console.error(`The notification permission is ${Notification.permission}`);
   }
 };
 
