@@ -1,0 +1,33 @@
+{
+    "background_color": "#FFF",
+    "icon_path": "./favicon.ico",
+    "name": "Hands Down!",
+    "short_name": "HandsDown",
+    "theme_color": "#C4C4C4",
+    "lang": "en",
+    "display": "minimal-ui",
+    "file_name": "manifest.json",
+    "orientation": "any",
+    "scope": "/",
+    "start_url": "https://handsdown.dev",
+    "dir": "auto",
+    "prefer_related_applications": false,
+    "related_applications": [],
+    "icons": [
+        {
+            "src": "/assets/favicon-64.png",
+            "sizes": "64x64",
+            "type": "image/png"
+        },
+        {
+            "src": "/assets/android-chrome-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/assets/android-chrome-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
