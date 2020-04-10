@@ -128,7 +128,7 @@ function processKeyPoints(combinedKeyPoints) {
       computeInference(facePoints, handPoints).then((inference) =>
         updateInferenceText(inference[0])
       );
-    } else document.getElementById('inference-txt').innerHTML = '0.00 %';
+    } else updateInferenceText(0);
   } else if (!state.isInDevMode) {
     document.getElementById('inference-txt').innerHTML = '- %';
   }
