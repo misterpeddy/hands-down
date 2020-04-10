@@ -123,11 +123,12 @@ function processKeyPoints(combinedKeyPoints) {
   }
 
   if (state.isInferenceOn) {
-    if (facePoints !== undefined && handPoints !== undefined) {
+    // TODO Look into merging/removing this condition to the line above to avoid unnecessary computations
+    if (facePoints !== undefined && handPoints !== null) {
       computeInference(facePoints, handPoints).then((inference) =>
         updateInferenceText(inference[0])
       );
-    }
+    } else document.getElementById('inference-txt').innerHTML = '0.00 %';
   } else if (!state.isInDevMode) {
     document.getElementById('inference-txt').innerHTML = '- %';
   }
@@ -141,6 +142,10 @@ function processKeyPoints(combinedKeyPoints) {
 async function startEngine(canvas, video) {
   (function update() {
     computeCombinedKeyPoints(video)
+      .then((combinedFeatures) => {
+        const noHandFound = !combinedFeatures[1].length;
+        return noHandFound ? [combinedFeatures[0], null] : combinedFeatures;
+      })
       .then((combinedFeatures) => drawFrame(canvas, video, combinedFeatures))
       .then((combinedKeyPoints) => processKeyPoints(combinedKeyPoints))
       .then(() => requestAnimationFrame(update))
