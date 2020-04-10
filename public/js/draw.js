@@ -44,7 +44,6 @@ function drawFrame(canvas, video, combinedFeatures) {
   }
 
   const faceMeshes = combinedFeatures[0];
-  const handPoses = combinedFeatures[1];
   const ctx = canvas.getContext('2d');
 
   ctx.drawImage(
@@ -67,14 +66,19 @@ function drawFrame(canvas, video, combinedFeatures) {
   }
 
   // Render HandPose
-  let handPoints;
-  if (handPoses !== undefined && handPoses.length > 0) {
-    handPoints = handPoses[0].landmarks;
-    const handAnnotations = handPoses[0].annotations;
-    drawPoints(ctx, handPoints, 3);
-    Object.entries(handAnnotations).forEach(([, points]) =>
-      drawPath(ctx, points)
-    );
+  let handPoints = null;
+  if (combinedFeatures[1] !== null) {
+    const handPoses = combinedFeatures[1];
+
+    // TODO Remove/merge this to the upper branch to avoid unnecessary complexity and computation
+    if (handPoses !== undefined && handPoses.length > 0) {
+      handPoints = handPoses[0].landmarks;
+      const handAnnotations = handPoses[0].annotations;
+      drawPoints(ctx, handPoints, 3);
+      Object.entries(handAnnotations).forEach(([, points]) =>
+        drawPath(ctx, points)
+      );
+    }
   }
 
   return [facePoints, handPoints];
