@@ -123,8 +123,7 @@ function processKeyPoints(combinedKeyPoints) {
   }
 
   if (state.isInferenceOn) {
-    // TODO Look into merging/removing this condition to the line above to avoid unnecessary computations
-    if (facePoints !== undefined && handPoints !== null) {
+    if (handPoints !== null) {
       computeInference(facePoints, handPoints).then((inference) =>
         updateInferenceText(inference[0])
       );
