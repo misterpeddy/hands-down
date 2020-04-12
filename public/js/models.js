@@ -86,10 +86,13 @@ async function computeCombinedKeyPoints(video) {
     throw Error('Cannot compute key points for undefined video stream');
   }
 
-  return Promise.all([
+  const combinedFeatures = await Promise.all([
     faceMesh.estimateFaces(video),
     handPose.estimateHands(video),
   ]);
+
+  const noHandFound = !combinedFeatures[1].length;
+  return noHandFound ? [combinedFeatures[0], null] : combinedFeatures;
 }
 
 /*

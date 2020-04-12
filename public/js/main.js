@@ -141,10 +141,6 @@ function processKeyPoints(combinedKeyPoints) {
 async function startEngine(canvas, video) {
   (function update() {
     computeCombinedKeyPoints(video)
-      .then((combinedFeatures) => {
-        const noHandFound = !combinedFeatures[1].length;
-        return noHandFound ? [combinedFeatures[0], null] : combinedFeatures;
-      })
       .then((combinedFeatures) => drawFrame(canvas, video, combinedFeatures))
       .then((combinedKeyPoints) => processKeyPoints(combinedKeyPoints))
       .then(() => requestAnimationFrame(update))
