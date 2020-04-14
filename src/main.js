@@ -1,11 +1,11 @@
 /* eslint-disable import/extensions */
-import drawFrame from './draw.js';
+import drawFrame from './js/draw.js';
 import {
   computeInference,
   computeCombinedKeyPoints,
   initializeModel,
-} from './models.js';
-import { collectFeatures, exportData } from './data.js';
+} from './js/models.js';
+import { collectFeatures, exportData } from './js/data.js';
 import {
   updateCollectionText,
   setStateUI,
@@ -16,7 +16,7 @@ import {
   updateInferenceText,
   error,
   setButtonsState,
-} from './ui.js';
+} from './js/ui.js';
 
 const state = {
   isCollectionOn: false,

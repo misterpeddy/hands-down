@@ -3,7 +3,7 @@
   <head>
     <title>Hands-Down!</title>
     <!-- Load tf.js libraries !-->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
 
     <!-- Load the pre-trained models !-->
@@ -32,12 +32,9 @@
     />
 
     <!-- Load Skeleton CSS -->
-    <link href="css/normalize.css" rel="stylesheet" />
-    <link href="css/skeleton.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
-
-    <!-- Load main local JS libraries -->
-    <script type="module" src="js/main.js"></script>
+    <link href="/css/normalize.css" rel="stylesheet" />
+    <link href="/css/skeleton.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -54,7 +51,7 @@
         <div class="five columns">
           <h6>
             <strong
-              ><span class="mdi mdi-hand-right"></span> &nbsp;<span
+              ><span class="mdi mdi-hand-right">&nbsp;</span> &nbsp;<span
                 id="inference-txt"
                 >- %</span
               ></strong
@@ -96,6 +93,6 @@
       </footer>
     </div>
 
-    <script src="/reload/reload.js"></script>
+    <script src="./index.js"></script>
   </body>
 </html>
