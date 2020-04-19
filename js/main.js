@@ -123,11 +123,11 @@ function processKeyPoints(combinedKeyPoints) {
   }
 
   if (state.isInferenceOn) {
-    if (facePoints !== undefined && handPoints !== undefined) {
+    if (handPoints !== null) {
       computeInference(facePoints, handPoints).then((inference) =>
         updateInferenceText(inference[0])
       );
-    }
+    } else updateInferenceText(0);
   } else if (!state.isInDevMode) {
     document.getElementById('inference-txt').innerHTML = '- %';
   }
