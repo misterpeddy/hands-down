@@ -8,7 +8,7 @@ Help slow the spread of COVID-19 by discouraging people from touching their face
 
 We break down the problem of inferring whether the subject is touching their face into 2 parts:
 
-* We use FaceMesh and HandPose pretrained models to extract key points describing the geometry of the hand and the face.
+* We use FaceMesh and HandPose pre-trained models to extract key points describing the geometry of the hand and the face.
 * We train a neural network to predict, given the two sets of key points, whether the subject's hand is touching their face.
 
 ## Documentation
@@ -44,3 +44,53 @@ Make sure you have branched off of the latest version of master. Keep commits sh
 There is a pre-commit hook that will check for good code style, and fail commits with an error. Run `npm run lint` to find out more.
 
 Please check for Markdown linting issues if you're updating the `README.md` or any `Markdown`.
+
+### Lighthouse
+
+#### Local testing
+If you're locally testing the app and want to see how much the metrics changes based on your changes, you should do the following:
+1. Run the app on a separate (private) browser window (**before applying your changes**).
+2. Launch Lighthouse (set on Desktop) by opening the DevTools (<kbd>CTRL/CMD</kbd>+<kbd>SHIFT</kbd>+<kbd>I</kbd>) then going on "Audits" (_with all categories enabled_) then click <kbd>Generate report</kbd>.
+3. Take note of the result (you can also save it as HTML or JSON by clicking on the <kbd>⋮</kbd>).
+4. Apply your changes.
+5. Reload the page (_if needed_).
+6. Do step 2 and 3.
+
+#### CI
+The CI will test several metrics which are: performance, accessibility, best practices, SEO and _PWAness_.
+Each score (apart from the PWA ones) are percentage.
+
+What are each metrics measuring?
+
+**Performance**
+- First Contentful Paint (FCP)
+- Speed Index (SI)
+- Time To Interactive (TTI)
+- First Meaningful Paint (FMP)
+- First CPU Idle
+- Max Potential First Input Delay (MPFID)
+
+**Accessibility**
+- Contrast
+- Accessible names
+- Required and valid attributes
+- ARIA labels and roles
+- ...
+
+**Best Practices**
+- Uses HTTPS and HTTP/2
+- No errors logged
+- Safe CORS links
+- HTML doctype
+- ...
+
+**Search Engine Optimization (SEO)**
+- Mobile-friendliness
+- Content Best Practices
+- Descriptive metadata
+- Successful HTTP status codes
+
+**Progressive Web App (PWA)**
+- Fast and reliable
+- Installable
+- PWA Optimized
