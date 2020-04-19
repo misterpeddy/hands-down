@@ -56,6 +56,8 @@ If you're locally testing the app and want to see how much the metrics changes b
 5. Reload the page (_if needed_).
 6. Do step 2 and 3.
 
+_Note_: you can run the app in your normal browser session, _but it's recommended_ to open a separate browser window with as few extensions as possible (since those can affect the performance score).
+
 #### CI
 The CI will test several metrics which are: performance, accessibility, best practices, SEO and _PWAness_.
 Each score (apart from the PWA ones) are percentage.
@@ -94,3 +96,9 @@ What are each metrics measuring?
 - Fast and reliable
 - Installable
 - PWA Optimized
+
+If you want to export the results of the CI, you should do the following:
+1. Click on the "Details" link beside the "Lighthouse / static-dist-dir (pull_request)" PR check.
+2. Click on the "static-dist-dir" check below "Lighthouse".
+3. You'll then see an "Artifacts (1)" button on the top right of the check window.
+4. Click that button then click on the "lighthouse-results" link.
