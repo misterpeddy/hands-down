@@ -59,7 +59,7 @@ If you're locally testing the app and want to see how much the metrics changes b
 _Note_: you can run the app in your normal browser session, _but it's recommended_ to open a separate browser window with as few extensions as possible (since those can affect the performance score).
 
 #### CI
-The CI will test several metrics which are: performance, accessibility, best practices, SEO and _PWAness_.
+The CI will test several metrics which are: performance, accessibility, best practices, SEO and _PWA_.
 Each score (apart from the PWA ones) are percentage.
 
 What are each metrics measuring?
@@ -80,7 +80,7 @@ What are each metrics measuring?
 - ...
 
 **Best Practices**
-- Uses HTTPS and HTTP/2
+- Use of HTTPS and HTTP/2
 - No errors logged
 - Safe CORS links
 - HTML doctype
