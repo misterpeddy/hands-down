@@ -71,9 +71,12 @@ const initCamera = async () => {
   }
 
   try {
+    const frameRate =
+      state.backend === 'cpu' ? { ideal: 10, max: 20 } : { ideal: 20, max: 30 };
     const stream = await navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: 'user',
+        frameRate,
         ...computeCameraDimensions(),
       },
       audio: false,
@@ -95,7 +98,6 @@ const initCamera = async () => {
     }
     throw err;
   }
-
   return new Promise((resolve) => {
     state.video.onloadedmetadata = () => {
       resolve();
@@ -163,7 +165,9 @@ const initialize = async () =>
  */
 const main = async () => {
   try {
-    await initialize();
+    const [backend] = await initialize();
+    state.backend = backend;
+    await initCamera();
   } catch (err) {
     error(err.message);
     setButtonsState({ disable: true });

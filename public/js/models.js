@@ -43,10 +43,13 @@ const initializeModel = async () => {
 
     [faceMesh, handPose, classifier] = models;
 
+    const backend = tf.getBackend();
     // eslint-disable-next-line no-console
-    console.log(`${tf.getBackend()} tf.js backend initialized`);
+    console.log(`${backend} tf.js backend initialized`);
 
     initialized = true;
+  }
+    return backend;
   };
 
   const modelPromises = [
