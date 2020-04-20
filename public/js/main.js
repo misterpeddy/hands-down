@@ -98,6 +98,7 @@ const initCamera = async () => {
     }
     throw err;
   }
+
   return new Promise((resolve) => {
     state.video.onloadedmetadata = () => {
       resolve();
