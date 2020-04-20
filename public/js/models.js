@@ -48,7 +48,6 @@ const initializeModel = async () => {
     console.log(`${backend} tf.js backend initialized`);
 
     initialized = true;
-  }
     return backend;
   };
 
@@ -96,7 +95,7 @@ const computeCombinedKeyPoints = async (video) => {
 
   const noHandFound = !combinedFeatures[1].length;
   return noHandFound ? [combinedFeatures[0], null] : combinedFeatures;
-}
+};
 
 /*
  * Given the face and hand keypoints extracted from an image,
