@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app -e js,css,html",
+    "dev": "parcel public/index.html",
+    "dev:train": "parcel public/dev.html",
+    "build": "parcel build public/index.html",
     "lint:js": "eslint --fix",
     "lint:html": "tidy -config tidy_config.txt",
     "lint:css": "stylelint --fix",
