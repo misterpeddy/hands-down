@@ -7,7 +7,7 @@
   - It should also give room to the user to opt-out for the notifications (like in a cookie manager for instance), say in a notification settings page
   - This has no throttle/debounce ability built-in so if implemented like so it can spam you.
 */
-import * as sound from '../../public/assets/stop-it-get-some-help.mp3';
+const sound = require('../../public/assets/stop-it-get-some-help.mp3');
 
 // TODO: Refactor into a thenable/awaitable function
 function setupNotification(callback) {
