@@ -2,52 +2,60 @@
 <html lang="en">
   <head>
     <title>Hands-Down!</title>
-    <!-- Load tf.js libraries !-->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
 
-    <!-- Load the pre-trained models !-->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/facemesh"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/handpose"></script>
+    <meta name="msapplication-TileColor" content="#C4C4C4" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    <meta name="theme-color" content="#C4C4C4" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="description"
+      content="Slow the spread of COVID-19 by discouraging people from touching their face"
+    />
+    <meta
+      name="keywords"
+      content="touch, hands, down, face, collection, covid-19"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
 
-    <!-- Load WASM backend for tf.js !-->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm/dist/tf-backend-wasm.js"></script>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="prefetch" href="dev.html" />
 
-    <!-- Load three.js -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.106.2/build/three.min.js"></script>
-
-    <!-- Load scatter-gl.js -->
-    <script src="https://cdn.jsdelivr.net/npm/scatter-gl@0.0.1/lib/scatter-gl.min.js"></script>
-
-    <!-- Load global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-163501590-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-163501590-1');
-    </script>
-
-    <!-- Load Skeleton/Google FONT -->
+    <!-- FavIcons -->
     <link
-      href="//fonts.googleapis.com/css?family=Raleway:400,300,600"
-      rel="stylesheet"
-      type="text/css"
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/apple-touch-icon.png"
     />
     <link
-      href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css"
-      rel="stylesheet"
-      type="text/css"
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/favicon-32.png"
     />
-
-    <!-- Load Skeleton CSS -->
-    <link href="css/normalize.css" rel="stylesheet" />
-    <link href="css/skeleton.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
-
-    <!-- Load main local JS libraries -->
-    <script type="module" src="js/main.js"></script>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/assets/android-chrome-192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/favicon-16.png"
+    />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link
+      rel="mask-icon"
+      href="/assets/safari-pinned-tab.svg"
+      color="#C4C4C4"
+    />
+    <link
+      rel="shortcut icon"
+      sizes="16x16 24x24 32x32 48x48 64x64"
+      href="/favicon.ico"
+    />
   </head>
 
   <body>
@@ -76,14 +84,8 @@
       <div class="row">
         <div class="one column"></div>
         <div class="canvas-wrapper">
-          <video id="video" style="display: none;"></video>
-          <!-- Changing the size here doesn't change much as the drawing changes the size again -->
-          <canvas
-            id="output"
-            width="640"
-            height="480"
-            style="border: 1px solid black;"
-          ></canvas>
+          <video id="video"></video>
+          <canvas id="output"></canvas>
         </div>
       </div>
       <div class="row">
@@ -106,6 +108,74 @@
       </footer>
     </div>
 
-    <script src="/reload/reload.js"></script>
+    <!-- Load Skeleton/Google FONT -->
+    <link
+      href="//fonts.googleapis.com/css?family=Raleway:400,300,600&display=swap"
+      rel="stylesheet"
+      type="text/css"
+      media="none"
+      media="none"
+      onload="this.media='all'"
+    />
+
+    <!-- Load CSS files -->
+    <link
+      href="css/normalize.min.css"
+      rel="stylesheet"
+      media="none"
+      media="none"
+      onload="this.media='all'"
+    />
+    <link
+      href="css/skeleton.min.css"
+      rel="stylesheet"
+      media="none"
+      media="none"
+      onload="this.media='all'"
+    />
+    <link
+      href="css/style.css"
+      rel="stylesheet"
+      media="none"
+      media="none"
+      onload="this.media='all'"
+    />
+
+    <!-- Load global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-163501590-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-163501590-1");
+    </script>
+
+    <!-- Load tf.js libraries !-->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+
+    <!-- Load the pre-trained models !-->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/facemesh"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/handpose"></script>
+
+    <!-- Load WASM backend for tf.js !-->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm/dist/tf-backend-wasm.js"></script>
+
+    <!-- Load three.js -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.106.2/build/three.min.js"></script>
+
+    <!-- Load scatter-gl.js -->
+    <script src="https://cdn.jsdelivr.net/npm/scatter-gl@0.0.1/lib/scatter-gl.min.js"></script>
+
+    <!-- Load main local JS libraries -->
+    <script type="module" src="js/main.js"></script>
+
+    <script src="/reload/reload.js" defer></script>
   </body>
 </html>

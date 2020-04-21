@@ -165,7 +165,6 @@ const main = async () => {
   try {
     await initialize();
   } catch (err) {
-    // TODO Use the danger class once this hits the new UI
     error(err.message);
     setButtonsState({ disable: true });
     // Maybe also disable the buttons to increase the emphasis?
