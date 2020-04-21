@@ -72,7 +72,7 @@ const initCamera = async () => {
 
   try {
     const frameRate =
-      state.backend === 'cpu' ? { ideal: 10, max: 20 } : { ideal: 20, max: 30 };
+      state.backend === 'cpu' ? { ideal: 2, max: 20 } : { ideal: 20, max: 30 };
     const stream = await navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: 'user',
@@ -159,15 +159,14 @@ const startEngine = async (canvas, video) => {
  * Failures should be fatal.
  */
 const initialize = async () =>
-  Promise.all([initCamera(), initializeModel(), initDom()]);
+  Promise.all([initCamera(), initializeModel(state), initDom()]);
 
 /* Initializes necessary components and starts the
  * inference engine.
  */
 const main = async () => {
   try {
-    const [backend] = await initialize();
-    state.backend = backend;
+    await initialize();
     await initCamera();
   } catch (err) {
     error(err.message);
