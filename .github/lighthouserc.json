@@ -1,0 +1,20 @@
+{
+  "ci": {
+    "preset": "lighthouse:recommended",
+    "assert": {
+      "assertions": {
+        "categories:performance": ["error", {"minScore": 0.4}],
+        "categories:accessibility": ["error", {"minScore": 0.9}],
+        "categories:best-practices": ["error", {"minScore": 0.7}],
+        "categories:seo": ["error", {"minScore": 0.6}],
+        "categories:pwa": ["error", {"minScore": 0.3}]
+      }
+    },
+    "collect": {
+      "staticDistDir": "./public",
+      "settings": {
+        "chromeFlags": ["--enable-webgl2-compute-context", "--use-fake-device-for-media-stream", "--use-fake-ui-for-media-stream"]
+      }
+    }
+  }
+}
