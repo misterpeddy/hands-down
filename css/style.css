@@ -95,6 +95,18 @@ input[type="button"]:hover {
   border-color: #000;
 }
 
+input:disabled,
+button:disabled,
+input[disabled]:hover,
+button[disabled]:hover,
+input[disabled]:focus,
+button[disabled]:focus,
+.button-off:disabled {
+  border: 1px solid #999;
+  background-color: #ccc;
+  color: #666;
+}
+
 /* Misc */
 .danger {
   color: #f00;
