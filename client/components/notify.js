@@ -52,7 +52,6 @@ function playSound(fileName) {
 function notify(notificationTitle, options = {}) {
   setupNotification(() => {
     const notification = new Notification(notificationTitle, options);
-    // const sound = `assets/${options.sound || 'blob'}.mp3`;
     playSound(sound);
     notification.onclick = () => AUDIO.pause();
   });
