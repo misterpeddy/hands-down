@@ -46,6 +46,10 @@ footer {
   margin-top: 2rem;
 }
 
+.justify {
+  text-align: justify;
+}
+
 /* Buttons */
 
 .button,
