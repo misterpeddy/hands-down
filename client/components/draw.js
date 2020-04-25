@@ -3,24 +3,24 @@
  * each point in the given array of (x,y) tuples
  * in the provided context.
  */
-function drawPoints(ctx, points, r) {
+const drawPoints = (ctx, points, r) => {
   if (points === undefined) return;
 
-  for (let i = 0; i < points.length; i += 1) {
+  for (let i = 0; i < points.length; i++) {
     const x = points[i][0];
     const y = points[i][1];
     ctx.beginPath();
     ctx.arc(x, y, r, 0, 2 * Math.PI);
     ctx.fill();
   }
-}
+};
 
 /*
  * Starts at the first point, and continually
  * draws lines in the provided context to the
  * next point until the final point is reached.
  */
-function drawPath(ctx, points) {
+const drawPath = (ctx, points) => {
   if (points === undefined) return;
 
   const region = new Path2D();
@@ -30,7 +30,7 @@ function drawPath(ctx, points) {
     region.lineTo(point[0], point[1]);
   }
   ctx.stroke(region);
-}
+};
 
 /*
  * Given a canvas containing a 2d context,
@@ -38,13 +38,12 @@ function drawPath(ctx, points) {
  * the hand and face key points contained in combinedFeatures.
  * Returns the extracted combined keypoints.
  */
-function drawFrame(canvas, video, combinedFeatures) {
+const drawFrame = (canvas, video, combinedFeatures) => {
   if (combinedFeatures === undefined) {
     throw Error('Cannot draw frame with undefined features');
   }
 
   const faceMeshes = combinedFeatures[0];
-  const handPoses = combinedFeatures[1];
   const ctx = canvas.getContext('2d');
 
   ctx.drawImage(
@@ -67,8 +66,9 @@ function drawFrame(canvas, video, combinedFeatures) {
   }
 
   // Render HandPose
-  let handPoints;
-  if (handPoses !== undefined && handPoses.length > 0) {
+  let handPoints = null;
+  if (combinedFeatures[1] !== null) {
+    const handPoses = combinedFeatures[1];
     handPoints = handPoses[0].landmarks;
     const handAnnotations = handPoses[0].annotations;
     drawPoints(ctx, handPoints, 3);
@@ -78,6 +78,6 @@ function drawFrame(canvas, video, combinedFeatures) {
   }
 
   return [facePoints, handPoints];
-}
+};
 
 export default drawFrame;

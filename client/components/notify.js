@@ -10,7 +10,7 @@
 const sound = require('../../public/assets/stop-it-get-some-help.mp3');
 
 // TODO: Refactor into a thenable/awaitable function
-function setupNotification(callback) {
+const setupNotification = (callback) => {
   if (!('Notification' in window)) {
     // eslint-disable-next-line no-alert
     alert(
@@ -28,10 +28,10 @@ function setupNotification(callback) {
       }
     });
   } else {
-    // eslint-disable-next-line no-alert
-    alert(`The permission is ${Notification.permission}`);
+    // eslint-disable-next-line no-console
+    console.error(`The notification permission is ${Notification.permission}`);
   }
-}
+};
 
 const AUDIO = new Audio();
 AUDIO.onerror = ({ path }) => {
@@ -49,12 +49,12 @@ function playSound(fileName) {
  * @param {string} notificationTitle Title
  * @param {{icon: string, body: string}} options Notification options
  */
-function notify(notificationTitle, options = {}) {
+const notify = (notificationTitle, options = {}) => {
   setupNotification(() => {
     const notification = new Notification(notificationTitle, options);
     playSound(sound);
     notification.onclick = () => AUDIO.pause();
   });
-}
+};
 
 export default notify;

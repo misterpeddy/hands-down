@@ -24,10 +24,10 @@ const state = {
   label: true,
   video: undefined,
   // TODO Consider putting the pathname to a JS[ON]/YAML file which would also be read by app.js
-  isInDevMode: window.location.pathname === '/dev',
+  isInDevMode: process.env.TRAIN_MODE,
 };
 
-function computeCameraDimensions() {
+const computeCameraDimensions = () => {
   const IDEAL_VIEW_WIDTH = 768;
   const IDEAL_VIEW_HEIGHT = 576;
   const REF_WIDTH = 1440;
@@ -52,7 +52,7 @@ function computeCameraDimensions() {
       max: MAX_CAMERA_HEIGHT,
     },
   };
-}
+};
 
 /*
  * Requests access to user-facing, video-only
@@ -60,7 +60,7 @@ function computeCameraDimensions() {
  * when onMetadataLoaded event is called on the
  * media stream
  */
-async function initCamera() {
+const initCamera = async () => {
   state.video = document.getElementById('video');
 
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -101,13 +101,13 @@ async function initCamera() {
       resolve();
     };
   });
-}
+};
 
 /*
  * Takes face and hand keypoints and carries out
  * all processing steps enabled in current state.
  */
-function processKeyPoints(combinedKeyPoints) {
+const processKeyPoints = (combinedKeyPoints) => {
   if (combinedKeyPoints === undefined || combinedKeyPoints.length !== 2) {
     throw Error(
       `Expected 2 key point arrays, but received ${combinedKeyPoints}`
@@ -123,22 +123,22 @@ function processKeyPoints(combinedKeyPoints) {
   }
 
   if (state.isInferenceOn) {
-    if (facePoints !== undefined && handPoints !== undefined) {
+    if (handPoints !== null) {
       computeInference(facePoints, handPoints).then((inference) =>
         updateInferenceText(inference[0])
       );
-    }
+    } else updateInferenceText(0);
   } else if (!state.isInDevMode) {
     document.getElementById('inference-txt').innerHTML = '- %';
   }
-}
+};
 
 /*
  * Each call to update carries out all key point computations,
  * any enabled processing, and draws the next frame. If no errors
  * occur, asks the runtime to be called again on next frame update.
  */
-async function startEngine(canvas, video) {
+const startEngine = async (canvas, video) => {
   (function update() {
     computeCombinedKeyPoints(video)
       .then((combinedFeatures) => drawFrame(canvas, video, combinedFeatures))
@@ -149,24 +149,22 @@ async function startEngine(canvas, video) {
         console.error('Could not compute and render frame: ', err)
       );
   })();
-}
+};
 
 /*
  * Initializes video feed models and tf.js runtime.
  * Failures should be fatal.
  */
-async function initialize() {
-  return Promise.all([initCamera(), initializeModel(), initDom()]);
-}
+const initialize = async () =>
+  Promise.all([initCamera(), initializeModel(), initDom()]);
 
 /* Initializes necessary components and starts the
  * inference engine.
  */
-async function main() {
+const main = async () => {
   try {
     await initialize();
   } catch (err) {
-    // TODO Use the danger class once this hits the new UI
     error(err.message);
     setButtonsState({ disable: true });
     // Maybe also disable the buttons to increase the emphasis?
@@ -183,6 +181,6 @@ async function main() {
   startEngine(canvas, state.video);
 
   return 0;
-}
+};
 
-main();
+export default main;

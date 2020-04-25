@@ -11,7 +11,7 @@ let inferenceText;
 let collectionText;
 
 // All handlers are private
-function toggleButton(button, value) {
+const toggleButton = (button, value) => {
   state[value] = !state[value];
   /* eslint-disable no-param-reassign */
   if (state[value]) {
@@ -21,9 +21,9 @@ function toggleButton(button, value) {
     button.innerHTML = 'Off';
     button.classList.add('button-off');
   }
-}
+};
 
-function toggleLabel() {
+const toggleLabel = () => {
   state.label = !state.label;
   if (state.label) {
     labelButton.innerHTML = 'True';
@@ -32,13 +32,13 @@ function toggleLabel() {
     labelButton.innerHTML = 'False';
     labelButton.classList.add('button-off');
   }
-}
+};
 
-function setStateUI(appState) {
+const setStateUI = (appState) => {
   state = appState;
-}
+};
 
-function remindUser() {
+const remindUser = () => {
   if (state.handFaceContact && !state.isInDevMode) {
     notify('Hands Down!!', {
       // TODO See why the icon isn't being shown (in Chromium-based browsers) and fix it!
@@ -48,9 +48,9 @@ function remindUser() {
       sound: 'stop-it-get-some-help',
     });
   }
-}
+};
 
-function initButtonsUI(exportDataHandler) {
+const initButtonsUI = (exportDataHandler) => {
   if (state.isInDevMode) {
     collectionButton = document.getElementById('collection-state-btn');
     exportButton = document.getElementById('export-btn');
@@ -91,16 +91,16 @@ function initButtonsUI(exportDataHandler) {
   const observerConfig = { childList: true };
   textObserver.observe(inferenceText, observerConfig);
   window.onunload = () => textObserver.disconnect();
-}
+};
 
-function initVideoUI() {
+const initVideoUI = () => {
   const { video } = state;
   video.play();
   video.width = video.videoWidth;
   video.height = video.videoHeight;
-}
+};
 
-function initCanvas() {
+const initCanvas = () => {
   const canvas = document.getElementById('output');
   const { video } = state;
   canvas.width = video.width;
@@ -117,33 +117,33 @@ function initCanvas() {
   ctx.lineWidth = 0.5;
 
   return canvas;
-}
+};
 
-function updateInferenceText(inference) {
+const updateInferenceText = (inference) => {
   inferenceText.innerHTML = `${(inference * 100).toFixed(2)} %`;
   const TOUCH_THRESHOLD = 0.8;
   const touching = inference >= TOUCH_THRESHOLD;
   state.handFaceContact = touching;
   inferenceText.parentElement.className = touching ? 'danger' : '';
-}
+};
 
-function updateCollectionText(numCollected) {
+const updateCollectionText = (numCollected) => {
   collectionText.innerHTML = numCollected;
-}
+};
 
-function error(message) {
+const error = (message) => {
   const errorText = document.getElementById('error-message');
   errorText.innerHTML = message;
-}
+};
 
-function setButtonsState({ disable = false }) {
+const setButtonsState = ({ disable = false }) => {
   const buttons = [...document.querySelectorAll('button')];
   buttons.forEach((button) => {
     button.setAttribute('disabled', disable);
   });
-}
+};
 
-function initDom() {
+const initDom = () => {
   // eslint-disable-next-line no-restricted-globals
   if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
     const reloadScript = document.querySelector(
@@ -151,7 +151,7 @@ function initDom() {
     );
     reloadScript.parentElement.removeChild(reloadScript);
   }
-}
+};
 
 export {
   setStateUI,

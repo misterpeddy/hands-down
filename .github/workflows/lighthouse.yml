@@ -1,0 +1,18 @@
+name: Lighthouse
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  static-dist-dir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run Lighthouse on urls and validate with lighthouserc
+        uses: treosh/lighthouse-ci-action@v2
+        with:
+          configPath: './.github/lighthouserc.json'
+          uploadArtifacts: true
