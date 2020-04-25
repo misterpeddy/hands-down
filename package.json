@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "parcel public/index.html",
+    "dev": "parcel public/index.html public/dev.html",
     "dev:train": "ENV NODE_ENV=train parcel public/dev.html",
-    "build": "parcel build public/index.html",
+    "build": "parcel build public/index.html public/dev.html",
     "lint:js": "eslint --fix",
     "lint:html": "tidy -config tidy_config.txt",
     "lint:css": "stylelint --fix",
@@ -29,8 +29,7 @@
   "homepage": "https://github.com/misterpeddy/hands-down#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "nclr": "^2.2.4",
-    "reload": "^3.0.4"
+    "nclr": "^2.2.4"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",

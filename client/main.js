@@ -24,7 +24,7 @@ const state = {
   label: true,
   video: undefined,
   // TODO Consider putting the pathname to a JS[ON]/YAML file which would also be read by app.js
-  isInDevMode: process.env.TRAIN_MODE,
+  isInDevMode: window.location.pathname === '/dev.html',
 };
 
 const computeCameraDimensions = () => {
