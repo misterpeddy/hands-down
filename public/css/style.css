@@ -77,8 +77,8 @@ input[type="button"]:hover {
 }
 
 .button-secondary {
-  border-color: #33c3f0;
-  color: #33c3f0;
+  border-color: #096987;
+  color: #096987;
   min-width: 9.338em; /* width of a button with 5 letters inside */
   outline: 0;
 }
