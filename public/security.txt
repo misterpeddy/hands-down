@@ -1,4 +1,4 @@
-Contact: inf@??.
+Contact: hello@handsdown.dev
 Acknowledgments: https://handsdown.dev/thanks.html
 Preferred-Languages: en
 Canonical: https://handsdown.dev/security.txt
