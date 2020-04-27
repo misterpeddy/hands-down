@@ -24,7 +24,7 @@ let initialized;
  * Initializes the Facemesh and Handpose models, fetches
  * and loads the frozen classifer into memory, all in parallel.
  */
-const initializeModel = async () => {
+const initializeModel = async (state) => {
   let i = 0;
   for (; i < BACKENDS.length; i++) {
     // eslint-disable-next-line no-await-in-loop
@@ -43,8 +43,10 @@ const initializeModel = async () => {
 
     [faceMesh, handPose, classifier] = models;
 
+    // eslint-disable-next-line no-param-reassign
+    state.backend = tf.getBackend();
     // eslint-disable-next-line no-console
-    console.log(`${tf.getBackend()} tf.js backend initialized`);
+    console.log(`${state.backend} tf.js backend initialized`);
 
     initialized = true;
   };

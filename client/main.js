@@ -71,9 +71,12 @@ const initCamera = async () => {
   }
 
   try {
+    const frameRate =
+      state.backend === 'cpu' ? { ideal: 2, max: 20 } : { ideal: 20, max: 30 };
     const stream = await navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: 'user',
+        frameRate,
         ...computeCameraDimensions(),
       },
       audio: false,
@@ -155,8 +158,7 @@ const startEngine = async (canvas, video) => {
  * Initializes video feed models and tf.js runtime.
  * Failures should be fatal.
  */
-const initialize = async () =>
-  Promise.all([initCamera(), initializeModel(), initDom()]);
+const initialize = async () => Promise.all([initializeModel(state), initDom()]);
 
 /* Initializes necessary components and starts the
  * inference engine.
@@ -164,6 +166,7 @@ const initialize = async () =>
 const main = async () => {
   try {
     await initialize();
+    await initCamera();
   } catch (err) {
     error(err.message);
     setButtonsState({ disable: true });
