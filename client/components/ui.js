@@ -143,22 +143,11 @@ const setButtonsState = ({ disable = false }) => {
   });
 };
 
-const initDom = () => {
-  // eslint-disable-next-line no-restricted-globals
-  if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
-    const reloadScript = document.querySelector(
-      'script[src="/reload/reload.js"]'
-    );
-    reloadScript.parentElement.removeChild(reloadScript);
-  }
-};
-
 export {
   setStateUI,
   initButtonsUI,
   initVideoUI,
   initCanvas,
-  initDom,
   updateInferenceText,
   updateCollectionText,
   error,
