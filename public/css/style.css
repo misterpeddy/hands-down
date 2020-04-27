@@ -145,7 +145,6 @@ a {
   src: url("https://cdn.materialdesignicons.com/5.0.45/fonts/materialdesignicons-webfont.eot?v=5.0.45");
   src:
     url("https://cdn.materialdesignicons.com/5.0.45/fonts/materialdesignicons-webfont.woff2?v=5.0.45") format("woff2"),
-    url("https://cdn.materialdesignicons.com/5.0.45/fonts/materialdesignicons-webfont.woff?v=5.0.45") format("woff"),
     url("https://cdn.materialdesignicons.com/5.0.45/fonts/materialdesignicons-webfont.ttf?v=5.0.45") format("truetype");
   font-weight: normal;
   font-style: normal;
