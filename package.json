@@ -5,15 +5,17 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app -e js,css,html",
+    "dev": "parcel public/index.html public/dev.html",
+    "dev:train": "NODE_ENV=train parcel public/dev.html",
+    "build": "parcel build public/index.html public/dev.html",
     "lint:js": "eslint --fix",
     "lint:html": "tidy -config tidy_config.txt",
     "lint:css": "stylelint --fix",
-    "lint": "npm run lint:js *.js public/js/*.js && npm run lint:html public/*.html && npm run lint:css public/css/*.css",
+    "lint": "npm run lint:js client/*.js && npm run lint:html public/*.html && npm run lint:css public/css/*.css",
     "test": "cypress run",
     "cy": "cypress open",
-    "test:dev": "CYPRESS_BASE_URL=http://localhost:8080 cypress run",
-    "cy:dev": "CYPRESS_BASE_URL=http://localhost:8080 cypress open"
+    "test:dev": "CYPRESS_BASE_URL=http://localhost:1234 cypress run",
+    "cy:dev": "CYPRESS_BASE_URL=http://localhost:1234 cypress open"
   },
   "repository": {
     "type": "git",
@@ -27,11 +29,16 @@
   "homepage": "https://github.com/misterpeddy/hands-down#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "nclr": "^2.2.4",
-    "reload": "^3.0.4"
+    "nclr": "^2.2.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "cssnano": "^4.1.10",
     "cypress": "^4.3.0",
+    "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-config-esnext": "^4.0.0",
@@ -45,6 +52,7 @@
     "husky": "^4.2.3",
     "lint-staged": "^10.0.10",
     "minify": "^5.1.1",
+    "parcel-bundler": "^1.12.4",
     "prettier": "2.0.2",
     "stylelint": "^13.3.0",
     "stylelint-config-standard": "^20.0.0"
