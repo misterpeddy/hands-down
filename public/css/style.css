@@ -61,13 +61,23 @@ input[type="button"] {
   color: #3b3b3b;
 }
 
+.button.button-primary,
+button.button-primary,
+input[type="submit"].button-primary,
+input[type="reset"].button-primary,
+input[type="button"].button-primary {
+  background-color: #096987;
+  border-color: #096987;
+}
+
 .button:hover,
 button:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover,
-input[type="button"]:hover {
-  border-color: #33c3f0;
-  color: #33c3f0;
+input[type="button"]:hover,
+.button-secondary {
+  border-color: #096987;
+  color: #096987;
 }
 
 .button-primary,
@@ -77,8 +87,6 @@ input[type="button"]:hover {
 }
 
 .button-secondary {
-  border-color: #096987;
-  color: #096987;
   min-width: 9.338em; /* width of a button with 5 letters inside */
   outline: 0;
 }
