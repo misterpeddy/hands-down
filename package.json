@@ -7,7 +7,7 @@
     "start": "node app.js",
     "dev": "parcel public/index.html public/dev.html",
     "dev:train": "NODE_ENV=train parcel public/dev.html",
-    "build": "parcel build public/index.html public/dev.html",
+    "build": "parcel build public/*.html",
     "lint:js": "eslint --fix",
     "lint:html": "tidy -config tidy_config.txt",
     "lint:css": "stylelint --fix",

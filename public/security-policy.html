@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <title>Hands-Down!</title>
+
     <meta name="msapplication-TileColor" content="#C4C4C4" />
     <meta name="msapplication-config" content="/browserconfig.xml" />
     <meta name="theme-color" content="#C4C4C4" />
@@ -56,37 +57,53 @@
     <header>
       <h3><strong>Hands Down!</strong></h3>
     </header>
-    <div class="container">
+    <div class="container justify">
       <div class="row">
-        <div class="one offset-by-one column"></div>
-        <div class="five columns">
-          Inference:
-          <button id="inference-state-btn" class="button-primary">On</button>
+        <div class="full-width">
+          <h4>Our Security Policy</h4>
+          <p>
+            We understand that many users place a high level of trust in the
+            Hands Down project to manage sensitive data. The privacy of customer
+            data and the security of our solutions and services are a top
+            priority. That's why we apply widely accepted best practices when it
+            comes to security.
+          </p>
+
+          <h5>Privacy</h5>
+          The Hands Down project has a privacy policy section that discloses
+          what information may be collected and how it is used.
+          <p>
+            For any specific questions, please contact
+            <a href="mailto: hello@handsdown.dev.com">hello@handsdown.dev</a>.
+          </p>
+
+          <h5>Vulnerability Reporting</h5>
+          We deeply appreciate any effort to discover and disclose security
+          vulnerabilities responsibly.
+
+          <p>
+            If you would like to report a vulnerability in this application or
+            have any security concerns with it, please email-us.
+          </p>
+
+          <p>
+            For non-critical matters, we prefer customers open a ticket with the
+            appropriate product. In order for us to best investigate your
+            request, please include any of the following when reporting:
+          </p>
+          <ul>
+            <li>Proof of concept</li>
+            <li>Any tools, including versions used</li>
+            <li>Output of the tools</li>
+          </ul>
+          <p>
+            We take all disclosures very seriously and will do our best to
+            rapidly respond and verify the vulnerability before taking the
+            necessary steps to fix it. After our initial reply to your
+            disclosure, which should be directly after receiving it, we will
+            periodically update you with the status of the fix.
+          </p>
         </div>
-        <div class="five columns">
-          <h6>
-            <strong
-              ><span class="mdi mdi-hand-right">&nbsp;</span> &nbsp;<span
-                id="inference-txt"
-                >- %</span
-              ></strong
-            >
-          </h6>
-        </div>
-        <div class="one column"></div>
-      </div>
-      <div class="row">
-        <div class="one column"></div>
-        <div class="canvas-wrapper">
-          <video id="video"></video>
-          <canvas id="output"></canvas>
-        </div>
-      </div>
-      <div class="row">
-        <h2
-          id="error-message"
-          class="one-third offset-by-one columns danger"
-        ></h2>
       </div>
       <footer class="row">
         <div class="two columns offset-by-three">
@@ -149,25 +166,5 @@
 
       gtag("config", "UA-163501590-1");
     </script>
-
-    <!-- Load tf.js libraries !-->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
-
-    <!-- Load the pre-trained models !-->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/facemesh"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/handpose"></script>
-
-    <!-- Load WASM backend for tf.js !-->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm/dist/tf-backend-wasm.js"></script>
-
-    <!-- Load three.js -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.106.2/build/three.min.js"></script>
-
-    <!-- Load scatter-gl.js -->
-    <script src="https://cdn.jsdelivr.net/npm/scatter-gl@0.0.1/lib/scatter-gl.min.js"></script>
-
-    <!-- Load main local JS libraries -->
-    <script src="../client/index.js"></script>
   </body>
 </html>

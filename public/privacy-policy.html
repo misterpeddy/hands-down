@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <title>Hands-Down!</title>
+
     <meta name="msapplication-TileColor" content="#C4C4C4" />
     <meta name="msapplication-config" content="/browserconfig.xml" />
     <meta name="theme-color" content="#C4C4C4" />
@@ -56,37 +57,36 @@
     <header>
       <h3><strong>Hands Down!</strong></h3>
     </header>
-    <div class="container">
+    <div class="container justify">
       <div class="row">
-        <div class="one offset-by-one column"></div>
-        <div class="five columns">
-          Inference:
-          <button id="inference-state-btn" class="button-primary">On</button>
+        <div class="full-width">
+          <h4>Our Privacy Policy</h4>
+          <p>
+            We only collect anonym data provided by Google Analytics for visitor
+            count and visitor information, such as:
+          </p>
+          <ul>
+            <li>Browser Type</li>
+            <li>Connection Type</li>
+            <li>Language</li>
+            <li>Location</li>
+            <li>Pages viewed</li>
+          </ul>
+          <p>
+            This information is used to improve the site. If you wish to opt out
+            of this please set the
+            <a href="https://www.eff.org/issues/do-not-track">Do Not Track</a>
+            header, you can find instructions on how to do this
+            <a href="https://allaboutdnt.com/">here</a> along with more
+            information on Do Not Track.
+          </p>
+          <p>
+            If you wish to see what data our model uses, you can go on the
+            <a href="/dev.html">dev page</a> and export it. You will see that
+            there's only numerical (vectors of the face and the hand) and
+            boolean data (label <em>you</em> set).
+          </p>
         </div>
-        <div class="five columns">
-          <h6>
-            <strong
-              ><span class="mdi mdi-hand-right">&nbsp;</span> &nbsp;<span
-                id="inference-txt"
-                >- %</span
-              ></strong
-            >
-          </h6>
-        </div>
-        <div class="one column"></div>
-      </div>
-      <div class="row">
-        <div class="one column"></div>
-        <div class="canvas-wrapper">
-          <video id="video"></video>
-          <canvas id="output"></canvas>
-        </div>
-      </div>
-      <div class="row">
-        <h2
-          id="error-message"
-          class="one-third offset-by-one columns danger"
-        ></h2>
       </div>
       <footer class="row">
         <div class="two columns offset-by-three">
@@ -149,25 +149,5 @@
 
       gtag("config", "UA-163501590-1");
     </script>
-
-    <!-- Load tf.js libraries !-->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
-
-    <!-- Load the pre-trained models !-->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/facemesh"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/handpose"></script>
-
-    <!-- Load WASM backend for tf.js !-->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm/dist/tf-backend-wasm.js"></script>
-
-    <!-- Load three.js -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.106.2/build/three.min.js"></script>
-
-    <!-- Load scatter-gl.js -->
-    <script src="https://cdn.jsdelivr.net/npm/scatter-gl@0.0.1/lib/scatter-gl.min.js"></script>
-
-    <!-- Load main local JS libraries -->
-    <script src="../client/index.js"></script>
   </body>
 </html>
