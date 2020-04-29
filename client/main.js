@@ -18,6 +18,7 @@ import {
   setButtonsState,
 } from './components/ui.js';
 
+const FRAMES_PER_SECOND = 1000 / 60;
 const state = {
   isCollectionOn: false,
   isInferenceOn: true,
@@ -25,6 +26,9 @@ const state = {
   video: undefined,
   // TODO Consider putting the pathname to a JS[ON]/YAML file which would also be read by app.js
   isInDevMode: window.location.pathname === '/dev',
+  canvas: null,
+  isActiveTab: true,
+  timerId: null,
 };
 
 const computeCameraDimensions = () => {
@@ -110,23 +114,14 @@ const initCamera = async () => {
  * Takes face and hand keypoints and carries out
  * all processing steps enabled in current state.
  */
-const processKeyPoints = (combinedKeyPoints) => {
-  if (combinedKeyPoints === undefined || combinedKeyPoints.length !== 2) {
-    throw Error(
-      `Expected 2 key point arrays, but received ${combinedKeyPoints}`
-    );
-  }
-
-  const facePoints = combinedKeyPoints[0];
-  const handPoints = combinedKeyPoints[1];
-
+const processKeyPoints = (facePoints, handPoints) => {
   if (state.isCollectionOn) {
     const collectionSize = collectFeatures(facePoints, handPoints, state.label);
     updateCollectionText(collectionSize);
   }
 
   if (state.isInferenceOn) {
-    if (handPoints !== null) {
+    if (facePoints && handPoints) {
       computeInference(facePoints, handPoints).then((inference) =>
         updateInferenceText(inference[0])
       );
@@ -137,28 +132,93 @@ const processKeyPoints = (combinedKeyPoints) => {
 };
 
 /*
+ * Extracts facePoints, handPoints, and handAnnotations.
+ */
+const extractPoints = (combinedFeatures) => {
+  if (combinedFeatures === undefined) {
+    throw Error('Cannot draw frame with undefined features');
+  }
+
+  // Render FaceMesh
+  const faceMeshes = combinedFeatures[0];
+  let facePoints;
+  if (faceMeshes !== undefined && faceMeshes.length > 0) {
+    facePoints = faceMeshes[0].scaledMesh;
+  }
+
+  // Render HandPose
+  const handMeshes = combinedFeatures[1];
+  let handPoints;
+  let handAnnotations;
+  if (handMeshes) {
+    handPoints = handMeshes[0].landmarks;
+    handAnnotations = handMeshes[0].annotations;
+  }
+  return [facePoints, handPoints, handAnnotations];
+};
+
+/*
  * Each call to update carries out all key point computations,
  * any enabled processing, and draws the next frame. If no errors
  * occur, asks the runtime to be called again on next frame update.
  */
-const startEngine = async (canvas, video) => {
-  (function update() {
-    computeCombinedKeyPoints(video)
-      .then((combinedFeatures) => drawFrame(canvas, video, combinedFeatures))
-      .then((combinedKeyPoints) => processKeyPoints(combinedKeyPoints))
-      .then(() => requestAnimationFrame(update))
-      .catch((err) =>
-        // eslint-disable-next-line no-console
-        console.error('Could not compute and render frame: ', err)
-      );
-  })();
-};
+const computeFrame = async () =>
+  computeCombinedKeyPoints(state.video)
+    .then((combinedFeatures) => extractPoints(combinedFeatures))
+    .then(([facePoints, handPoints, handAnnotations]) => {
+      // Don't need to draw on canvas if tab is NOT active (i.e. visible)
+      if (state.isActiveTab) {
+        drawFrame(
+          state.canvas,
+          state.video,
+          facePoints,
+          handPoints,
+          handAnnotations
+        );
+      }
+      return processKeyPoints(facePoints, handPoints);
+    })
+    .then(() => {
+      // requestAnimationFrame only works on an active tab
+      if (state.isActiveTab) {
+        state.timerId = requestAnimationFrame(computeFrame);
+      }
+      return Promise.resolve();
+    })
+    .catch((err) =>
+      // eslint-disable-next-line no-console
+      console.error('Could not compute and render frame: ', err)
+    );
 
 /*
  * Initializes video feed models and tf.js runtime.
  * Failures should be fatal.
  */
 const initialize = async () => Promise.all([initializeModel(state), initDom()]);
+
+/*
+ * Handles when user switches tabs and initiates the process with appropriate loop.
+ * No need for canvas when on a DIFFERENT tab.
+ * Should only use requestAnimationFrame when tab=active.
+ * Also responsible for the stopping the previous timer.
+ */
+const handleVisibilityChange = () => {
+  if (document.visibilityState === 'hidden') {
+    if (state.timerId) {
+      cancelAnimationFrame(state.timerId);
+    }
+    state.isActiveTab = false;
+    state.canvas.style.display = 'none';
+    state.timerId = setInterval(computeFrame, FRAMES_PER_SECOND);
+  } else {
+    if (state.timerId) {
+      clearTimeout(state.timerId);
+    }
+    state.canvas.style.display = 'inline-block';
+    state.isActiveTab = true;
+    computeFrame();
+  }
+};
 
 /* Initializes necessary components and starts the
  * inference engine.
@@ -180,8 +240,10 @@ const main = async () => {
   initButtonsUI(exportData);
   initVideoUI();
   const canvas = initCanvas();
+  state.canvas = canvas;
 
-  startEngine(canvas, state.video);
+  computeFrame();
+  document.addEventListener('visibilitychange', handleVisibilityChange, false);
 
   return 0;
 };
