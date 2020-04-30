@@ -203,19 +203,18 @@ const initialize = async () => Promise.all([initializeModel(state), initDom()]);
  * Also responsible for the stopping the previous timer.
  */
 const handleVisibilityChange = () => {
-  if (document.visibilityState === 'hidden') {
-    if (state.timerId) {
+  state.isActiveTab = document.visibilityState === 'visible';
+  if (!state.isActiveTab) {
+    if (!state.timerId) {
       cancelAnimationFrame(state.timerId);
     }
-    state.isActiveTab = false;
     state.canvas.style.display = 'none';
     state.timerId = setInterval(computeFrame, FRAMES_PER_SECOND);
   } else {
-    if (state.timerId) {
-      clearTimeout(state.timerId);
-    }
     state.canvas.style.display = 'inline-block';
-    state.isActiveTab = true;
+    if (state.timerId) {
+      clearInterval(state.timerId);
+    }
     computeFrame();
   }
 };
