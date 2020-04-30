@@ -38,12 +38,7 @@ const drawPath = (ctx, points) => {
  * the hand and face key points contained in combinedFeatures.
  * Returns the extracted combined keypoints.
  */
-const drawFrame = (canvas, video, combinedFeatures) => {
-  if (combinedFeatures === undefined) {
-    throw Error('Cannot draw frame with undefined features');
-  }
-
-  const faceMeshes = combinedFeatures[0];
+const drawFrame = (canvas, video, facePoints, handPoints, handAnnotations) => {
   const ctx = canvas.getContext('2d');
 
   ctx.drawImage(
@@ -59,25 +54,19 @@ const drawFrame = (canvas, video, combinedFeatures) => {
   );
 
   // Render FaceMesh
-  let facePoints;
-  if (faceMeshes !== undefined && faceMeshes.length > 0) {
-    facePoints = faceMeshes[0].scaledMesh;
+  if (facePoints) {
     drawPoints(ctx, facePoints, 1);
   }
-
   // Render HandPose
-  let handPoints = null;
-  if (combinedFeatures[1] !== null) {
-    const handPoses = combinedFeatures[1];
-    handPoints = handPoses[0].landmarks;
-    const handAnnotations = handPoses[0].annotations;
+  // let handPoints = null;
+  if (handPoints) {
     drawPoints(ctx, handPoints, 3);
+  }
+  if (handAnnotations) {
     Object.entries(handAnnotations).forEach(([, points]) =>
       drawPath(ctx, points)
     );
   }
-
-  return [facePoints, handPoints];
 };
 
 export default drawFrame;
