@@ -687,10 +687,6 @@ button[disabled]:focus,
   color: #f00;
 }
 
-.mdi {
-  vertical-align: middle;
-}
-
 #video {
   display: none;
 }
@@ -699,27 +695,6 @@ button[disabled]:focus,
   border: 1px solid black;
 }
 
-@font-face {
-  font-family: "Material Design Icons";
-  src: url("https://cdn.materialdesignicons.com/5.0.45/fonts/materialdesignicons-webfont.eot?v=5.0.45");
-  src:
-    url("https://cdn.materialdesignicons.com/5.0.45/fonts/materialdesignicons-webfont.woff2?v=5.0.45")
-    format("woff2"),
-    url("https://cdn.materialdesignicons.com/5.0.45/fonts/materialdesignicons-webfont.ttf?v=5.0.45")
-    format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-.mdi::before {
-  display: inline-block;
-  font: normal normal normal 24px/1 "Material Design Icons", sans-serif;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.mdi-hand-right::before {
-  content: "\F0E47";
+a {
+  color: #0f566d;
 }
