@@ -18,9 +18,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="UTF-8" />
 
-    <link rel="dns-prefetch" href="http://fonts.gstatic.com" />
-    <link rel="prefetch" href="terms.html" />
-    <link rel="prefetch" href="security-policy.html" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="prefetch" href="dev.html" />
 
     <!-- FavIcons -->
     <link
@@ -61,34 +60,7 @@
     <div class="container justify">
       <div class="row">
         <div class="full-width">
-          <h4>Our Privacy Policy</h4>
-          <p>
-            We only collect anonym data provided by Google Analytics for visitor
-            count and visitor information, such as:
-          </p>
-          <ul>
-            <li>Browser Type</li>
-            <li>Connection Type</li>
-            <li>Language</li>
-            <li>Location</li>
-            <li>Pages viewed</li>
-          </ul>
-          <p>
-            This information is used to improve the site. If you wish to opt out
-            of this please set the
-            <a href="https://www.eff.org/issues/do-not-track">Do Not Track</a>
-            header, you can find
-            <a href="https://allaboutdnt.com/"
-              >instructions on how to do this</a
-            >
-            along with more information on Do Not Track.
-          </p>
-          <p>
-            If you wish to see what data our model uses, you can go on the
-            <a href="/dev.html">dev page</a> and export it. You will see that
-            there's only numerical (vectors of the face and the hand) and
-            boolean data (label <em>you</em> set).
-          </p>
+          <h4>Notifications</h4>
         </div>
       </div>
       <footer class="row">
@@ -105,7 +77,7 @@
       </footer>
     </div>
 
-    <!-- Load Google FONT -->
+    <!-- Load Skeleton/Google FONT -->
     <link
       href="//fonts.googleapis.com/css?family=Raleway:400,300,600&display=swap"
       rel="stylesheet"
@@ -118,6 +90,13 @@
     <!-- Load CSS files -->
     <link
       href="css/normalize.min.css"
+      rel="stylesheet"
+      media="none"
+      media="none"
+      onload="this.media='all'"
+    />
+    <link
+      href="css/skeleton.min.css"
       rel="stylesheet"
       media="none"
       media="none"
