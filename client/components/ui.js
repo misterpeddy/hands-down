@@ -9,6 +9,8 @@ let exportButton;
 let labelButton;
 let inferenceText;
 let collectionText;
+const notificationsEnabled =
+  localStorage.getItem('handsdown-notifications') !== 'false';
 
 // All handlers are private
 const toggleButton = (button, value) => {
@@ -39,7 +41,7 @@ const setStateUI = (appState) => {
 };
 
 const remindUser = () => {
-  if (state.handFaceContact && !state.isInDevMode) {
+  if (notificationsEnabled && state.handFaceContact && !state.isInDevMode) {
     notify('Hands Down!!', {
       // TODO See why the icon isn't being shown (in Chromium-based browsers) and fix it!
       icon: '/assets/favicon-64.png',

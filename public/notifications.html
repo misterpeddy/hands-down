@@ -59,8 +59,16 @@
     </header>
     <div class="container justify">
       <div class="row">
-        <div class="full-width">
-          <h4>Notifications</h4>
+        <div class="columns ten offset-by-two">
+          <h4>Notifications Settings</h4>
+          <form>
+            <label>
+              <input type="checkbox" id="notif-switch" checked />
+              <span class="label-body">Desktop notifications</span>
+            </label>
+            <button id="notif-btn" class="button-primary">Save</button>
+            <output id="status"></output>
+          </form>
         </div>
       </div>
       <footer class="row">
@@ -123,6 +131,26 @@
       gtag("js", new Date());
 
       gtag("config", "UA-163501590-1");
+
+      window.onpageshow = () => {
+        const notificationCheck = document.getElementById("notif-switch");
+        const notificationButton = document.getElementById("notif-btn");
+        const statusOutput = document.getElementById("status");
+        const notificationSetting = "handsdown-notifications";
+
+        if (localStorage.getItem(notificationSetting) === "false") {
+          notificationCheck.checked = false;
+        }
+
+        notificationButton.addEventListener("click", (event) => {
+          event.preventDefault();
+          localStorage.setItem(notificationSetting, notificationCheck.checked);
+          statusOutput.innerText = "Settings saved!";
+          setTimeout(() => {
+            statusOutput.innerText = "";
+          }, 2000);
+        });
+      };
     </script>
   </body>
 </html>
