@@ -687,6 +687,11 @@ button[disabled]:focus,
   color: #f00;
 }
 
+svg {
+  position: relative;
+  top: 6px;
+}
+
 #video {
   display: none;
 }
