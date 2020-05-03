@@ -9,6 +9,10 @@ let exportButton;
 let labelButton;
 let inferenceText;
 let collectionText;
+let lastInference = null;
+const EPS = 2 ** -52;
+const PRECISION = 10_000;
+const TOUCH_THRESHOLD = 0.8;
 
 // All handlers are private
 const toggleButton = (button, value) => {
@@ -119,12 +123,24 @@ const initCanvas = () => {
   return canvas;
 };
 
+const hasNotChangedEnough = (inference) => {
+  const change =
+    Math.round(Math.abs(inference - lastInference) * PRECISION) / PRECISION;
+  return change < EPS;
+};
+
 const updateInferenceText = (inference) => {
-  inferenceText.innerHTML = `${(inference * 100).toFixed(2)} %`;
-  const TOUCH_THRESHOLD = 0.8;
-  const touching = inference >= TOUCH_THRESHOLD;
-  state.handFaceContact = touching;
-  inferenceText.parentElement.className = touching ? 'danger' : '';
+  if (hasNotChangedEnough(inference)) return;
+  if (!inference) {
+    inferenceText.innerHTML = '- %';
+    inferenceText.parentElement.className = '';
+  } else {
+    inferenceText.innerHTML = `${(inference * 100).toFixed(2)} %`;
+    const touching = inference >= TOUCH_THRESHOLD;
+    state.handFaceContact = touching;
+    inferenceText.parentElement.className = touching ? 'danger' : '';
+  }
+  lastInference = inference;
 };
 
 const updateCollectionText = (numCollected) => {
