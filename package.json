@@ -26,6 +26,14 @@
     "url": "https://github.com/misterpeddy/hands-down/issues"
   },
   "homepage": "https://github.com/misterpeddy/hands-down#readme",
+  "dependencies": {
+    "workbox-background-sync": "^5.1.3",
+    "workbox-cacheable-response": "^5.1.3",
+    "workbox-expiration": "^5.1.3",
+    "workbox-precaching": "^5.1.3",
+    "workbox-routing": "^5.1.3",
+    "workbox-strategies": "^5.1.3"
+  },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
     "@babel/plugin-transform-runtime": "^7.9.0",
