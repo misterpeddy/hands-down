@@ -57,6 +57,24 @@ registerRoute(
   new StaleWhileRevalidate()
 );
 
+// TODO Check if group1-*.bin files go to the google-fonts cache
+registerRoute(
+  /\.bin$/,
+  new CacheFirst({
+    cacheName: 'models',
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+      new ExpirationPlugin({
+        maxAgeSeconds: ONE_WEEK,
+        maxEntries: 30,
+      }),
+    ],
+  })
+);
+
+// If the *.bin files remain here, perhaps consider using a /^https:\/\/fonts\.gstatic\.com/ style RE
 registerRoute(
   /.*(?:googleapis|gstatic)\.com/,
   new CacheFirst({
@@ -73,11 +91,10 @@ registerRoute(
   })
 );
 
-// TODO Check why group1-*.bin files go to the google-fonts cache
 registerRoute(
-  /\.bin$/,
+  /^https:\/\/cdn\.jsdelivr\.net/,
   new CacheFirst({
-    cacheName: 'models',
+    cacheName: 'external-js',
     plugins: [
       new CacheableResponsePlugin({
         statuses: [0, 200],
