@@ -10,23 +10,19 @@ import { ExpirationPlugin } from 'workbox-expiration';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 
 // TODO Consider adding https://github.com/dahnielson/parcel-plugin-workbox
-// TODO Add a register route for .bin files (models) and perhaps a specialized for JSON files
 // TODO Decide if it's worth adding a register route for TFjs imports
 // GA offline? https://developers.google.com/web/tools/workbox/guides/enable-offline-analytics
 
-console.log('Hello from service-worker.js');
 const ONE_WEEK = 7 * 24 * 60 * 60;
 const ONE_MONTH = 30 * 24 * 60 * 60;
 const ONE_YEAR = 60 * 60 * 24 * 365;
-
-// registerRoute(/\.js(on)?$/, new NetworkFirst());
 
 registerRoute(
   /\.(?:js|css|json)$/,
   // Use cache but update in the background.
   new StaleWhileRevalidate({
     // Use a custom cache name.
-    cacheName: 'css-cache',
+    cacheName: 'resources',
   })
 );
 
@@ -35,7 +31,7 @@ registerRoute(
   /\.(?:png|jpg|jpeg|svg|gif|ico)$/,
   // Use the cache if it's available.
   new CacheFirst({
-    cacheName: 'image-cache',
+    cacheName: 'images',
     plugins: [
       new ExpirationPlugin({
         maxEntries: 20,
@@ -46,7 +42,7 @@ registerRoute(
 );
 
 registerRoute(
-  /\.txt|mp3$/,
+  /\.(?:txt|mp3)$/,
   new CacheFirst({
     plugins: [
       new ExpirationPlugin({
@@ -71,6 +67,23 @@ registerRoute(
       }),
       new ExpirationPlugin({
         maxAgeSeconds: ONE_YEAR,
+        maxEntries: 30,
+      }),
+    ],
+  })
+);
+
+// TODO Check why group1-*.bin files go to the google-fonts cache
+registerRoute(
+  /\.bin$/,
+  new CacheFirst({
+    cacheName: 'models',
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+      new ExpirationPlugin({
+        maxAgeSeconds: ONE_WEEK,
         maxEntries: 30,
       }),
     ],
