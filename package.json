@@ -4,8 +4,7 @@
   "description": "Help slow the spread of COVID-19 by discouraging people from touching their face while sitting in front of a computer.",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "parcel public/index.html public/dev.html",
+    "start": "parcel public/index.html public/dev.html",
     "dev:train": "NODE_ENV=train parcel public/dev.html",
     "build": "parcel build public/*.html",
     "lint:js": "eslint --fix",
@@ -28,8 +27,7 @@
   },
   "homepage": "https://github.com/misterpeddy/hands-down#readme",
   "dependencies": {
-    "express": "^4.17.1",
-    "nclr": "^2.2.4"
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
