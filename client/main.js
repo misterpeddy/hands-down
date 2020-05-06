@@ -30,6 +30,7 @@ const state = {
   timerId: null,
 };
 
+// TODO Is this a good parallelizable function? If so -> WebWorker
 const computeCameraDimensions = () => {
   const IDEAL_VIEW_WIDTH = 768;
   const IDEAL_VIEW_HEIGHT = 576;
@@ -45,12 +46,10 @@ const computeCameraDimensions = () => {
 
   return {
     width: {
-      // min: 640,
       ideal: IDEAL_VIEW_WIDTH,
       max: MAX_CAMERA_WIDTH,
     },
     height: {
-      // min: 480,
       ideal: IDEAL_VIEW_HEIGHT,
       max: MAX_CAMERA_HEIGHT,
     },
@@ -109,6 +108,7 @@ const initCamera = async () => {
   });
 };
 
+// TODO Is this a good parallelizable function? If so -> WebWorker
 /*
  * Takes face and hand keypoints and carries out
  * all processing steps enabled in current state.
@@ -156,6 +156,7 @@ const extractPoints = (combinedFeatures) => {
   return [facePoints, handPoints, handAnnotations];
 };
 
+// TODO Is this a good parallelizable function? If so -> WebWorker
 /*
  * Each call to update carries out all key point computations,
  * any enabled processing, and draws the next frame. If no errors

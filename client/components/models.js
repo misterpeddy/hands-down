@@ -18,6 +18,7 @@ let handPose;
 let classifier;
 let initialized;
 
+// TODO Is this a good parallelizable function? If so -> WebWorker
 /*
  * Must be called before any other functions in module.
  * First tries to load most performant TF backend.
@@ -67,7 +68,7 @@ const initializeModel = async (state) => {
 };
 
 /*
- * Throws error if  init() has not previously been called.
+ * Throws error if init() has not previously been called.
  */
 const validateInit = () => {
   if (!initialized) {
@@ -77,6 +78,7 @@ const validateInit = () => {
   }
 };
 
+// TODO Is this a good parallelizable function? If so -> WebWorkers
 /*
  * Given a video stream, returns a promise wrapping
  * the estimated keypoints of a single face and a
@@ -97,6 +99,7 @@ const computeCombinedKeyPoints = async (video) => {
   return noHandFound ? [combinedFeatures[0], null] : combinedFeatures;
 };
 
+// TODO Is this a good parallelizable function? If so -> WebWorker
 /*
  * Given the face and hand keypoints extracted from an image,
  * returns a promise for there inference result (probability

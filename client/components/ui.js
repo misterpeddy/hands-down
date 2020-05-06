@@ -124,6 +124,7 @@ const initCanvas = () => {
   return canvas;
 };
 
+// TODO Is this a good parallelizable function? If so -> WebWorker
 const hasNotChangedEnough = (inference) => {
   const change =
     Math.round(Math.abs(inference - lastInference) * PRECISION) / PRECISION;

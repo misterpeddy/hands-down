@@ -1,3 +1,4 @@
+// TODO Is this a good parallelizable function? Is canvas usable in Web workers? If so -> WebWorker
 /*
  * Draws circles of radius r centered around
  * each point in the given array of (x,y) tuples
@@ -15,6 +16,7 @@ const drawPoints = (ctx, points, r) => {
   }
 };
 
+// TODO Is this a good parallelizable function? Is canvas usable in Web workers? If so -> WebWorker
 /*
  * Starts at the first point, and continually
  * draws lines in the provided context to the
