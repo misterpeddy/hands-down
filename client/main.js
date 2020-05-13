@@ -239,6 +239,7 @@ const main = async () => {
   initVideoUI();
   const canvas = initCanvas();
   state.canvas = canvas;
+  document.getElementById('loader').style.display = 'none';
 
   computeFrame();
   document.addEventListener('visibilitychange', handleVisibilityChange, false);
