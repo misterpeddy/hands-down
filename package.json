@@ -4,8 +4,7 @@
   "description": "Help slow the spread of COVID-19 by discouraging people from touching their face while sitting in front of a computer.",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "parcel public/index.html public/dev.html",
+    "start": "parcel public/index.html public/dev.html",
     "dev:train": "NODE_ENV=train parcel public/dev.html",
     "build": "parcel build public/*.html",
     "lint:js": "eslint --fix",
@@ -27,10 +26,6 @@
     "url": "https://github.com/misterpeddy/hands-down/issues"
   },
   "homepage": "https://github.com/misterpeddy/hands-down#readme",
-  "dependencies": {
-    "express": "^4.17.1",
-    "nclr": "^2.2.4"
-  },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
     "@babel/plugin-transform-runtime": "^7.9.0",
@@ -51,7 +46,6 @@
     "eslint-plugin-you-dont-need-lodash-underscore": "^6.10.0",
     "husky": "^4.2.3",
     "lint-staged": "^10.0.10",
-    "minify": "^5.1.1",
     "parcel-bundler": "^1.12.4",
     "prettier": "2.0.2",
     "stylelint": "^13.3.0",

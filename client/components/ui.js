@@ -11,6 +11,10 @@ let inferenceText;
 let collectionText;
 const notificationsEnabled =
   localStorage.getItem('handsdown-notifications') !== 'false';
+let lastInference = null;
+const EPS = 2 ** -52;
+const PRECISION = 10_000;
+const TOUCH_THRESHOLD = 0.8;
 
 // All handlers are private
 const toggleButton = (button, value) => {
@@ -47,7 +51,6 @@ const remindUser = () => {
       icon: '/assets/favicon-64.png',
       body: 'YOU are touching your face!',
       vibrate: [200, 100, 200], // Vibrates the device for 200ms, pause 100ms, vibrate for 200ms
-      sound: 'stop-it-get-some-help',
     });
   }
 };
@@ -121,12 +124,24 @@ const initCanvas = () => {
   return canvas;
 };
 
+const hasNotChangedEnough = (inference) => {
+  const change =
+    Math.round(Math.abs(inference - lastInference) * PRECISION) / PRECISION;
+  return change < EPS;
+};
+
 const updateInferenceText = (inference) => {
-  inferenceText.innerHTML = `${(inference * 100).toFixed(2)} %`;
-  const TOUCH_THRESHOLD = 0.8;
-  const touching = inference >= TOUCH_THRESHOLD;
-  state.handFaceContact = touching;
-  inferenceText.parentElement.className = touching ? 'danger' : '';
+  if (hasNotChangedEnough(inference)) return;
+  if (!inference) {
+    inferenceText.innerHTML = '- %';
+    inferenceText.parentElement.className = '';
+  } else {
+    inferenceText.innerHTML = `${(inference * 100).toFixed(2)} %`;
+    const touching = inference >= TOUCH_THRESHOLD;
+    state.handFaceContact = touching;
+    inferenceText.parentElement.className = touching ? 'danger' : '';
+  }
+  lastInference = inference;
 };
 
 const updateCollectionText = (numCollected) => {

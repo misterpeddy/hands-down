@@ -126,7 +126,7 @@ const processKeyPoints = (facePoints, handPoints) => {
       );
     } else updateInferenceText(0);
   } else if (!state.isInDevMode) {
-    document.getElementById('inference-txt').innerHTML = '- %';
+    updateInferenceText(false);
   }
 };
 
