@@ -90,7 +90,7 @@ const initButtonsUI = (exportDataHandler) => {
    * - Debounce: 200 (or anywhere between 150-200)
    */
 
-  const DELAY = 2000;
+  const DELAY = 3500;
   const textObserver = new MutationObserver(throttle(remindUser, DELAY));
 
   const observerConfig = { childList: true };
