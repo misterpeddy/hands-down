@@ -9,6 +9,8 @@ let exportButton;
 let labelButton;
 let inferenceText;
 let collectionText;
+const notificationsEnabled =
+  localStorage.getItem('handsdown-notifications') !== 'false';
 let lastInference = null;
 const EPS = 2 ** -52;
 const PRECISION = 10_000;
@@ -43,7 +45,7 @@ const setStateUI = (appState) => {
 };
 
 const remindUser = () => {
-  if (state.handFaceContact && !state.isInDevMode) {
+  if (notificationsEnabled && state.handFaceContact && !state.isInDevMode) {
     notify('Hands Down!!', {
       // TODO See why the icon isn't being shown (in Chromium-based browsers) and fix it!
       icon: '/assets/favicon-64.png',
@@ -88,7 +90,7 @@ const initButtonsUI = (exportDataHandler) => {
    * - Debounce: 200 (or anywhere between 150-200)
    */
 
-  const DELAY = 2000;
+  const DELAY = 3500;
   const textObserver = new MutationObserver(throttle(remindUser, DELAY));
 
   const observerConfig = { childList: true };

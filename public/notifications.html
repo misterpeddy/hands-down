@@ -13,13 +13,10 @@
     />
     <meta
       name="keywords"
-      content="touch, hands, down, face, security, policy, covid-19"
+      content="touch, hands, down, face, collection, covid-19"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="UTF-8" />
-
-    <link rel="prefetch" href="terms.html" />
-    <link rel="prefetch" href="privacy-policy.html" />
 
     <!-- FavIcons -->
     <link
@@ -61,50 +58,16 @@
     </header>
     <div class="container justify">
       <div class="row">
-        <div class="full-width">
-          <h4>Our Security Policy</h4>
-          <p>
-            We understand that many users place a high level of trust in the
-            Hands Down project to manage sensitive data. The privacy of customer
-            data and the security of our solutions and services are a top
-            priority. That's why we apply widely accepted best practices when it
-            comes to security.
-          </p>
-
-          <h5>Privacy</h5>
-          The Hands Down project has a privacy policy section that discloses
-          what information may be collected and how it is used.
-          <p>
-            For any specific questions, please contact
-            <a href="mailto: hello@handsdown.dev.com">hello@handsdown.dev</a>.
-          </p>
-
-          <h5>Vulnerability Reporting</h5>
-          We deeply appreciate any effort to discover and disclose security
-          vulnerabilities responsibly.
-
-          <p>
-            If you would like to report a vulnerability in this application or
-            have any security concerns with it, please email-us.
-          </p>
-
-          <p>
-            For non-critical matters, we prefer customers open a ticket with the
-            appropriate product. In order for us to best investigate your
-            request, please include any of the following when reporting:
-          </p>
-          <ul>
-            <li>Proof of concept</li>
-            <li>Any tools, including versions used</li>
-            <li>Output of the tools</li>
-          </ul>
-          <p>
-            We take all disclosures very seriously and will do our best to
-            rapidly respond and verify the vulnerability before taking the
-            necessary steps to fix it. After our initial reply to your
-            disclosure, which should be directly after receiving it, we will
-            periodically update you with the status of the fix.
-          </p>
+        <div class="columns ten offset-by-two">
+          <h4>Notifications Settings</h4>
+          <form>
+            <label>
+              <input type="checkbox" id="notif-switch" checked />
+              <span class="label-body">Desktop notifications</span>
+            </label>
+            <button id="notif-btn" class="button-primary">Save</button>
+            <output id="status"></output>
+          </form>
         </div>
       </div>
       <footer class="row">
@@ -121,7 +84,7 @@
       </footer>
     </div>
 
-    <!-- Load Google FONT -->
+    <!-- Load Skeleton/Google FONT -->
     <link
       href="//fonts.googleapis.com/css?family=Raleway:400,300,600&display=swap"
       rel="stylesheet"
@@ -160,6 +123,26 @@
       gtag("js", new Date());
 
       gtag("config", "UA-163501590-1");
+
+      window.onpageshow = () => {
+        const notificationCheck = document.getElementById("notif-switch");
+        const notificationButton = document.getElementById("notif-btn");
+        const statusOutput = document.getElementById("status");
+        const notificationSetting = "handsdown-notifications";
+
+        if (localStorage.getItem(notificationSetting) === "false") {
+          notificationCheck.checked = false;
+        }
+
+        notificationButton.addEventListener("click", (event) => {
+          event.preventDefault();
+          localStorage.setItem(notificationSetting, notificationCheck.checked);
+          statusOutput.innerText = "Settings saved!";
+          setTimeout(() => {
+            statusOutput.innerText = "";
+          }, 2000);
+        });
+      };
     </script>
   </body>
 </html>
