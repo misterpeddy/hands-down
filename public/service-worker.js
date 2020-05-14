@@ -1,16 +1,9 @@
-// import { precaching } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import {
-  // NetworkFirst,
-  CacheFirst,
-  StaleWhileRevalidate,
-} from 'workbox-strategies';
-// import { BackgroundSyncPlugin } from 'workbox-background-sync';
+import { CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 
 // TODO Consider adding https://github.com/dahnielson/parcel-plugin-workbox
-// TODO Decide if it's worth adding a register route for TFjs imports
 // GA offline? https://developers.google.com/web/tools/workbox/guides/enable-offline-analytics
 
 const ONE_WEEK = 7 * 24 * 60 * 60;
@@ -19,17 +12,13 @@ const ONE_YEAR = 60 * 60 * 24 * 365;
 
 registerRoute(
   /\.(?:js|css|json)$/,
-  // Use cache but update in the background.
   new StaleWhileRevalidate({
-    // Use a custom cache name.
     cacheName: 'resources',
   })
 );
 
 registerRoute(
-  // Cache image files.
   /\.(?:png|jpg|jpeg|svg|gif|ico)$/,
-  // Use the cache if it's available.
   new CacheFirst({
     cacheName: 'images',
     plugins: [
@@ -58,6 +47,7 @@ registerRoute(
 );
 
 // TODO Check if group1-*.bin files go to the google-fonts cache
+// If they do then consider using a /^https:\/\/fonts\.gstatic\.com/ style RE
 registerRoute(
   /\.bin$/,
   new CacheFirst({
@@ -74,7 +64,6 @@ registerRoute(
   })
 );
 
-// If the *.bin files remain here, perhaps consider using a /^https:\/\/fonts\.gstatic\.com/ style RE
 registerRoute(
   /.*(?:googleapis|gstatic)\.com/,
   new CacheFirst({
