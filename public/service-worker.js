@@ -49,7 +49,7 @@ registerRoute(
 // TODO Check if group1-*.bin files go to the google-fonts cache
 // If they do then consider using a /^https:\/\/fonts\.gstatic\.com/ style RE
 registerRoute(
-  /\.bin$/,
+  /.*(?:storage.googleapis)\.com/,
   new CacheFirst({
     cacheName: 'models',
     plugins: [
@@ -65,7 +65,7 @@ registerRoute(
 );
 
 registerRoute(
-  /.*(?:googleapis|gstatic)\.com/,
+  /.*(?:fonts.googleapis|gstatic)\.com/,
   new CacheFirst({
     cacheName: 'google-fonts',
     plugins: [
