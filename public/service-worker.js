@@ -3,9 +3,7 @@ import { CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 
-// TODO Consider adding https://github.com/dahnielson/parcel-plugin-workbox
 // GA offline? https://developers.google.com/web/tools/workbox/guides/enable-offline-analytics
-
 const ONE_WEEK = 7 * 24 * 60 * 60;
 const ONE_MONTH = 30 * 24 * 60 * 60;
 const ONE_YEAR = 60 * 60 * 24 * 365;
@@ -46,8 +44,6 @@ registerRoute(
   new StaleWhileRevalidate()
 );
 
-// TODO Check if group1-*.bin files go to the google-fonts cache
-// If they do then consider using a /^https:\/\/fonts\.gstatic\.com/ style RE
 registerRoute(
   /.*(?:storage.googleapis)\.com/,
   new CacheFirst({
