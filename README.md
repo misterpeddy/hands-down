@@ -4,6 +4,8 @@
 
 Help slow the spread of COVID-19 by discouraging people from touching their face while sitting in front of a computer.
 
+[Check it out here!](https://handsdown.dev/)
+
 ## Design
 
 We break down the problem of inferring whether the subject is touching their face into 2 parts:
