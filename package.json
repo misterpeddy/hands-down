@@ -13,8 +13,8 @@
     "lint": "npm run lint:js client/*.js && npm run lint:html public/*.html && npm run lint:css public/css/*.css",
     "test": "cypress run",
     "cy": "cypress open",
-    "test:dev": "CYPRESS_BASE_URL=http://localhost:1234 cypress run",
-    "cy:dev": "CYPRESS_BASE_URL=http://localhost:1234 cypress open"
+    "test:prod": "CYPRESS_BASE_URL=https://handsdown.dev cypress run",
+    "cy:prod": "CYPRESS_BASE_URL=https://handsdown.dev cypress open"
   },
   "repository": {
     "type": "git",
@@ -38,7 +38,7 @@
     "@babel/preset-env": "^7.9.5",
     "babel-plugin-transform-runtime": "^6.23.0",
     "cssnano": "^4.1.10",
-    "cypress": "^4.3.0",
+    "cypress": "^4.8.0",
     "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
