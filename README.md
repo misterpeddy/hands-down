@@ -4,7 +4,7 @@
 
 Help slow the spread of COVID-19 by discouraging people from touching their face while sitting in front of a computer.
 
-[Check it out here!](https://handsdown.dev/)
+[Check it out here!](https://misterpeddy.github.io/hands-down/)
 
 ## Design
 
@@ -35,7 +35,7 @@ Clone the repo and run:
 
 2. `npm start` or `npm run dev` (like `npm start` but the server automatically restarts after any HTML/CSS/JS files are changed)
 
-Then _app_ should be serving at localhost:8080.
+Then _app_ should be serving at localhost:1234.
 
 ### Pull Requests
 
